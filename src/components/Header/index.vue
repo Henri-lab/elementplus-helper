@@ -4,7 +4,7 @@
             <div class="link-btns"></div>
         </div>
         <div class="right">
-            <div class="timebar"></div>
+            <div class="time-bar"></div>
         </div>
     </div>
 </template>

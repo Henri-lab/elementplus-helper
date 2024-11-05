@@ -8,23 +8,26 @@ $height: 1080px;
 }
 
 // btn|btn|btn ----title---- time|user|btn
-@mixin common-header($h: 100px, $w1: 30%, $w2: 30%) {
+@mixin common-header($h: 100px, $L: 20%, $R: 20%, $M: 60%) {
   width: 100%;
   height: $h;
   background-color: red;
+  background: url(../images/header.png) repeat center;
   @include flexbox(space-between, center, row, wrap);
 
   .left {
-    width: $w1;
+    width: $L;
     height: $h;
     background-color: blue;
+    opacity: 60%;
     @include flexbox(space-between, center, row, wrap);
   }
 
   .right {
-    width: $w2;
+    width: $R;
     height: $h;
     background-color: green;
+    opacity: 60%;
     @include flexbox(space-between, center, row, wrap);
   }
 }
@@ -39,7 +42,8 @@ $height: 1080px;
 
       .el-header {
         height: 10%;
-        background-color: rgb(0, 255, 242);
+        background-color: rgb(8, 16, 15);
+        padding: 0;
       }
 
       .el-aside {
