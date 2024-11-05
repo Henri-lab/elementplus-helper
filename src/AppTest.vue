@@ -2,9 +2,9 @@
     <div class="test-bar">
         <el-button class="trigger" @click="trigger">test-bar🌞</el-button>
         <div class="btns" v-if="isTest">
+            <router-link class="item" to="/testComponents"><el-button>组件测试</el-button></router-link>
             <router-link class="item" to="/layout/display0/@targetSystem"><el-button>目标体系布局</el-button></router-link>
             <router-link class="item" to="/layout/display0/targetSystem"><el-button>目标体系内容</el-button></router-link>
-            <router-link class="item" to="/testComponents"><el-button>组件测试</el-button></router-link>
             <router-link class="item" to="/layout/display0/targetSystem"><el-button>目标体系内容</el-button></router-link>
             <router-link class="item" to="/layout/display0/targetSystem"><el-button>目标体系内容</el-button></router-link>
             <router-link class="item" to="/layout/display0/targetSystem"><el-button>目标体系内容</el-button></router-link>
