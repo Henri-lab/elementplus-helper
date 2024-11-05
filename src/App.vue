@@ -1,5 +1,6 @@
 <script lang="ts">
 import { onMounted, onBeforeUnmount, defineComponent } from 'vue';
+//@ts-ignore
 import AppTest from './AppTest.vue';
 export default defineComponent({
   components: { AppTest },
@@ -52,5 +53,4 @@ export default defineComponent({
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
