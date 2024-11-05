@@ -5,8 +5,9 @@ export const cssOption = {
             // 引入 mixin.scss 这样就可以在全局中使用 mixin.scss中预定义的变量了
             // 给导入的路径最后加上 ;
             additionalData: [
+                '@import "@/assets/scss/_var.scss";',
                 '@import "@/assets/scss/mixin.scss";',
-                '@import "@/assets/scss/_var.scss";'
+                '@import "@/assets/scss/layout.scss";',
             ].join('\n')
         },
     },

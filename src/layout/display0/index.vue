@@ -5,7 +5,7 @@
                 <RouterView name="header"></RouterView>
             </el-header>
             <el-container>
-                <el-aside width="200px">
+                <el-aside>
                     <RouterView name="aside"></RouterView>
                 </el-aside>
                 <el-container>
@@ -20,3 +20,10 @@
         </el-container>
     </div>
 </template>
+
+
+<style lang="scss" scoped>
+.common-layout {
+    @include common-layout-display0;
+}
+</style>

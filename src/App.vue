@@ -1,8 +1,8 @@
 <script lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import { onMounted, onBeforeUnmount } from 'vue';
-
-export default {
+import { onMounted, onBeforeUnmount, defineComponent } from 'vue';
+import AppTest from './AppTest.vue';
+export default defineComponent({
+  components: { AppTest },
   setup() {
     const designWidth = 1920; // 设计图的宽度
     const designHeight = 1080; // 设计图的高度
@@ -35,18 +35,22 @@ export default {
       window.removeEventListener('resize', adjustScale);
     });
 
-    
-
-    return {};
+    return {
+      designWidth,
+      designHeight,
+    };
   },
-};
+}
+)
 
 </script>
 
 <template>
-  <div id="app" class="scale-container">
+  <div id="app">
+    <AppTest></AppTest>
     <RouterView />
   </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+</style>

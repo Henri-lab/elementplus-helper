@@ -29,11 +29,28 @@ const publicRoutes: RouteRecordRaw[] = [
         },
         children: [
           {
+            // 目标体系 布局模版
+            path: '@targetSystem',
+            name: '@targetSystem',
+            components: {
+              default: () => import('@/layout/display0/index.vue'),
+              header: () => import('@/layout/display0/header.vue'),
+              main: () => import('@/layout/display0/main.vue'),
+              aside: () => import('@/layout/display0/aside.vue'),
+              footer: () => import('@/layout/display0/footer.vue'),
+            },
+            meta: {
+              title: '@目标体系',
+              icon: '@targetSystem',
+            },
+          },
+          {
+            // 目标体系 内容填充
             path: 'targetSystem',
             name: 'targetSystem',
             components: {
               default: () => import('@/layout/display0/index.vue'),
-              header: () => import('@/layout/display0/header.vue'),
+              header: () => import('@/components/Header/index.vue'),
               main: () => import('@/layout/display0/main.vue'),
               aside: () => import('@/layout/display0/aside.vue'),
               footer: () => import('@/layout/display0/footer.vue'),
@@ -66,6 +83,5 @@ const publicRoutes: RouteRecordRaw[] = [
     ],
   },
 ];
-
 
 export default publicRoutes;
