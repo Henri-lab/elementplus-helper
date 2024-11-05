@@ -45,7 +45,7 @@ export default {
 
 <template>
   <div id="app" class="scale-container">
-    <!-- <RouterView /> -->
+    <RouterView />
   </div>
 </template>
 
