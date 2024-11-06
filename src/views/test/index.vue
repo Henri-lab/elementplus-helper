@@ -10,12 +10,22 @@
         <div class="test-btns">
             <router-link class="item" to="/testComponents/Tree">
                 <el-button>
-                    TreeComponent
+                    Tree
                 </el-button>
             </router-link>
             <router-link class="item" to="/testComponents/Table">
                 <el-button>
-                    TableComponent
+                    Table
+                </el-button>
+            </router-link>
+            <router-link class="item" to="/testComponents/TableTargetBasicInfo">
+                <el-button>
+                    Table《目标基本信息》
+                </el-button>
+            </router-link>
+            <router-link class="item" to="/testComponents/Pagination">
+                <el-button>
+                    Pagination
                 </el-button>
             </router-link>
         </div>
@@ -52,5 +62,6 @@
     border: 1px solid red;
     box-shadow: 10px 10px 10px #e0e0e0;
     margin: 0 auto;
+    overflow: visible;
 }
 </style>

@@ -1,6 +1,7 @@
 //@/components/Table/index.vue
 @mixin default-enhanced-table {
-  &__add-button {
+  &__add-button,
+  &__delete-selected {
     margin-bottom: 15px;
   }
 
@@ -10,7 +11,7 @@
 
   &__operations {
     display: flex;
-    gap: 8px; // 操作按钮之间的间距
+    gap: 8px;
     justify-content: center;
     align-items: center;
   }
@@ -38,7 +39,7 @@
   }
 
   &__form {
-    max-width: 500px; // 表单最大宽度
+    max-width: 500px;
   }
 
   &__form-item {
@@ -66,5 +67,34 @@
   &__button--save {
     background-color: #409eff;
     color: #fff;
+  }
+  ::v-deep .el-table__cell {
+    color: $table_cell_color;
+    background-color: $table_cell_bg_color;
+  }
+}
+
+@mixin default-enhanced-pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  &__total {
+    font-size: 14px;
+    color: #606266;
+  }
+
+  &__size {
+    width: 120px;
+  }
+
+  &__jumper {
+    display: flex;
+    align-items: center;
+    .jumper-input {
+      width: 50px;
+      margin-left: 5px;
+    }
   }
 }

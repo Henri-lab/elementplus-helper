@@ -2,9 +2,15 @@
     <div class="enhanced-table">
         <!-- 表格操作按钮 -->
         <el-button type="primary" @click="handleAdd" class="enhanced-table__add-button">新增</el-button>
+        <el-button type="danger" @click="handleDeleteSelected" class="enhanced-table__delete-selected">删除选中</el-button>
 
         <!-- 表格 -->
-        <el-table :data="tableData" class="enhanced-table__table" style="width: 100%">
+        <el-table ref="tableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange"
+            class="enhanced-table__table">
+
+            <!-- 多选列 -->
+            <el-table-column type="selection" width="50" />
+
             <!-- 动态渲染列 -->
             <el-table-column v-for="column in columns" :key="column.prop" :prop="column.prop" :label="column.label"
                 :width="column.width || 'auto'" />
@@ -41,6 +47,7 @@
         </el-dialog>
     </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
@@ -64,6 +71,8 @@ export default defineComponent({
         const form = ref({}); // 表单数据
         const isEditing = ref(false); // 是否为编辑模式
         const currentIndex = ref(-1); // 当前编辑项索引
+        const selectedRows = ref([]); // 存储选中的行数据
+        const tableRef = ref(null); // 表格引用
 
         // 新增
         const handleAdd = () => {
@@ -80,12 +89,23 @@ export default defineComponent({
             dialogVisible.value = true;
         };
 
-        // 删除
+        // 删除单行
         const handleDelete = (row) => {
             ElMessageBox.confirm('确认删除这条记录吗?', '提示', {
                 type: 'warning'
             }).then(() => {
                 tableData.value = tableData.value.filter(item => item !== row);
+                ElMessage.success('删除成功');
+            }).catch(() => { });
+        };
+
+        // 删除选中行
+        const handleDeleteSelected = () => {
+            ElMessageBox.confirm('确认删除选中的记录吗?', '提示', {
+                type: 'warning'
+            }).then(() => {
+                tableData.value = tableData.value.filter(item => !selectedRows.value.includes(item));
+                selectedRows.value = []; // 清空已选
                 ElMessage.success('删除成功');
             }).catch(() => { });
         };
@@ -104,6 +124,11 @@ export default defineComponent({
             dialogVisible.value = false;
         };
 
+        // 处理多选变更
+        const handleSelectionChange = (rows) => {
+            selectedRows.value = rows;
+        };
+
         return {
             tableData,
             dialogVisible,
@@ -112,7 +137,11 @@ export default defineComponent({
             handleAdd,
             handleEdit,
             handleDelete,
-            handleSubmit
+            handleDeleteSelected,
+            handleSubmit,
+            handleSelectionChange,
+            tableRef,
+            selectedRows
         };
     }
 });
