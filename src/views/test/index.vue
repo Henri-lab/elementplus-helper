@@ -13,6 +13,11 @@
                     TreeComponent
                 </el-button>
             </router-link>
+            <router-link class="item" to="/testComponents/Table">
+                <el-button>
+                    TableComponent
+                </el-button>
+            </router-link>
         </div>
         <el-divider>components</el-divider>
         <div class="components">

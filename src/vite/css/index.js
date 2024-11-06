@@ -8,6 +8,8 @@ export const cssOption = {
                 '@import "@/assets/scss/_var.scss";',
                 '@import "@/assets/scss/mixin.scss";',
                 '@import "@/assets/scss/layout.scss";',
+                '@import "@/assets/scss/table.scss";',
+                '@import "@/assets/scss/reset.scss";',
             ].join('\n')
         },
     },
