@@ -1,6 +1,8 @@
 <template>
     <div class="table-target-basic-info">
-        <EnhancedTable :columns="columns" :initialData="paginatedData">
+        <ToolBarOfTable></ToolBarOfTable>
+
+        <EnhancedTable :columns="columns" :initialData="paginatedData" :isAddBtn="false" :isDeleteSelected="false">
         </EnhancedTable>
         <br>
 
@@ -14,6 +16,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
+//@ts-ignore
+import ToolBarOfTable from '@/components/ToolBar/OfTable.vue'
 import EnhancedTable from './index.vue';
 //@ts-ignore
 import { targetBasicInfoData } from '@/mock/table_test';
@@ -23,7 +27,7 @@ import EnhancedPagination from '../Pagination/index.vue';
 
 
 export default defineComponent({
-    components: { EnhancedTable, EnhancedPagination },
+    components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
     setup() {
         const columns = targetBasicInfoColumns;
         const data = targetBasicInfoData;// 模拟数据

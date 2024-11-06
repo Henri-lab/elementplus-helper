@@ -1,8 +1,8 @@
 <template>
     <div class="enhanced-table">
         <!-- 表格操作按钮 -->
-        <el-button type="primary" @click="handleAdd" class="enhanced-table__add-button">新增</el-button>
-        <el-button type="danger" @click="handleDeleteSelected" class="enhanced-table__delete-selected">删除选中</el-button>
+        <el-button v-if="isAddBtn" type="primary" @click="handleAdd" class="enhanced-table__add-button">新增</el-button>
+        <el-button v-if="isDeleteSelected" type="danger" @click="handleDeleteSelected" class="enhanced-table__delete-selected">删除选中</el-button>
 
         <!-- 表格 -->
         <el-table ref="tableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange"
@@ -61,6 +61,8 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
+//@ts-ignore
+import $bus from '@/utils/bus';
 
 export default defineComponent({
     props: {
@@ -81,6 +83,14 @@ export default defineComponent({
         delete: {
             type: Boolean,
             default: true
+        },
+        isAddBtn: {
+            type: Boolean,
+            default: true
+        },
+        isDeleteSelected: {
+            type: Boolean,
+            default: true
         }
     },
 
@@ -94,6 +104,8 @@ export default defineComponent({
         const tableData = ref<Array<RowObject>>([...props.initialData]); // 表格数据
         const isEdit = ref(props.edit);
         const isDelete = ref(props.delete);
+        const isAddBtn = ref(props.isAddBtn);
+        const isDeleteSelected = ref(props.isDeleteSelected);
         const dialogVisible = ref(false); // 控制对话框显示
         const form = ref<AnyObject>({}); // 表单数据
         const isEditing = ref(false); // 是否为编辑模式
@@ -181,6 +193,23 @@ export default defineComponent({
             }
         }
 
+        // 搜索
+        const handleSearch = (name: string) => {
+            const filteredData = tableData.value.filter((item) => {
+                return item.name.includes(name);
+            });
+            tableData.value = filteredData;
+        };
+
+        //$bus 
+        $bus.on('Table:searchByTargetName', (name: string) => {
+            handleSearch(name);
+        });
+
+        $bus.on('Table:add_row', () => {
+            handleAdd();
+        });
+
         return {
             tableData,
             dialogVisible,
@@ -197,7 +226,9 @@ export default defineComponent({
             isTextOverflow,
             tableRowClassName,
             isEdit,
-            isDelete
+            isDelete,
+            isAddBtn,
+            isDeleteSelected
         };
     }
 });
@@ -206,8 +237,5 @@ export default defineComponent({
 <style lang="scss" scoped>
 .enhanced-table {
     @include default-enhanced-table;
-
-
-
 }
 </style>

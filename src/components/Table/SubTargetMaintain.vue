@@ -1,6 +1,7 @@
 <template>
     <div class="table-subtarget-maintain">
-        <EnhancedTable :columns="columns" :initialData="paginatedData" :edit="false">
+        <EnhancedTable :columns="columns" :initialData="paginatedData" :edit="false" :isAddBtn="false"
+            :isDeleteSelected="false">
             <template #operation="scope">
                 <el-button @click="handleCustomBtn(scope.row)" size="small">
                     关联图片
