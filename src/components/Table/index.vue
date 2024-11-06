@@ -30,7 +30,7 @@
                 <template #default="{ row }">
                     <div class="enhanced-table__operations">
                         <el-button v-if="isEdit" @click="handleEdit(row)" size="small"
-                        class="enhanced-table__button--edit">编辑</el-button>
+                            class="enhanced-table__button--edit">编辑</el-button>
                         <slot name="operation" :row="row"></slot>
                         <el-button v-if="isDelete" @click="handleDelete(row)" type="danger" size="small"
                             class="enhanced-table__button--delete">删除</el-button>
@@ -65,12 +65,12 @@ import { ElMessageBox, ElMessage } from 'element-plus';
 export default defineComponent({
     props: {
         columns: {
-            type: Array,
+            type: Array<any>,
             required: true,
             default: () => []
         },
         initialData: {
-            type: Array,
+            type: Array<any>,
             required: true,
             default: () => []
         },
@@ -83,15 +83,22 @@ export default defineComponent({
             default: true
         }
     },
+
     setup(props) {
-        const tableData = ref([...props.initialData]); // 表格数据
+        type AnyObject = {
+            [key: string]: any;
+        };
+        type RowObject = {
+            [key: string]: any;
+        }
+        const tableData = ref<Array<RowObject>>([...props.initialData]); // 表格数据
         const isEdit = ref(props.edit);
         const isDelete = ref(props.delete);
         const dialogVisible = ref(false); // 控制对话框显示
-        const form = ref({}); // 表单数据
+        const form = ref<AnyObject>({}); // 表单数据
         const isEditing = ref(false); // 是否为编辑模式
         const currentIndex = ref(-1); // 当前编辑项索引
-        const selectedRows = ref([]); // 存储选中的行数据
+        const selectedRows = ref<Array<RowObject>>([]); // 存储选中的行数据
         const tableRef = ref(null); // 表格引用
 
         // 监听 `initialData` 的变化并同步更新 `tableData`
@@ -111,7 +118,7 @@ export default defineComponent({
         };
 
         // 编辑
-        const handleEdit = (row) => {
+        const handleEdit = (row: any) => {
             form.value = { ...row };
             currentIndex.value = tableData.value.indexOf(row);
             isEditing.value = true;
@@ -119,7 +126,7 @@ export default defineComponent({
         };
 
         // 删除单行
-        const handleDelete = (row) => {
+        const handleDelete = (row: any) => {
             ElMessageBox.confirm('确认删除这条记录吗?', '提示', {
                 type: 'warning'
             }).then(() => {
@@ -154,7 +161,7 @@ export default defineComponent({
         };
 
         // 处理多选变更
-        const handleSelectionChange = (rows) => {
+        const handleSelectionChange = (rows: any) => {
             selectedRows.value = rows;
         };
 
@@ -166,8 +173,8 @@ export default defineComponent({
         }
 
         // 表格行样式
-        const tableRowClassName = ({ row, rowIndex }) => {
-            if (rowIndex % 2 === 0) {
+        const tableRowClassName = (arg: { row: any, rowIndex: number }) => {
+            if (arg.rowIndex % 2 === 0) {
                 return 'row-even';
             } else {
                 return 'row-odd';
