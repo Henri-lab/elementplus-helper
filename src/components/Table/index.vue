@@ -2,7 +2,8 @@
     <div class="enhanced-table">
         <!-- 表格操作按钮 -->
         <el-button v-if="isAddBtn" type="primary" @click="handleAdd" class="enhanced-table__add-button">新增</el-button>
-        <el-button v-if="isDeleteSelected" type="danger" @click="handleDeleteSelected" class="enhanced-table__delete-selected">删除选中</el-button>
+        <el-button v-if="isDeleteSelected" type="danger" @click="handleDeleteSelected"
+            class="enhanced-table__delete-selected">删除选中</el-button>
 
         <!-- 表格 -->
         <el-table ref="tableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange"
@@ -196,7 +197,7 @@ export default defineComponent({
         // 搜索
         const handleSearch = (name: string) => {
             const filteredData = tableData.value.filter((item) => {
-                return item.name.includes(name);
+                return item.name.toLowerCase().includes(name);
             });
             tableData.value = filteredData;
         };
