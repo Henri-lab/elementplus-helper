@@ -1,11 +1,6 @@
 <template>
     <div class="table-target-basic-info">
         <EnhancedTable :columns="columns" :initialData="paginatedData">
-            <template #operation="scope">
-                <el-button @click="handleCustomBtn(scope.row)">
-                    custom
-                </el-button>
-            </template>
         </EnhancedTable>
         <br>
 
