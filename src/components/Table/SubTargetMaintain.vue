@@ -1,9 +1,12 @@
 <template>
     <div class="table-subtarget-maintain">
-        <EnhancedTable :columns="columns" :initialData="paginatedData">
+        <EnhancedTable :columns="columns" :initialData="paginatedData" :edit="false">
             <template #operation="scope">
-                <el-button @click="handleCustomBtn(scope.row)">
-                    custom
+                <el-button @click="handleCustomBtn(scope.row)" size="small">
+                    关联图片
+                </el-button>
+                <el-button @click="handleCustomBtn(scope.row)" size="small">
+                    导出
                 </el-button>
             </template>
         </EnhancedTable>
@@ -21,7 +24,7 @@
 import { computed, defineComponent, ref } from 'vue';
 import EnhancedTable from './index.vue';
 //@ts-ignore
-import { subTargetMaintainData} from '@/mock/table_test';
+import { subTargetMaintainData } from '@/mock/table_test';
 //@ts-ignore
 import subTargetMaintainColums from './config/subTargetMaintain'
 import EnhancedPagination from '../Pagination/index.vue';

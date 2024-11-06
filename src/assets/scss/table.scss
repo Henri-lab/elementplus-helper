@@ -5,6 +5,18 @@
     margin-bottom: 15px;
   }
 
+  // 表格行样式 
+  ::v-deep .row-even {
+    .el-table__cell {
+      background-color: #0d5084 !important;
+    }
+  }
+  ::v-deep .row-odd {
+    .el-table__cell {
+      background-color: #217d84 !important;
+    }
+  }
+  
   &__table {
     width: 100%;
     //overflow text
@@ -12,7 +24,6 @@
       overflow: scroll;
       white-space: nowrap;
       text-overflow: ellipsis;
-      width: 100px;
     }
   }
 

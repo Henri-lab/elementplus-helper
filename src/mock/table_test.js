@@ -36,12 +36,12 @@ export const targetBasicInfoData = Array.from({ length: 500 }).map(() => ({
 }))
 
 export const subTargetMaintainData = Array.from(Array.from({ length: 500 })).map(() => ({
-  name: faker.lorem.word(), // 随机生成子目标名称
-  alias: faker.lorem.word(), // 随机生成所属目标
-  type: faker.lorem.word(), // 随机生成子目标类别
-  class1: faker.lorem.word(), // 随机生成一级分类
-  class2: faker.lorem.word(), // 随机生成二级分类
-  class3: faker.lorem.word(), // 随机生成三级分类
+  name: faker.lorem.word(5), // 随机生成子目标名称
+  affi: faker.lorem.word(5), // 随机生成所属目标
+  type: faker.lorem.word(2), // 随机生成子目标类别
+  class1: faker.lorem.word(2), // 随机生成一级分类
+  class2: faker.lorem.word(2), // 随机生成二级分类
+  class3: faker.lorem.word(2), // 随机生成三级分类
   lon: faker.location.longitude(), // 随机生成经度
   lat: faker.location.latitude(), // 随机生成纬度
   height: faker.number.int({ min: 1000, max: 10000 }), // 随机生成大地高

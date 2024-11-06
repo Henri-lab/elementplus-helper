@@ -6,14 +6,14 @@
 
         <!-- 表格 -->
         <el-table ref="tableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange"
-            class="enhanced-table__table">
+            class="enhanced-table__table" :row-class-name="tableRowClassName" highlight-current-row>
 
             <!-- 多选列 -->
-            <el-table-column type="selection" width="50" />
+            <el-table-column type="selection" width="50" align="center" />
 
             <!-- 动态渲染列 -->
-            <el-table-column v-for="column in columns" :key="column.prop" :prop="column.prop" :label="column.label"
-                :width="column.width || 'auto'">
+            <el-table-column align="center" v-for="column in columns" :key="column.prop" :prop="column.prop"
+                :label="column.label" :width="column.width || 'auto'">
                 <!-- 处理文本溢出 -->
                 <template #default="{ row, column }">
                     <el-tooltip v-if="isTextOverflow(row[column.property])" class="enhanced-table__tooltip"
@@ -26,14 +26,14 @@
             </el-table-column>
 
             <!-- 操作列 -->
-            <el-table-column label="操作" width="150">
+            <el-table-column label="操作" align="center">
                 <template #default="{ row }">
                     <div class="enhanced-table__operations">
-                        <el-button @click="handleEdit(row)" size="small"
-                            class="enhanced-table__button--edit">编辑</el-button>
-                        <el-button @click="handleDelete(row)" type="danger" size="small"
-                            class="enhanced-table__button--delete">删除</el-button>
+                        <el-button v-if="isEdit" @click="handleEdit(row)" size="small"
+                        class="enhanced-table__button--edit">编辑</el-button>
                         <slot name="operation" :row="row"></slot>
+                        <el-button v-if="isDelete" @click="handleDelete(row)" type="danger" size="small"
+                            class="enhanced-table__button--delete">删除</el-button>
                     </div>
                 </template>
             </el-table-column>
@@ -73,10 +73,20 @@ export default defineComponent({
             type: Array,
             required: true,
             default: () => []
+        },
+        edit: {
+            type: Boolean,
+            default: true
+        },
+        delete: {
+            type: Boolean,
+            default: true
         }
     },
     setup(props) {
         const tableData = ref([...props.initialData]); // 表格数据
+        const isEdit = ref(props.edit);
+        const isDelete = ref(props.delete);
         const dialogVisible = ref(false); // 控制对话框显示
         const form = ref({}); // 表单数据
         const isEditing = ref(false); // 是否为编辑模式
@@ -155,6 +165,15 @@ export default defineComponent({
             else return true;
         }
 
+        // 表格行样式
+        const tableRowClassName = ({ row, rowIndex }) => {
+            if (rowIndex % 2 === 0) {
+                return 'row-even';
+            } else {
+                return 'row-odd';
+            }
+        }
+
         return {
             tableData,
             dialogVisible,
@@ -168,7 +187,10 @@ export default defineComponent({
             handleSelectionChange,
             tableRef,
             selectedRows,
-            isTextOverflow
+            isTextOverflow,
+            tableRowClassName,
+            isEdit,
+            isDelete
         };
     }
 });
@@ -178,7 +200,7 @@ export default defineComponent({
 .enhanced-table {
     @include default-enhanced-table;
 
-   
+
 
 }
 </style>
