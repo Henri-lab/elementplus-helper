@@ -41,5 +41,7 @@ declare module 'vue' {
     Test: typeof import('./src/components/Pagination/test.vue')['default']
     ThematicMap: typeof import('./src/components/Table/ThematicMap.vue')['default']
     Tree: typeof import('./src/components/Tree/index.vue')['default']
+    TreeOrg: typeof import('./src/components/Tree/TreeOrg.vue')['default']
+    TreeOrg2: typeof import('./src/components/Tree/TreeOrg2.vue')['default']
   }
 }

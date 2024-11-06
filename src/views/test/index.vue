@@ -35,7 +35,12 @@
             </router-link>
             <router-link class="item" to="/testComponents/ContextMenu">
                 <el-button>
-                   ContextMenu
+                    ContextMenu
+                </el-button>
+            </router-link>
+            <router-link class="item" to="/testComponents/TreeOrg">
+                <el-button>
+                   TreeOrg
                 </el-button>
             </router-link>
         </div>

@@ -77,6 +77,7 @@ const fuse = new Fuse(data, {
 // 处理搜索并更新推荐列表
 const getRecommend = () => {
     const result = fuse.search(form.value.targetName);
+    //@ts-ignore
     suggestions.value = result.map((item) => item.item.title);
 };
 

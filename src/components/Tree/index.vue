@@ -3,7 +3,8 @@
     <el-input v-model="filterText" style="width: 240px" placeholder="Filter keyword" />
     <el-tree ref="treeRef" auto-expand-parent class="filter-tree" :data="data" :props="defaultProps" default-expand-all
         :filter-node-method="filterNode" @node-click="getNodeInfo">
-        <template #default="{ node, data }">
+
+        <template #default="{ node }">
             <span class="tree-node">
                 <span class="label">
                     {{ node.label }}
@@ -84,10 +85,12 @@ onMounted(() => {
 
     .tree-node {
         @include flexbox;
-        .label{
-             margin-right: 10px;
-             cursor: pointer;
+
+        .label {
+            margin-right: 10px;
+            cursor: pointer;
         }
+
         .image {
             background-color: black;
         }
