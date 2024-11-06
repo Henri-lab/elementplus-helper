@@ -7,6 +7,13 @@
 
   &__table {
     width: 100%;
+    //overflow text
+    .cell-ellipsis {
+      overflow: scroll;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100px;
+    }
   }
 
   &__operations {
@@ -79,10 +86,11 @@
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  //   flex-direction: row-reverse;
 
   &__total {
     font-size: 14px;
-    color: #606266;
+    color: #fff;
   }
 
   &__size {
@@ -96,5 +104,11 @@
       width: 50px;
       margin-left: 5px;
     }
+  }
+  //go to
+  ::v-deep .el-pagination__jump.is-last {
+    display: none;
+    // color: #fff;
+    // visibility: hidden;
   }
 }

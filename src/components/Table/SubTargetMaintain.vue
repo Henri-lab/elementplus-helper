@@ -1,5 +1,5 @@
 <template>
-    <div class="table-target-basic-info">
+    <div class="table-subtarget-maintain">
         <EnhancedTable :columns="columns" :initialData="paginatedData">
             <template #operation="scope">
                 <el-button @click="handleCustomBtn(scope.row)">
@@ -21,17 +21,17 @@
 import { computed, defineComponent, ref } from 'vue';
 import EnhancedTable from './index.vue';
 //@ts-ignore
-import { targetBasicInfoData } from '@/mock/table_test';
+import { subTargetMaintainData} from '@/mock/table_test';
 //@ts-ignore
-import targetBasicInfoColumns from './config/targetBasicInfo'
+import subTargetMaintainColums from './config/subTargetMaintain'
 import EnhancedPagination from '../Pagination/index.vue';
 
 
 export default defineComponent({
     components: { EnhancedTable, EnhancedPagination },
     setup() {
-        const columns = targetBasicInfoColumns;
-        const data = targetBasicInfoData;// 模拟数据
+        const columns = subTargetMaintainColums;
+        const data = subTargetMaintainData;// 模拟数据
 
         const handleCustomBtn = (row: any) => {
             console.log('custom button clicked:', row);

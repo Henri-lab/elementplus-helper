@@ -1,4 +1,18 @@
 #app {
-    @include layout-app;
-    background-color: $bg_color;
-  }
+  @include layout-app;
+  background-color: $bg_color;
+}
+
+.el-popper.is-dark {
+  background-color: $table_cell_tooltip_bg_color !important;
+  color: $table_cell_tooltip_color;
+  font-size: $table_cell_tooltip_font_size;
+  border-radius: $table_cell_tooltip_border_radius;
+  width: $table_cell_tooltip_width;
+  height: $table_cell_tooltip_height;
+  overflow: scroll;
+  box-shadow: $table_cell_tooltip_shadow;
+}
+.el-popper__arrow {
+  display: none;
+}

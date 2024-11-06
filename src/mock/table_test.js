@@ -35,3 +35,16 @@ export const targetBasicInfoData = Array.from({ length: 500 }).map(() => ({
   type: faker.helpers.arrayElement(['军事', '政治', '文化', '商业', '医疗', '教育', '其他']) // 随机生成目标类型
 }))
 
+export const subTargetMaintainData = Array.from(Array.from({ length: 500 })).map(() => ({
+  name: faker.lorem.word(), // 随机生成子目标名称
+  alias: faker.lorem.word(), // 随机生成所属目标
+  type: faker.lorem.word(), // 随机生成子目标类别
+  class1: faker.lorem.word(), // 随机生成一级分类
+  class2: faker.lorem.word(), // 随机生成二级分类
+  class3: faker.lorem.word(), // 随机生成三级分类
+  lon: faker.location.longitude(), // 随机生成经度
+  lat: faker.location.latitude(), // 随机生成纬度
+  height: faker.number.int({ min: 1000, max: 10000 }), // 随机生成大地高
+  alt: faker.number.int({ min: 100, max: 1000 }), // 随机生成海拔
+  desc: faker.lorem.sentence(50) // 随机生成说明 
+}))

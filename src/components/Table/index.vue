@@ -13,17 +13,27 @@
 
             <!-- 动态渲染列 -->
             <el-table-column v-for="column in columns" :key="column.prop" :prop="column.prop" :label="column.label"
-                :width="column.width || 'auto'" />
+                :width="column.width || 'auto'">
+                <!-- 处理文本溢出 -->
+                <template #default="{ row, column }">
+                    <el-tooltip v-if="isTextOverflow(row[column.property])" class="enhanced-table__tooltip"
+                        :content="row[column.property]" effect="dark" placement="right-end" trigger="hover"
+                        :show-after="300" :hide-after="500" popper-class="custom-tooltip">
+                        <div class="cell-ellipsis">{{ row[column.property] }}</div>
+                    </el-tooltip>
+                    <div v-else class="cell-ellipsis">{{ row[column.property] }}</div>
+                </template>
+            </el-table-column>
 
             <!-- 操作列 -->
             <el-table-column label="操作" width="150">
-                <template #default="scope">
+                <template #default="{ row }">
                     <div class="enhanced-table__operations">
-                        <el-button @click="handleEdit(scope.row)" size="small"
+                        <el-button @click="handleEdit(row)" size="small"
                             class="enhanced-table__button--edit">编辑</el-button>
-                        <el-button @click="handleDelete(scope.row)" type="danger" size="small"
+                        <el-button @click="handleDelete(row)" type="danger" size="small"
                             class="enhanced-table__button--delete">删除</el-button>
-                        <slot name="operation" :row="scope.row"></slot>
+                        <slot name="operation" :row="row"></slot>
                     </div>
                 </template>
             </el-table-column>
@@ -49,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 export default defineComponent({
@@ -73,6 +83,15 @@ export default defineComponent({
         const currentIndex = ref(-1); // 当前编辑项索引
         const selectedRows = ref([]); // 存储选中的行数据
         const tableRef = ref(null); // 表格引用
+
+        // 监听 `initialData` 的变化并同步更新 `tableData`
+        watch(
+            () => props.initialData,
+            (newData) => {
+                tableData.value = [...newData];
+            },
+            { deep: true } // 深度监听
+        );
 
         // 新增
         const handleAdd = () => {
@@ -129,6 +148,13 @@ export default defineComponent({
             selectedRows.value = rows;
         };
 
+        // 处理文本溢出
+        const isTextOverflow = (content: string) => {
+            if (!content) return false;
+            else if (content.toString().length < 20) return false
+            else return true;
+        }
+
         return {
             tableData,
             dialogVisible,
@@ -141,7 +167,8 @@ export default defineComponent({
             handleSubmit,
             handleSelectionChange,
             tableRef,
-            selectedRows
+            selectedRows,
+            isTextOverflow
         };
     }
 });
@@ -150,5 +177,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .enhanced-table {
     @include default-enhanced-table;
+
+   
+
 }
 </style>

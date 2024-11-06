@@ -23,6 +23,11 @@
                     Table《目标基本信息》
                 </el-button>
             </router-link>
+            <router-link class="item" to="/testComponents/TableSubTargetMaintain">
+                <el-button>
+                    Table《子目标维护》
+                </el-button>
+            </router-link>
             <router-link class="item" to="/testComponents/Pagination">
                 <el-button>
                     Pagination
