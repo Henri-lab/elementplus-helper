@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -13,6 +16,7 @@
   "dependencies": {
     "@faker-js/faker": "^9.2.0",
     "element-plus": "^2.8.7",
+    "fuse.js": "^7.0.0",
     "mitt": "^3.0.1",
     "mock": "^0.1.1",
     "pinia": "^2.2.4",

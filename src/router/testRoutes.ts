@@ -30,6 +30,11 @@ const testRoutes: RouteRecordRaw[] = [
         name: 'Pagination',
         component: () => import('@/components/Pagination/test.vue'),
       },
+      {
+        path: 'ContextMenu',
+        name: 'ContextMenu',
+        component: () => import('@/components/ContextMenu/index.vue'),
+      },
     ],
   },
 ];

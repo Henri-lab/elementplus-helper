@@ -12,7 +12,7 @@ $height: 1080px;
   width: 100%;
   height: $h;
   background-color: red;
-  background: url(../images/header.png) repeat center;
+  background: url(../image/header.png) repeat center;
   @include flexbox(space-between, center, row, wrap);
 
   .left {
