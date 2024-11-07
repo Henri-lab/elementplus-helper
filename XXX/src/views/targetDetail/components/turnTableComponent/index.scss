@@ -1,0 +1,125 @@
+#circle0 {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  background:url("@/assets/images/转盘外圈.png");
+  background-size: 100% 100%;
+}
+.nei{
+  width: 180px;
+  height: 180px;
+  position:absolute;
+  top:55%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+}
+p:nth-child(1){
+  background:url("@/assets/images/check/目标详情.png");
+  background-size: 100% 100%;
+  width: 84px;
+  height:79px;
+  position:absolute;
+  top:-9%;
+  left:50%;
+  rotate:0deg;
+}
+p:nth-child(1):hover{
+  background:url("@/assets/images/check/目标详情-选中.png") !important;
+}
+p:nth-child(2){
+  background:url("@/assets/images/check/装备部署情况.png");
+  background-size: 100% 100%;
+  width: 66px;
+  height: 96px;
+  position:absolute;
+  top:17%;
+  left:66%;
+  rotate:2deg;
+}
+p:nth-child(2):hover{
+  background:url("@/assets/images/check/装备部署情况-选中.png") !important;
+}
+p:nth-child(3){
+  background:url("@/assets/images/check/相关事件.png");
+  background-size: 100% 100%;
+  width: 84px;
+  height: 78px;
+  position:absolute;
+  top:53%;
+  left:49%;
+  rotate:0deg;
+}
+p:nth-child(3):hover{
+  background:url("@/assets/images/check/相关事件-选中.png") !important;
+}
+p:nth-child(4){
+  background:url("@/assets/images/check/发展变化图.png");
+  background-size: 100% 100%;
+  width: 84px;
+  height: 79px;
+  position:absolute;
+  top:52%;
+  left:4%;
+}
+p:nth-child(4):hover{
+  background:url("@/assets/images/check/发展变化图-选中.png") !important;
+}
+p:nth-child(5){
+  background:url("@/assets/images/check/目标动态.png");
+  
+  background-size: 100% 100%;
+  width: 66px;
+  height: 96px;
+  
+  position:absolute;
+  top:16%;
+  left:-3%;
+  rotate:0deg;
+}
+p:nth-child(5):hover{
+  background:url("@/assets/images/check/目标动态-选中.png") !important;
+}
+p:nth-child(6){
+  background:url("@/assets/images/check/历史变化.png");
+  background-size: 100% 100%;
+  width: 85px;
+  height: 78px;
+  position:absolute;
+  top:-9%;
+  left:4%; 
+  rotate:0deg
+}  
+p:nth-child(6):hover{
+  background:url("@/assets/images/check/历史变化-选中.png") !important;
+}
+.neiCircle{
+  width: 73px; 
+  height: 73px;
+  position:absolute;
+  background: url("@/assets/images/内圈2.png");
+  background-size: 100% 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.neiTwoCircle{
+  width: 53px; 
+  height: 53px;
+  position:absolute;
+  background: url("@/assets/images/内圈1.png");
+  background-size: 100% 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.specialCircle{
+  width: 33px; 
+  height: 33px;
+  position:absolute;
+  background: url("@/assets/images/321-特级机场64蓝 拷贝.png");
+  background-size: 100% 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}

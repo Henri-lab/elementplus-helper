@@ -16,8 +16,12 @@
   "dependencies": {
     "@faker-js/faker": "^9.2.0",
     "@riophae/vue-treeselect": "^0.4.0",
+    "@vueup/vue-quill": "^1.2.0",
     "element-plus": "^2.8.7",
+    "file-saver": "^2.0.5",
     "fuse.js": "^7.0.0",
+    "js-cookie": "^3.0.5",
+    "jsencrypt": "^3.3.2",
     "mitt": "^3.0.1",
     "mock": "^0.1.1",
     "pinia": "^2.2.4",
