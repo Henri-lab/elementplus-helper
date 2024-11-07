@@ -2,7 +2,7 @@
   width: auto;
   height: 960px;
   overflow: scroll;
-  @include scroll;
+  @include scrollbar;
   background-color: $bg_color;
   color: wheat;
 
