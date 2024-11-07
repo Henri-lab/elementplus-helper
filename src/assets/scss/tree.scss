@@ -2,9 +2,10 @@
   width: auto;
   height: 960px;
   overflow: scroll;
+  @include scroll;
   background-color: $bg_color;
   color: wheat;
-  
+
   // Base style for el-tree
   ::v-deep .el-tree {
     font-size: 14px; // Base font size

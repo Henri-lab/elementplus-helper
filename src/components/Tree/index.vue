@@ -1,15 +1,17 @@
 <template>
-    <ContextMenu :menuItems="menuOptions"></ContextMenu>
+    <ContextMenu :targetElement="targetElement" :menuItems="menuOptions"></ContextMenu>
     <el-input v-model="filterText" style="width: 240px" placeholder="Filter keyword" />
-    <el-tree ref="treeRef" auto-expand-parent class="filter-tree" :data="data" :props="defaultProps" default-expand-all
-        :filter-node-method="filterNode" @node-click="getNodeInfo">
-
+    <el-tree id="idOfTree" ref="treeRef" auto-expand-parent class="filter-tree" :data="data" :props="defaultProps"
+        default-expand-all :filter-node-method="filterNode" @node-click="getNodeInfo">
         <template #default="{ node }">
             <span class="tree-node">
+                <div class="checkbox">
+                    <el-checkbox></el-checkbox>
+                </div>
                 <span class="label">
                     {{ node.label }}
                 </span>
-                <div class="image">
+                <div class="operations image">
                     <el-image :src="connection" style="height: 16px;" fit="cover" />
                     <el-image :src="addone" style="height: 16px;margin: 0 5px;" fit="none" />
                     <el-image :src="Delete" style="height: 16px;" fit="cover" />
@@ -37,6 +39,7 @@ interface Tree {
     [key: string]: any
 }
 
+const targetElement = ref(null);
 const filterText = ref('')
 const treeRef = ref<InstanceType<typeof ElTree>>()
 
@@ -73,9 +76,15 @@ const data: Tree[] = mockData
 const getNodeInfo = (node: Tree) => {
     console.log('获取节点信息:', node)
 }
-
-onMounted(() => {
-    console.log(mockData);
+function sleep(t: number) {
+    return new Promise((resolve) => setTimeout(resolve, t));
+}
+onMounted(async () => {
+    if (treeRef.value) {
+        targetElement.value =
+            treeRef.value.$refs.el$ || document.getElementById('idOfTree');
+    }
+    // console.log(treeRef.value.$refs.el$);
 })
 </script>
 
@@ -91,8 +100,8 @@ onMounted(() => {
             cursor: pointer;
         }
 
-        .image {
-            background-color: black;
+        .operations {
+            background-color: $bg_color;
         }
     }
 

@@ -2,7 +2,7 @@
     <!-- 右键菜单 -->
     <div v-if="menuVisible" :style="contextMenuStyle" class="context-menu">
         <ul>
-            <li v-for="(item, index) in menuItems" :key="index" @click="item.action">
+            <li v-for="(item, index) in menuItems" :key="index" @click="handleMenuItemClick(item.action)">
                 {{ item.label }}
             </li>
         </ul>
@@ -10,21 +10,25 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 
 const props = defineProps({
-    menuItems: {// 菜单选项
+    menuItems: {
         type: Array,
-        default: [
+        default: () => [
             { label: '删除', action: () => console.log('delete') },
             { label: '编辑', action: () => console.log('edit') },
         ],
     },
-    el: {
-        type: HTMLElement,
-        default: null,
-    }
-
+    // 绑定的目标元素选择器或 DOM 元素
+    targetElement: {
+        type: [String, Object],
+        default: 'app',
+    },
+    global: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const menuVisible = ref(false);
@@ -34,50 +38,78 @@ const contextMenuStyle = ref({
     top: '0px',
     left: '0px',
 });
-let curLabel = null;
-let nodeLabelClicked = null;
+const targetRef = ref(null);
 
-const menuItems = props.menuItems;
-const el = props.el;
-
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+function handleMenuItemClick(action) {
+    action();
+    menuVisible.value = false;
 }
 
-// 右键点击事件处理，显示自定义菜单
-const handleClickRight = async (event) => {
-    event.preventDefault(); // 阻止默认的右键菜单
+// 右键点击事件处理
+const handleClickRight = (event) => {
+    event.preventDefault();
 
     menuX.value = event.clientX;
     menuY.value = event.clientY;
 
-    // 更新菜单的位置
     contextMenuStyle.value = {
         top: `${menuY.value}px`,
         left: `${menuX.value}px`,
     };
 
-    // 显示菜单
     menuVisible.value = true;
 };
 
-// 点击页面其他地方时隐藏菜单
+// 点击其他地方时隐藏菜单
 const handleClick = () => {
     menuVisible.value = false;
 };
 
-// 注册事件
-onMounted(() => {
-    document.addEventListener('click', handleClick);
-    el || document.addEventListener('contextmenu', handleClickRight);
-    console.log('contextmenu is now mounted')
+// 根据 props.targetElement 动态绑定右键菜单事件
+function bindContextMenu() {
+    if (props.global) {
+        document.addEventListener('contextmenu', handleClickRight);
+        console.log('contextmenu is now globally bound');
+    } else {
+        // 如果 targetElement 是字符串，按选择器查询元素
+        targetRef.value = typeof props.targetElement === 'string'
+            ? document.getElementById(props.targetElement)
+            : props.targetElement;
+
+        if (targetRef.value) {
+            targetRef.value.addEventListener('contextmenu', handleClickRight);
+            console.log('contextmenu is now bound to element:', targetRef.value.id || targetRef.value);
+        } else {
+            console.warn(`Element with selector "${props.targetElement}" not found.`);
+        }
+    }
+}
+
+// 移除绑定的右键菜单事件
+function unbindContextMenu() {
+    if (props.global) {
+        document.removeEventListener('contextmenu', handleClickRight);
+        console.log('contextmenu is now unbound globally');
+    } else if (targetRef.value) {
+        targetRef.value.removeEventListener('contextmenu', handleClickRight);
+        console.log('contextmenu is now unbound from element:', targetRef.value.id || targetRef.value);
+    }
+}
+
+// 监听 targetElement 变化
+watch(() => props.targetElement, (newTarget) => {
+    unbindContextMenu();
+    bindContextMenu();
 });
 
-// 移除事件
+onMounted(() => {
+    document.addEventListener('click', handleClick);
+    bindContextMenu();
+});
+
 onBeforeUnmount(() => {
     document.removeEventListener('click', handleClick);
-    el || document.removeEventListener('contextmenu', handleClickRight);
-    console.log('contextmenu is now unmounted')
+    unbindContextMenu();
 });
 </script>
 
