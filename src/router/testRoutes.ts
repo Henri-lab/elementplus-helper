@@ -40,6 +40,11 @@ const testRoutes: RouteRecordRaw[] = [
         name: 'ContextMenu',
         component: () => import('@/components/ContextMenu/index.vue'),
       },
+      {
+        path: 'Dialog',
+        name: 'Dialog',
+        component: () => import('@/components/EditDialog/test.vue'),
+      },
     ],
   },
 ];

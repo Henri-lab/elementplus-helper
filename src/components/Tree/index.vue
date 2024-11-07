@@ -79,6 +79,65 @@ const getNodeInfo = (node: Tree) => {
 function sleep(t: number) {
     return new Promise((resolve) => setTimeout(resolve, t));
 }
+
+
+
+// 递归查找节点
+const findNode = (data: any, nodeId: any) => {
+    for (let node of data) {
+        if (node.id === nodeId) {
+            return node;
+        }
+        if (node.children) {
+            const found = findNode(node.children, nodeId);
+            if (found) {
+                return found;
+            }
+        }
+    }
+    return null;
+};
+
+// 添加子节点
+const addNode = (parentNodeId: any, newNode: any) => {
+    const parentNode = findNode(data, parentNodeId);
+    if (parentNode) {
+        parentNode.children = parentNode.children || [];
+        parentNode.children.push(newNode);
+    } else {
+        console.warn('Parent node not found');
+    }
+};
+
+// 删除节点
+const deleteNode = (nodeId: any, data:any) => {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].id === nodeId) {
+            data.splice(i, 1);
+            return true;
+        } else if (data[i].children) {
+            const deleted = deleteNode(nodeId, data[i].children);
+            if (deleted) return true;
+        }
+    }
+    return false;
+};
+
+// 更新节点
+const updateNode = (nodeId: any, updatedProperties: any) => {
+    const node = findNode(data, nodeId);
+    if (node) {
+        Object.assign(node, updatedProperties);
+    } else {
+        console.warn('Node not found');
+    }
+};
+
+// 查找节点
+const searchNode = (nodeId: any) => {
+    return findNode(data, nodeId);
+};
+
 onMounted(async () => {
     if (treeRef.value) {
         targetElement.value =

@@ -10,6 +10,7 @@ declare module 'vue' {
     CodeEditor: typeof import('./src/components/CodeEditor/index.vue')['default']
     ContextMenu: typeof import('./src/components/ContextMenu/index.vue')['default']
     copy: typeof import('./src/components/ContextMenu/index copy.vue')['default']
+    EditDialog: typeof import('./src/components/EditDialog/index.vue')['default']
     Editor: typeof import('./src/components/Editor/index.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']

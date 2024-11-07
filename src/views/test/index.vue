@@ -43,6 +43,11 @@
                    TreeOrg
                 </el-button>
             </router-link>
+            <router-link class="item" to="/testComponents/Dialog">
+                <el-button>
+                   EditDialog
+                </el-button>
+            </router-link>
         </div>
         <el-divider>components</el-divider>
         <div class="components">
