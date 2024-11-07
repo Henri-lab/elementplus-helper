@@ -1,11 +1,14 @@
 @mixin filter-tree {
-  width: 500px;
-  height: 800px;
+  width: auto;
+  height: 960px;
   overflow: scroll;
+  background-color: $bg_color;
+  color: wheat;
+  
   // Base style for el-tree
   ::v-deep .el-tree {
     font-size: 14px; // Base font size
-    color: #333; // Default text color
+    color: #ffffff; // Default text color
 
     .el-tree-node {
       position: relative;
@@ -13,7 +16,7 @@
       transition: all 0.3s;
 
       &:hover {
-        background-color: #f5f7fa; // Hover background color for nodes
+        // background-color: #f5f7fa; // Hover background color for nodes
       }
 
       .el-tree-node__content {
@@ -23,9 +26,10 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.2s ease;
+        background-color: transparent;
 
         &:hover {
-          background-color: #eef2f7;
+          // background-color: #eef2f7;
         }
       }
 
@@ -35,7 +39,7 @@
         color: #909399;
 
         &.is-expanded {
-          color: #409eff; // Change color when expanded
+          color: #d413c4; // Change color when expanded
         }
       }
 
@@ -51,7 +55,7 @@
         margin-right: 10px;
 
         &.is-checked .el-checkbox__input {
-          background-color: #409eff; // Checked color
+          // background-color: #409eff; // Checked color
         }
 
         .el-checkbox__inner {
@@ -59,7 +63,7 @@
           border-color: #dcdfe6;
 
           &:hover {
-            border-color: #409eff; // Border color on hover
+            // border-color: #409eff; // Border color on hover
           }
         }
       }
@@ -68,7 +72,7 @@
       .el-tree-node__icon {
         font-size: 14px;
         margin-right: 8px;
-        color: #409eff; // Icon color
+        // color: #409eff; // Icon color
       }
     }
   }
@@ -87,7 +91,7 @@
       top: 0;
       bottom: 0;
       width: 1px;
-      background-color: #e4e7ed;
+      // background-color: #e4e7ed;
     }
 
     .el-tree-node__content {
@@ -108,9 +112,21 @@
 
   // Styling for active/selected node
   ::v-deep .el-tree-node.is-current .el-tree-node__content {
-    background-color: #e6f7ff;
-    color: #409eff;
+    // background-color: transparent;// notice!
+    // color: #ff4040;
     border-radius: 4px;
+  }
+
+  /* Customize el-tree node hover color */
+  ::v-deep.el-tree .el-tree-node__content:hover {
+    background-color: transparent; /* Replace with your preferred hover color */
+    color: aqua;
+  }
+
+  /* Custom styles for el-tree node selected color */
+  ::v-deep .el-tree .el-tree-node.is-current .el-tree-node__content {
+    background-color: transparent; /* Replace with your desired color */
+    color: #000; /* Optional: Set text color for better contrast */
   }
 }
 

@@ -43,21 +43,24 @@ $height: 1080px;
 
       .el-header {
         height: 10%;
-        background-color: rgb(8, 16, 15);
+        background-color: rgb(195, 134, 207);
         padding: 0;
       }
 
       .el-aside {
         width: 20%;
         background-color: yellowgreen;
+        padding: 0;
       }
 
       .el-main {
         background-color: bisque;
+        padding: 0;
       }
 
       .el-footer {
         background-color: goldenrod;
+        padding: 0;
       }
     }
   }
@@ -74,21 +77,41 @@ $height: 1080px;
 
       .el-header {
         height: 10%;
-        background-color: rgb(8, 16, 15);
+        background-color: rgb(195, 134, 207);
         padding: 0;
       }
 
       .el-aside {
-        width: 20%;
         background-color: yellowgreen;
+        width: 20%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
       }
 
       .el-main {
         background-color: bisque;
+        padding: 0;
+        .main_h {
+          height: 10%;
+          background-color: peru;
+          padding: 0;
+        }
+        .main_m {
+          height: 60%;
+          background-color: rgb(107, 42, 36);
+          padding: 0;
+        }
+        .main_f {
+          height: 30%;
+          background-color: rgb(9, 58, 89);
+          padding: 0;
+        }
       }
 
       .el-footer {
         background-color: goldenrod;
+        padding: 0;
       }
     }
   }

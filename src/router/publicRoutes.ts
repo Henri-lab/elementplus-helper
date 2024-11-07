@@ -52,7 +52,7 @@ const publicRoutes: RouteRecordRaw[] = [
               default: () => import('@/layout/display0/index.vue'),
               header: () => import('@/components/Header/index.vue'),
               main: () => import('@/layout/display0/main.vue'),
-              aside: () => import('@/layout/display0/aside.vue'),
+              aside: () => import('@/components/Tree/index.vue'),
               footer: () => import('@/layout/display0/footer.vue'),
             },
             meta: {
@@ -63,6 +63,7 @@ const publicRoutes: RouteRecordRaw[] = [
         ],
       },
       {
+        //目标价值分析 布局模版
         path: 'display1',
         name: 'display1',
         component: () => import('@/layout/display1/index.vue'),
@@ -70,6 +71,25 @@ const publicRoutes: RouteRecordRaw[] = [
           title: '页面1',
           icon: 'display1',
         },
+        children: [
+          {
+            path: '@targetValueAnalyse',
+            name: 'display1',
+            components: {
+              default: () => import('@/layout/display1/index.vue'),
+              header: () => import('@/layout/display1/header.vue'),
+              main_h: () => import('@/layout/display1/main.vue'),
+              main_m: () => import('@/layout/display1/main.vue'),
+              main_f: () => import('@/layout/display1/main.vue'),
+              aside: () => import('@/layout/display1/aside.vue'),
+              footer: () => import('@/layout/display1/footer.vue'),
+            },
+            meta: {
+              title: '页面1',
+              icon: 'display1',
+            },
+          },
+        ],
       },
       {
         path: 'display2',
