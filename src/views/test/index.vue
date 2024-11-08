@@ -48,6 +48,11 @@
                    EditDialog
                 </el-button>
             </router-link>
+            <router-link class="item" to="/testComponents/Form">
+                <el-button>
+                   Form
+                </el-button>
+            </router-link>
         </div>
         <el-divider>components</el-divider>
         <div class="components">

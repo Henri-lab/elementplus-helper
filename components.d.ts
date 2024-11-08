@@ -7,6 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Button: typeof import('./src/components/EditDialog/button/index.vue')['default']
+    'Button.vue': typeof import('./src/components/EditDialog/button.vue/index.vue')['default']
     CodeEditor: typeof import('./src/components/CodeEditor/index.vue')['default']
     ContextMenu: typeof import('./src/components/ContextMenu/index.vue')['default']
     copy: typeof import('./src/components/ContextMenu/index copy.vue')['default']
@@ -15,6 +17,7 @@ declare module 'vue' {
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
+    ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
@@ -31,11 +34,14 @@ declare module 'vue' {
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElRatio: typeof import('element-plus/es')['ElRatio']
+    ElRow: typeof import('element-plus/es')['ElRow']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    Form: typeof import('./src/components/Form/index.vue')['default']
     Header: typeof import('./src/components/Header/index.vue')['default']
+    Idex: typeof import('./src/components/Form/idex.vue')['default']
     Index2: typeof import('./src/components/Tree/index2.vue')['default']
     OfTable: typeof import('./src/components/ToolBar/OfTable.vue')['default']
     Pagination: typeof import('./src/components/Pagination/index.vue')['default']
