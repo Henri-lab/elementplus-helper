@@ -65,6 +65,11 @@ const testRoutes: RouteRecordRaw[] = [
         name: 'DraggableDemo2',
         component: () => import('@/components/Draggable/demo2.vue'),
       },
+      {
+        path: 'DraggableDemo3',
+        name: 'DraggableDemo3',
+        component: () => import('@/components/Draggable/demo3.vue'),
+      },
     ],
   },
 ];

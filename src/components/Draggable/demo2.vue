@@ -54,9 +54,9 @@ import { VueDraggableNext as Draggable } from 'vue-draggable-next';
 const getTestData = (a: number, b: number) => {
   const tasks = [];
   for (let i = a; i <= b; i++) {
-    tasks.push({ id: i, name: `image ${i}`, url: '' });
+    tasks.push({ id: i, name: `image ${i}`, url: '' } as never);
   }
-  return tasks;
+  return tasks as any;
 };
 const tasks = ref({
   related: getTestData(0, 3),
@@ -142,7 +142,7 @@ const onDragEnd2 = (event: any) => {
   display: flex;
   align-items: center;
   gap: 40px; /* 增大箭头之间的间距 */
-//   border: 5px dashed wheat;
+  //   border: 5px dashed wheat;
   position: absolute;
   top: 50%;
   left: 37%;
