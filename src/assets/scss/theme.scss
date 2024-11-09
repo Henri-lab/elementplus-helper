@@ -1,0 +1,138 @@
+// 定义主题颜色变量
+// 动态主题系统
+$themes: (
+  light: (
+    primary: $color-primary,
+    secondary: $color-secondary,
+    background: #ffffff,
+    surface: $color-gray-100,
+    border: $color-gray-300,
+    shadow: rgba(0, 0, 0, 0.1),
+    text-primary: $color-gray-900,
+    text-secondary: $color-gray-700,
+    text-disabled: $color-gray-500,
+    text-inverse: #ffffff,
+
+    button-primary-bg: $color-primary,
+    button-primary-hover: darken($color-primary, 10%),
+    button-secondary-bg: $color-secondary,
+    button-secondary-hover: darken($color-secondary, 10%),
+    button-disabled-bg: $color-gray-300,
+    button-disabled-text: $color-gray-500,
+
+    input-bg: $color-gray-100,
+    input-border: $color-gray-300,
+    input-text: $color-gray-800,
+    input-placeholder: $color-gray-500,
+
+    card-bg: #ffffff,
+    card-shadow: rgba(0, 0, 0, 0.05),
+    modal-bg: #ffffff,
+    modal-overlay: rgba(0, 0, 0, 0.5),
+    tooltip-bg: $color-gray-800,
+    tooltip-text: #ffffff,
+
+    navbar-bg: $color-primary,
+    navbar-text: #ffffff,
+
+    sidebar-bg: $color-gray-900,
+    sidebar-text: $color-gray-200,
+    sidebar-border: $color-gray-800,
+    sidebar-hover: lighten($color-gray-900, 5%),
+    footer-bg: $color-gray-800,
+    footer-text: $color-gray-200,
+  ),
+
+  dark: (
+    primary: darken($color-primary, 15%),
+    secondary: darken($color-secondary, 10%),
+    background: $color-gray-900,
+    surface: $color-gray-800,
+    border: $color-gray-700,
+    shadow: rgba(0, 0, 0, 0.3),
+    text-primary: $color-gray-100,
+    text-secondary: $color-gray-300,
+    text-disabled: $color-gray-600,
+    text-inverse: #000000,
+
+    button-primary-bg: darken($color-primary, 10%),
+    button-primary-hover: darken($color-primary, 20%),
+    button-secondary-bg: darken($color-secondary, 10%),
+    button-secondary-hover: darken($color-secondary, 20%),
+    button-disabled-bg: $color-gray-700,
+    button-disabled-text: $color-gray-500,
+
+    input-bg: $color-gray-800,
+    input-border: $color-gray-600,
+    input-text: $color-gray-100,
+    input-placeholder: $color-gray-500,
+
+    card-bg: $color-gray-800,
+    card-shadow: rgba(0, 0, 0, 0.4),
+    modal-bg: $color-gray-800,
+    modal-overlay: rgba(0, 0, 0, 0.7),
+    tooltip-bg: $color-gray-700,
+    tooltip-text: $color-gray-100,
+
+    navbar-bg: darken($color-primary, 20%),
+    navbar-text: $color-gray-100,
+
+    sidebar-bg: darken($color-gray-900, 5%),
+    sidebar-text: $color-gray-300,
+    sidebar-border: $color-gray-800,
+    sidebar-hover: lighten($color-gray-900, 10%),
+    footer-bg: darken($color-gray-800, 5%),
+    footer-text: $color-gray-300,
+  ),
+);
+
+@mixin theme($theme-name) {
+  $theme: map-get($themes, $theme-name);
+
+  --color-primary: #{map-get($theme, primary)};
+  --color-secondary: #{map-get($theme, secondary)};
+  --background: #{map-get($theme, background)};
+  --surface: #{map-get($theme, surface)};
+  --border-color: #{map-get($theme, border)};
+  --shadow-color: #{map-get($theme, shadow)};
+
+  --text-primary: #{map-get($theme, text-primary)};
+  --text-secondary: #{map-get($theme, text-secondary)};
+  --text-disabled: #{map-get($theme, text-disabled)};
+  --text-inverse: #{map-get($theme, text-inverse)};
+
+  --button-primary-bg: #{map-get($theme, button-primary-bg)};
+  --button-primary-hover: #{map-get($theme, button-primary-hover)};
+  --button-secondary-bg: #{map-get($theme, button-secondary-bg)};
+  --button-secondary-hover: #{map-get($theme, button-secondary-hover)};
+  --button-disabled-bg: #{map-get($theme, button-disabled-bg)};
+  --button-disabled-text: #{map-get($theme, button-disabled-text)};
+
+  --input-bg: #{map-get($theme, input-bg)};
+  --input-border: #{map-get($theme, input-border)};
+  --input-text: #{map-get($theme, input-text)};
+  --input-placeholder: #{map-get($theme, input-placeholder)};
+
+  --card-bg: #{map-get($theme, card-bg)};
+  --card-shadow: #{map-get($theme, card-shadow)};
+
+  --modal-bg: #{map-get($theme, modal-bg)};
+  --modal-overlay: #{map-get($theme, modal-overlay)};
+
+  --tooltip-bg: #{map-get($theme, tooltip-bg)};
+  --tooltip-text: #{map-get($theme, tooltip-text)};
+
+  --navbar-bg: #{map-get($theme, navbar-bg)};
+  --navbar-text: #{map-get($theme, navbar-text)};
+
+  --sidebar-bg: #{map-get($theme, sidebar-bg)};
+  --sidebar-text: #{map-get($theme, sidebar-text)};
+  --sidebar-border: #{map-get($theme, sidebar-border)};
+  --sidebar-hover: #{map-get($theme, sidebar-hover)};
+
+  --footer-bg: #{map-get($theme, footer-bg)};
+  --footer-text: #{map-get($theme, footer-text)};
+}
+
+
+

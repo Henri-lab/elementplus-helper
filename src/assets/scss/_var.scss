@@ -1,24 +1,36 @@
-//color
-$bg_color: rgb(16, 90, 96);
-$table_cell_color: white;
-$table_cell_bg_color: rgb(55, 55, 16);
-$table_header_color: rgb(16, 90, 96);
-$table_header_height: 100px;
+// 基础色系
+$color-primary: #3498db;
+$color-secondary: #2ecc71;
+$color-tertiary: #e74c3c;
+$color-quaternary: #9b59b6;
+$color-quinary: #34495e;
+
+$color-warning: #f39c12;
+$color-info: #1abc9c;
+$color-success: #2ecc71;
+$color-danger: #e74c3c;
+
+// 灰色系
+$color-gray-50: #fafafa;
+$color-gray-100: #f8f9fa;
+$color-gray-200: #e9ecef;
+$color-gray-300: #dee2e6;
+$color-gray-400: #ced4da;
+$color-gray-500: #adb5bd;
+$color-gray-600: #6c757d;
+$color-gray-700: #495057;
+$color-gray-800: #343a40;
+$color-gray-900: #212529;
+
+$bg_color: rgb(11, 56, 90);
 $active-color: #1a7bf9; //激活颜色
 $not-obvious: #5b697b; //不明显 或 不突出
 $system-light: #0e3050; //系统 浅色
 $system-middle: #09365e; //系统 中
 $system-strong: #07253f; //系统 重
 $border-light: #235b91; // 边框 浅
+$color-accent: #e90000; // 强调色
 
-//tooltip
-$table_cell_tooltip_bg_color: rgb(240, 191, 16);
-$table_cell_tooltip_color: white;
-$table_cell_tooltip_font_size: 14px;
-$table_cell_tooltip_border_radius: 15px;
-$table_cell_tooltip_width: 200px;
-$table_cell_tooltip_height: 120px;
-$table_cell_tooltip_shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.5);
 
 //img
 $header_img: '../image/header.png';

@@ -1,0 +1,189 @@
+// 页面结构颜色
+$header-bg-color: $color-primary;
+$header-text-color: #ffffff;
+$header-border-color: darken($color-primary, 10%);
+$header-hover-bg: lighten($color-primary, 10%);
+$header-active-bg: darken($color-primary, 10%);
+$header-shadow: rgba(0, 0, 0, 0.15);
+
+$footer-bg-color: $color-gray-800;
+$footer-text-color: $color-gray-100;
+$footer-border-color: darken($color-gray-800, 10%);
+$footer-shadow: rgba(0, 0, 0, 0.1);
+
+$sidebar-bg-color: $color-gray-900;
+$sidebar-text-color: $color-gray-100;
+$sidebar-hover-bg-color: lighten($color-gray-900, 10%);
+$sidebar-active-bg-color: darken($color-gray-900, 10%);
+$sidebar-border-color: $color-gray-700;
+$sidebar-icon-color: $color-primary;
+
+// 按钮颜色
+$button-primary-bg: $color-primary;
+$button-primary-text: #ffffff;
+$button-primary-border: $color-primary;
+$button-primary-hover-bg: darken($color-primary, 10%);
+$button-primary-active-bg: darken($color-primary, 15%);
+
+$button-secondary-bg: $color-secondary;
+$button-secondary-text: #ffffff;
+$button-secondary-border: $color-secondary;
+$button-secondary-hover-bg: darken($color-secondary, 10%);
+$button-secondary-active-bg: darken($color-secondary, 15%);
+
+$button-danger-bg: $color-danger;
+$button-danger-text: #ffffff;
+$button-danger-border: $color-danger;
+$button-danger-hover-bg: darken($color-danger, 10%);
+$button-danger-active-bg: darken($color-danger, 15%);
+
+$button-disabled-bg: $color-gray-300;
+$button-disabled-text: $color-gray-600;
+$button-disabled-border: $color-gray-400;
+
+// 表格、表单和输入框
+$table-bg-color: $color-gray-50;
+$table-header-bg: $color-gray-200;
+$table-border-color: $color-gray-300;
+$table-row-hover-bg: lighten($color-gray-100, 5%);
+$table-row-selected-bg: darken($color-gray-100, 5%);
+
+$table_cell_color: white;
+$table_cell_bg_color: rgb(55, 55, 16);
+$table_header_color: rgb(16, 90, 96);
+$table_header_height: 100px;
+$table_cell_tooltip_bg_color: rgb(240, 191, 16);
+$table_cell_tooltip_color: white;
+
+$form-bg-color: $color-gray-50;
+$form-border-color: $color-gray-300;
+$form-text-color: $color-gray-800;
+$form-placeholder-color: $color-gray-500;
+$input-bg-color: $color-gray-100;
+$input-text-color: $color-gray-800;
+$input-border-color: $color-gray-300;
+$input-focus-border-color: $color-primary;
+$input-disabled-bg-color: $color-gray-200;
+$input-disabled-text-color: $color-gray-500;
+
+//卡片、弹窗、工具提示和徽章
+$card-bg-color: #ffffff;
+$card-text-color: $color-gray-900;
+$card-border-color: $color-gray-200;
+$card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+$modal-bg-color: #ffffff;
+$modal-overlay-color: rgba(0, 0, 0, 0.5);
+$modal-border-color: $color-gray-300;
+$modal-close-icon-color: $color-danger;
+$modal-header-bg: $color-gray-100;
+$modal-header-text: $color-gray-900;
+
+$tooltip-bg-color: $color-gray-800;
+$tooltip-text-color: #ffffff;
+$tooltip-border-color: $color-gray-700;
+$tooltip-arrow-color: $color-gray-800;
+
+$badge-primary-bg: $color-primary;
+$badge-primary-text: #ffffff;
+$badge-secondary-bg: $color-secondary;
+$badge-secondary-text: #ffffff;
+$badge-success-bg: $color-success;
+$badge-success-text: #ffffff;
+$badge-danger-bg: $color-danger;
+$badge-danger-text: #ffffff;
+$badge-info-bg: $color-info;
+$badge-info-text: #ffffff;
+$badge-warning-bg: $color-warning;
+$badge-warning-text: #ffffff;
+
+//链接颜色
+$link-color: $color-primary;
+$link-hover-color: darken($color-primary, 10%);
+$link-active-color: $color-secondary;
+$link-visited-color: darken($color-primary, 20%);
+$link-disabled-color: $color-gray-500;
+
+//消息、通知和警告
+$alert-bg-color: $color-warning;
+$alert-text-color: $color-gray-900;
+$notification-bg-color: $color-info;
+$notification-text-color: #ffffff;
+$success-bg-color: $color-success;
+$success-text-color: #ffffff;
+$error-bg-color: $color-danger;
+$error-text-color: #ffffff;
+$warning-bg-color: $color-warning;
+$warning-text-color: $color-gray-900;
+
+//状态色
+$hover-bg-color: lighten($color-primary, 20%);
+$active-bg-color: darken($color-primary, 15%);
+$focus-border-color: $color-primary;
+$disabled-bg-color: $color-gray-200;
+$disabled-text-color: $color-gray-600;
+
+//文本和背景
+$text-color-primary: $color-gray-900;
+$text-color-secondary: $color-gray-600;
+$text-color-muted: $color-gray-500;
+$background-color-default: $color-gray-100;
+$background-color-light: #ffffff;
+$background-color-dark: $color-gray-900;
+$background-color-accent: $color-accent;
+
+// 阴影和透明度
+$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+$box-shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+$box-shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.2);
+$overlay-color: rgba(0, 0, 0, 0.5); // 弹窗遮罩颜色
+
+// 进度条、加载动画颜色
+$progress-bar-color: $color-primary;
+$progress-bg-color: $color-gray-300;
+$spinner-color: $color-primary;
+$loading-icon-color: $color-secondary;
+
+// 标签和进度指示器
+$tag-primary-bg: $color-primary;
+$tag-primary-text: #ffffff;
+$tag-secondary-bg: $color-secondary;
+$tag-secondary-text: #ffffff;
+$tag-info-bg: $color-info;
+$tag-info-text: #ffffff;
+$tag-warning-bg: $color-warning;
+$tag-warning-text: $color-gray-900;
+$tag-danger-bg: $color-danger;
+$tag-danger-text: #ffffff;
+
+$progress-indicator-bg: $color-gray-300;
+$progress-indicator-active: $color-primary;
+$progress-indicator-complete: $color-success;
+
+// 日历和日期选择器
+$calendar-bg-color: $color-gray-50;
+$calendar-border-color: $color-gray-300;
+$calendar-text-color: $color-gray-900;
+$calendar-selected-bg: $color-primary;
+$calendar-selected-text: #ffffff;
+$calendar-today-bg: lighten($color-primary, 30%);
+$calendar-today-border: $color-primary;
+
+// 图表颜色
+$chart-primary-color: $color-primary;
+$chart-secondary-color: $color-secondary;
+$chart-accent-color: $color-accent;
+$chart-danger-color: $color-danger;
+$chart-background-color: $background-color-default;
+$chart-grid-color: $color-gray-300;
+$chart-text-color: $text-color-primary;
+
+// 滚动条和分隔线颜色
+$scrollbar-track-color: $color-gray-100;
+$scrollbar-thumb-color: $color-gray-400;
+$divider-color: $color-gray-300;
+
+//==========================================================================
+// 其他颜色
+
+

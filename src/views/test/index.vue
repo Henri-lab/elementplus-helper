@@ -54,7 +54,7 @@ const routerLinks = computed(() => {
 
 .components {
     width: 80%;
-    height: auto;
+    height: 700px;
     padding: 10px;
     border: 1px solid red;
     box-shadow: 10px 10px 10px #e0e0e0;

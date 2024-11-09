@@ -1,6 +1,6 @@
 @mixin filter-tree {
   width: auto;
-  height: 960px;
+  height: 96%;
   overflow: scroll;
   @include scrollbar;
   background-color: $bg_color;

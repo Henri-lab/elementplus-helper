@@ -1,11 +1,18 @@
 //@/components/Table/index.vue
+//tooltip
+$table_cell_tooltip_font_size: 14px;
+$table_cell_tooltip_border_radius: 15px;
+$table_cell_tooltip_width: 200px;
+$table_cell_tooltip_height: 120px;
+$table_cell_tooltip_shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.5);
+
 @mixin default-enhanced-table {
   &__add-button,
   &__delete-selected {
     margin-bottom: 15px;
   }
 
-  // 表格行样式 
+  // 表格行样式
   ::v-deep .row-even {
     .el-table__cell {
       background-color: #0d5084 !important;
@@ -16,7 +23,7 @@
       background-color: #217d84 !important;
     }
   }
-  
+
   &__table {
     width: 100%;
     //overflow text
@@ -123,3 +130,4 @@
     // visibility: hidden;
   }
 }
+

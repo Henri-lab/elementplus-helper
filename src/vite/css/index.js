@@ -7,10 +7,14 @@ export const cssOption = {
             additionalData: [
                 '@import "@/assets/scss/_var.scss";',
                 '@import "@/assets/scss/mixin.scss";',
+                '@import "@/assets/scss/color.scss";',
                 '@import "@/assets/scss/layout.scss";',
                 '@import "@/assets/scss/table.scss";',
                 '@import "@/assets/scss/tree.scss";',
                 '@import "@/assets/scss/reset.scss";',
+                '@import "@/assets/scss/theme.scss";',
+                '@import "@/assets/scss/base.scss";',
+                
             ].join('\n')
         },
     },

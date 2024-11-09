@@ -1,24 +1,17 @@
-@import './company.scss';
+@import '../ktStyle.scss';
 #app {
   @include layout-app;
   background-color: $bg_color;
 }
 
-.el-popper.is-dark {
-  background-color: $table_cell_tooltip_bg_color !important;
-  color: $table_cell_tooltip_color;
-  font-size: $table_cell_tooltip_font_size;
-  border-radius: $table_cell_tooltip_border_radius;
-  width: $table_cell_tooltip_width;
-  height: $table_cell_tooltip_height;
-  overflow: scroll;
-  box-shadow: $table_cell_tooltip_shadow;
-}
-.el-popper__arrow {
-  display: none;
+.light-theme {
+  @include theme(light);
 }
 
-/* 全局修改 el-form-item__label 的颜色 */
-.el-form-item__label {
-  color: wheat !important;
+.dark-theme {
+  @include theme(dark);
 }
+
+
+
+
