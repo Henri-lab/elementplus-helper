@@ -14,7 +14,7 @@
 <script setup>
 import { reactive } from 'vue';
 
-
+const formRef = ref(null);
 const props = defineProps({
     description: {
         type: Array,
@@ -119,5 +119,12 @@ const getFieldProps = (item) => {
         return { options: item.options };
     }
     return { placeholder: item.placeholder };
+};
+
+
+const emit=defineEmits(['submit']);
+
+const submitForm = () => {
+  
 };
 </script>

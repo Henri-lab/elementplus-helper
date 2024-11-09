@@ -8,51 +8,11 @@
             welcome testing components!
         </div>
         <div class="test-btns">
-            <router-link class="item" to="/testComponents/Tree">
-                <el-button>
-                    Tree
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/Table">
-                <el-button>
-                    Table
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/TableTargetBasicInfo">
-                <el-button>
-                    Table《目标基本信息》
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/TableSubTargetMaintain">
-                <el-button>
-                    Table《子目标维护》
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/Pagination">
-                <el-button>
-                    Pagination
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/ContextMenu">
-                <el-button>
-                    ContextMenu
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/TreeOrg">
-                <el-button>
-                   TreeOrg
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/Dialog">
-                <el-button>
-                   EditDialog
-                </el-button>
-            </router-link>
-            <router-link class="item" to="/testComponents/Form">
-                <el-button>
-                   Form
-                </el-button>
-            </router-link>
+            <div class="item" v-for="link in routerLinks" :key="link.path">
+                <router-link :to="link.path">
+                    <el-button>{{ link.name }}</el-button>
+                </router-link>
+            </div>
         </div>
         <el-divider>components</el-divider>
         <div class="components">
@@ -63,6 +23,18 @@
 </template>
 
 <script setup>
+import testRoutes from '@/router/testRoutes';
+import { computed } from 'vue';
+
+// 计算属性生成路径
+const routerLinks = computed(() => {
+    return testRoutes
+        .flatMap(route => route.children.map(child => ({
+            path: `${route.path}/${child.path}`,
+            name: child.name,
+        })));
+});
+
 
 </script>
 

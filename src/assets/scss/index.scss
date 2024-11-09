@@ -17,6 +17,10 @@
   display: none;
 }
 
+/* 全局修改 el-form-item__label 的颜色 */
+.el-form-item__label {
+  color: wheat !important; 
+}
 // 树控件
 // .el-tree {
 //   --el-tree-node-hover-bg-color: transparent !important;

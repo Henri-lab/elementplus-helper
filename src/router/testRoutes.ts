@@ -50,6 +50,11 @@ const testRoutes: RouteRecordRaw[] = [
         name: 'Form',
         component: () => import('@/components/Form/index.vue'),
       },
+      {
+        path: 'EnhancdForm',
+        name: 'EnhancdForm',
+        component: () => import('@/components/EnhancedForm/test.vue'),
+      },
     ],
   },
 ];

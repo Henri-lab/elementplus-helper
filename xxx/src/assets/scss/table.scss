@@ -1,0 +1,125 @@
+//@/components/Table/index.vue
+@mixin default-enhanced-table {
+  &__add-button,
+  &__delete-selected {
+    margin-bottom: 15px;
+  }
+
+  // 表格行样式 
+  ::v-deep .row-even {
+    .el-table__cell {
+      background-color: #0d5084 !important;
+    }
+  }
+  ::v-deep .row-odd {
+    .el-table__cell {
+      background-color: #217d84 !important;
+    }
+  }
+  
+  &__table {
+    width: 100%;
+    //overflow text
+    .cell-ellipsis {
+      overflow: scroll;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__operations {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__button--edit {
+    background-color: #409eff;
+    color: #fff;
+    &:hover {
+      background-color: #66b1ff;
+    }
+  }
+
+  &__button--delete {
+    background-color: #f56c6c;
+    color: #fff;
+    &:hover {
+      background-color: #ff7875;
+    }
+  }
+
+  &__dialog {
+    .el-dialog__body {
+      padding: 20px;
+    }
+  }
+
+  &__form {
+    max-width: 500px;
+  }
+
+  &__form-item {
+    margin-bottom: 15px;
+    label {
+      font-weight: bold;
+    }
+  }
+
+  &__input {
+    width: 100%;
+  }
+
+  &__dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+  }
+
+  &__button--cancel {
+    color: #606266;
+  }
+
+  &__button--save {
+    background-color: #409eff;
+    color: #fff;
+  }
+  ::v-deep .el-table__cell {
+    color: $table_cell_color;
+    background-color: $table_cell_bg_color;
+  }
+}
+
+@mixin default-enhanced-pagination {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  //   flex-direction: row-reverse;
+
+  &__total {
+    font-size: 14px;
+    color: #fff;
+  }
+
+  &__size {
+    width: 120px;
+  }
+
+  &__jumper {
+    display: flex;
+    align-items: center;
+    .jumper-input {
+      width: 50px;
+      margin-left: 5px;
+    }
+  }
+  //go to
+  ::v-deep .el-pagination__jump.is-last {
+    display: none;
+    // color: #fff;
+    // visibility: hidden;
+  }
+}
