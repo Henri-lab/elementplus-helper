@@ -1,0 +1,65 @@
+// 发光字体效果
+@mixin glow-text($color: #fff, $glow-color: rgb(8, 13, 84), $intensity: 5px) {
+  color: $color;
+  text-shadow: 0 0 $intensity $glow-color, 0 0 ($intensity * 2) $glow-color,
+    0 0 ($intensity * 3) $glow-color, 0 0 ($intensity * 4) $glow-color;
+}
+
+@mixin strong-glow-text($color: #fff, $glow-color: #ff00ff, $intensity: 5px) {
+  color: $color;
+  text-shadow: 0 0 $intensity $glow-color, 0 0 ($intensity * 2) $glow-color,
+    0 0 ($intensity * 3) $glow-color, 0 0 ($intensity * 4) $glow-color,
+    0 0 ($intensity * 5) $glow-color, 0 0 ($intensity * 6) $glow-color;
+}
+
+// 动态发光效果 Mixin
+@mixin animated-glow-text($color: #fff, $glow-color: #ff0000, $intensity: 5px) {
+  color: $color;
+  text-shadow: 0 0 $intensity $glow-color, 0 0 ($intensity * 2) $glow-color,
+    0 0 ($intensity * 3) $glow-color;
+
+  // 闪烁动画
+  @-webkit-keyframes glow {
+    0%,
+    100% {
+      text-shadow: 0 0 $intensity $glow-color, 0 0 ($intensity * 2) $glow-color,
+        0 0 ($intensity * 3) $glow-color;
+    }
+    50% {
+      text-shadow: 0 0 ($intensity / 2) $glow-color, 0 0 $intensity $glow-color,
+        0 0 ($intensity * 1.5) $glow-color;
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      text-shadow: 0 0 $intensity $glow-color, 0 0 ($intensity * 2) $glow-color,
+        0 0 ($intensity * 3) $glow-color;
+    }
+    50% {
+      text-shadow: 0 0 ($intensity / 2) $glow-color, 0 0 $intensity $glow-color,
+        0 0 ($intensity * 1.5) $glow-color;
+    }
+  }
+
+  -webkit-animation: glow 1.5s infinite alternate;
+  animation: glow 1.5s infinite alternate;
+}
+
+@mixin multi-glow-text(
+  $color: #fff,
+  $colors: (
+    #00f,
+    #0f0,
+    #f00,
+  ),
+  $intensity: 5px
+) {
+  color: $color;
+  text-shadow: 0 0 $intensity nth($colors, 1),
+    0 0 ($intensity * 2) nth($colors, 2), 0 0 ($intensity * 3) nth($colors, 3),
+    0 0 ($intensity * 4) nth($colors, 1), 0 0 ($intensity * 5) nth($colors, 2),
+    0 0 ($intensity * 6) nth($colors, 3);
+}
+

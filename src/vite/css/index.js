@@ -14,7 +14,9 @@ export const cssOption = {
                 '@import "@/assets/scss/reset.scss";',
                 '@import "@/assets/scss/theme.scss";',
                 '@import "@/assets/scss/base.scss";',
-                
+                '@import "@/assets/scss/text.scss";',
+                '@import "@/assets/scss/border.scss";',
+                '@import "@/assets/scss/size.scss";',
             ].join('\n')
         },
     },

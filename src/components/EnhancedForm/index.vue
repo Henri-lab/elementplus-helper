@@ -23,7 +23,7 @@
       </el-steps>
 
       <!-- 可拖拽的动态表单字段 -->
-      <draggable
+      <vue-draggable-next
         v-if="drag"
         v-model="currentStepFields"
         handle=".drag-handle"
@@ -32,8 +32,8 @@
         <el-row :gutter="20">
           <el-col
             v-for="item in currentStepFields"
-            :span="item.span"
             :key="item.field"
+            :span="item.span"
           >
             <el-form-item
               :label="item.label"
@@ -59,7 +59,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-      </draggable>
+      </vue-draggable-next>
       <!-- 或者 -->
       <!-- 动态表单字段 -->
       <el-row v-else :gutter="20">
@@ -88,7 +88,6 @@
             >
               <i class="el-icon-info"></i>
             </el-tooltip>
-            <div class="drag-handle" style="cursor: move">拖动</div>
           </el-form-item>
         </el-col>
       </el-row>
@@ -150,7 +149,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed, watch, onMounted } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import draggable from 'vuedraggable';
+import { VueDraggableNext } from 'vue-draggable-next';
 
 const props = defineProps({
   description: { type: Array<any>, required: true },

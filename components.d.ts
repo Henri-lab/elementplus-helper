@@ -12,6 +12,8 @@ declare module 'vue' {
     CodeEditor: typeof import('./src/components/CodeEditor/index.vue')['default']
     ContextMenu: typeof import('./src/components/ContextMenu/index.vue')['default']
     copy: typeof import('./src/components/ContextMenu/index copy.vue')['default']
+    Demo1: typeof import('./src/components/Draggable/demo1.vue')['default']
+    Demo2: typeof import('./src/components/Draggable/demo2.vue')['default']
     EditDialog: typeof import('./src/components/EditDialog/index.vue')['default']
     Editor: typeof import('./src/components/Editor/index.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']

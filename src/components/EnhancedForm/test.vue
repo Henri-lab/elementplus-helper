@@ -1,6 +1,7 @@
 <template>
-  <div class="test demo" style="background-color:gray">
+  <div class="test demo" style="background-color: gray">
     <EnhancedForm
+      drag
       :description="description"
       :initialData="initialData"
       :steps="steps"
