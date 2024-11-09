@@ -93,7 +93,7 @@
         </el-col>
       </el-row>
       <!-- 动态字段克隆 -->
-      <div v-for="(group, index) in cloneableFields" :key="index">
+      <el-row v-for="(group, index) in cloneableFields" :key="index">
         <el-form-item label="姓名">
           <el-input v-model="group.name"></el-input>
         </el-form-item>
@@ -104,7 +104,7 @@
         <el-button @click="removeFieldGroup(index)" type="danger"
           >删除</el-button
         >
-      </div>
+      </el-row>
 
       <!-- 多步表单导航按钮 -->
       <div v-if="steps.length > 1" class="steps-btns">
@@ -368,7 +368,7 @@ const scrollToFirstError = (errorFields: any[]) => {
   display: flex;
   flex-direction: row;
   justify-content: left;
-  align-items:center;
+  align-items: center;
   gap: 20px;
   border-radius: 4px;
   margin-bottom: 10px;
