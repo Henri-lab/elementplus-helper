@@ -4,7 +4,6 @@
     <br />
     <Draggable
       v-model="items"
-      :animation="300"
       :disabled="isDragDisabled"
       ghost-class="ghost"
       chosen-class="chosen"

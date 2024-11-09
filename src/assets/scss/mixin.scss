@@ -11,6 +11,14 @@
   flex-wrap: $wrap;
 }
 
+@mixin gridbox {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 创建 10 列，每列占据 1fr */
+  grid-template-rows: repeat(10, 1fr); /* 创建 10 行，每行占据 1fr */
+  gap: 10px; /* 网格间距 */
+  padding: 10px;
+}
+
 @mixin scrollbar {
   &::-webkit-scrollbar {
     width: 8px;

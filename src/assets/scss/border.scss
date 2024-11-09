@@ -70,7 +70,7 @@
   }
 }
 
-@mixin animate-glowing-border-scale {
+@mixin animate-glowing-border-scale($s1:1, $s2:1) {
     padding: 10px 20px;
     border-radius: 5px;
     background-color: #000;
@@ -82,13 +82,13 @@
     @keyframes glow {
       0%,
       100% {
-        transform: scale(1);
+        transform: scale($s1);
         box-shadow: 0 0 10px rgba(0, 255, 255, 0.6),
           0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.6),
           0 0 40px rgba(0, 255, 255, 0.6);
       }
       50% {
-        transform: scale(1.01);
+        transform: scale($s2);
         box-shadow: 0 0 5px rgba(0, 255, 255, 0.3),
           0 0 10px rgba(0, 255, 255, 0.3), 0 0 15px rgba(0, 255, 255, 0.3),
           0 0 20px rgba(0, 255, 255, 0.3);
