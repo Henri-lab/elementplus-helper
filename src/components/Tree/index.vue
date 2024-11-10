@@ -1,33 +1,59 @@
 <template>
-    <ContextMenu :targetElement="targetElement" :menuItems="menuOptions"></ContextMenu>
-    <el-input v-model="filterText" style="width: 240px" placeholder="Filter keyword" />
-    <el-tree id="idOfTree" ref="treeRef" auto-expand-parent class="filter-tree" :data="data" :props="defaultProps"
-        default-expand-all :filter-node-method="filterNode" @node-click="getNodeInfo">
-        <template #default="{ node }">
-            <span class="tree-node">
-                <div class="checkbox">
-                    <el-checkbox></el-checkbox>
-                </div>
-                <span class="label">
-                    {{ node.label }}
-                </span>
-                <div class="operations image">
-                    <el-image :src="connection" style="height: 16px;" fit="cover" />
-                    <el-image :src="addone" style="height: 16px;margin: 0 5px;" fit="none" />
-                    <el-image :src="Delete" style="height: 16px;" fit="cover" />
-                </div>
-            </span>
-        </template>
-    </el-tree>
+  <ContextMenu
+    :targetElement="targetElement"
+    :menuItems="menuOptions"
+  ></ContextMenu>
+  <el-input
+    v-model="filterText"
+    style="width: 240px"
+    placeholder="Filter keyword"
+  />
+  <el-tree
+    id="idOfTree"
+    ref="treeRef"
+    auto-expand-parent
+    class="filter-tree"
+    :data="data"
+    :props="defaultProps"
+    :default-expand-all="false"
+    :filter-node-method="filterNode"
+    @node-click="getClickedNodeInfo"
+  >
+    <template #default="{ node }">
+      <span class="tree-node">
+        <div class="checkbox">
+          <el-checkbox
+            v-model="node.data.check"
+            :checked="node.data.check"
+          ></el-checkbox>
+        </div>
+        <span class="label">
+          {{ node.label }}
+        </span>
+        <div class="operations image">
+          <el-image :src="connection" style="height: 16px" fit="cover" />
+          <el-image
+            :src="addone"
+            style="height: 16px; margin: 0 5px"
+            fit="none"
+            @click="handleAddOne(node)"
+          />
+          <el-image :src="Delete" style="height: 16px" fit="cover" />
+        </div>
+      </span>
+    </template>
+  </el-tree>
+  <div class="test" v-draggable v-if="props.test">
+    {{ data }}
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
-import { ElTree } from 'element-plus'
+import { onMounted, ref, watch } from 'vue';
+import { ElTree } from 'element-plus';
+
 //@ts-ignore
-import mockData from '@/mock/tree_node';
-//@ts-ignore
-import ContextMenu from '../ContextMenu/index.vue'
+import ContextMenu from '../ContextMenu/index.vue';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
 //@ts-ignore
@@ -36,133 +62,192 @@ import addone from '@/assets/image/add-one.png';
 import Delete from '@/assets/image/delete.png';
 
 interface Tree {
-    [key: string]: any
+  [key: string]: any;
 }
+
+const props = defineProps({
+  test: {
+    type: Boolean,
+    default: false,
+  },
+  data: {
+    type: Array<any>,
+    default: () => [
+      {
+        label: 'Node 1',
+        children: [
+          {
+            label: 'Node 1-1',
+            children: [
+              {
+                label: 'Node 1-1-1',
+              },
+              {
+                label: 'Node 1-1-2',
+              },
+            ],
+          },
+          {
+            label: 'Node 1-2',
+          },
+          {
+            label: 'Node 1-3',
+          },
+        ],
+      },
+    ],
+  },
+});
 
 const targetElement = ref(null);
-const filterText = ref('')
-const treeRef = ref<InstanceType<typeof ElTree>>()
+const filterText = ref('');
+const treeRef = ref<InstanceType<typeof ElTree>>();
+const dom = treeRef.value;
 
 const defaultProps = {
-    children: 'children',
-    label: 'label',
-}
+  children: 'children',
+  label: 'label',
+};
 
 const menuOptions = [
-    {
-        label: '添加',
-        action: () => {
-            console.log('添加')
-        }
+  {
+    label: '添加',
+    action: () => {
+      console.log('添加');
     },
-    {
-        label: '删除',
-        action: () => {
-            console.log('删除')
-        }
-    }
-]
+  },
+  {
+    label: '删除',
+    action: () => {
+      console.log('删除');
+    },
+  },
+];
 watch(filterText, (val) => {
-    treeRef.value!.filter(val)
-})
+  treeRef.value!.filter(val);
+});
 
 const filterNode = (value: string, data: Tree) => {
-    if (!value) return true
-    return data.label.includes(value)
-}
+  if (!value) return true;
+  return data.label.includes(value);
+};
 
-const data: Tree[] = mockData
+const data = ref<Tree[]>(props.data);
 
-const getNodeInfo = (node: Tree) => {
-    console.log('获取节点信息:', node)
-}
-function sleep(t: number) {
-    return new Promise((resolve) => setTimeout(resolve, t));
-}
-
-
+const clickedNodeLabel = ref('');
+const isClickedNodeLeaf = ref(false);
+const getClickedNodeInfo = (node: Tree) => {
+  clickedNodeLabel.value = node.label;
+  isClickedNodeLeaf.value = !node.children || node.children.length == 0;
+  //   console.log('点击的节点label:', clickedNodeLabel.value);
+  //   console.log('是否是子节点:', isClickedNodeLeaf.value);
+  console.log('点击的节点:', node);
+};
 
 // 递归查找节点
-const findNode = (data: any, nodeId: any) => {
-    for (let node of data) {
-        if (node.id === nodeId) {
-            return node;
-        }
-        if (node.children) {
-            const found = findNode(node.children, nodeId);
-            if (found) {
-                return found;
-            }
-        }
+const findNode = (data: any, nodeId: any): any => {
+  for (let node of data) {
+    if (node.id === nodeId) {
+      return node;
     }
-    return null;
+    if (node.children) {
+      const found = findNode(node.children, nodeId);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+};
+
+const handleAddOne = (node: any) => {
+  if (node.isLeaf) {
+    //click the node leaf
+    console.log('add:node-isLeaf');
+  } else {
+    console.log('add"node-isParent");');
+  }
 };
 
 // 添加子节点
 const addNode = (parentNodeId: any, newNode: any) => {
-    const parentNode = findNode(data, parentNodeId);
-    if (parentNode) {
-        parentNode.children = parentNode.children || [];
-        parentNode.children.push(newNode);
-    } else {
-        console.warn('Parent node not found');
-    }
+  const parentNode = findNode(data, parentNodeId);
+  if (parentNode) {
+    parentNode.children = parentNode.children || [];
+    parentNode.children.push(newNode);
+  } else {
+    console.warn('Parent node not found');
+  }
 };
 
 // 删除节点
-const deleteNode = (nodeId: any, data:any) => {
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].id === nodeId) {
-            data.splice(i, 1);
-            return true;
-        } else if (data[i].children) {
-            const deleted = deleteNode(nodeId, data[i].children);
-            if (deleted) return true;
-        }
+const deleteNode = (nodeId: any, data: any) => {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].id === nodeId) {
+      data.splice(i, 1);
+      return true;
+    } else if (data[i].children) {
+      const deleted = deleteNode(nodeId, data[i].children);
+      if (deleted) return true;
     }
-    return false;
+  }
+  return false;
 };
 
 // 更新节点
 const updateNode = (nodeId: any, updatedProperties: any) => {
-    const node = findNode(data, nodeId);
-    if (node) {
-        Object.assign(node, updatedProperties);
-    } else {
-        console.warn('Node not found');
-    }
+  const node = findNode(data, nodeId);
+  if (node) {
+    Object.assign(node, updatedProperties);
+  } else {
+    console.warn('Node not found');
+  }
 };
 
 // 查找节点
 const searchNode = (nodeId: any) => {
-    return findNode(data, nodeId);
+  return findNode(data, nodeId);
 };
 
 onMounted(async () => {
-    if (treeRef.value) {
-        targetElement.value =
-            treeRef.value.$refs.el$ || document.getElementById('idOfTree');
-    }
-    // console.log(treeRef.value.$refs.el$);
-})
+  //context menu area
+  if (dom) {
+    targetElement.value = (dom.$refs.el$ ||
+      document.getElementById('idOfTree')) as any;
+  }
+  // console.log(treeRef.value.$refs.el$);
+});
 </script>
 
 <style lang="scss" scoped>
 .filter-tree {
-    @include filter-tree;
+  @include filter-tree;
+  .tree-node {
+    @include flexbox;
 
-    .tree-node {
-        @include flexbox;
-
-        .label {
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .operations {
-            background-color: $bg_color;
-        }
+    .label {
+      margin-right: 10px;
+      cursor: pointer;
     }
 
+    .operations {
+      background-color: $bg_color;
+    }
+  }
+}
+
+.test {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  background: wheat;
+  color: black;
+  width: 800px;
+  height: 600px;
+  z-index: 1000;
+  overflow: scroll;
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  @include multicolor-glowing-border;
 }
 </style>

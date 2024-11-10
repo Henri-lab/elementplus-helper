@@ -8,7 +8,7 @@ const testRoutes: RouteRecordRaw[] = [
       {
         path: 'Tree',
         name: 'Tree',
-        component: () => import('@/components/Tree/index.vue'),
+        component: () => import('@/components/Tree/test.vue'),
       },
       {
         path: 'TreeOrg',

@@ -29,7 +29,7 @@ Object.defineProperty(obj, 'myVar', {
 
 // obj.myVar = 100; // Error: This variable has already been set.
 
-const createWriteOnce = (initialValue) => {
+const createWriteOnce = (initialValue:any) => {
     let value = initialValue;
     let isSet = false;
   
