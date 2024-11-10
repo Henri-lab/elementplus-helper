@@ -52,7 +52,7 @@ const publicRoutes: RouteRecordRaw[] = [
               default: () => import('@/layout/display0/index.vue'),
               header: () => import('@/components/Header/index.vue'),
               main: () => import('@/layout/display0/main.vue'),
-              aside: () => import('@/components/Tree/index.vue'),
+              aside: () => import('@/components/Tabs/SysAndTarget.vue'),
               footer: () => import('@/layout/display0/footer.vue'),
             },
             meta: {
