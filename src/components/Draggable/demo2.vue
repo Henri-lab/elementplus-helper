@@ -116,12 +116,13 @@ const onDragEnd2 = (event: any) => {
 }
 
 .task-item {
+  width: 200px;
   padding: 10px;
   margin: 5px 0;
   background-color: #f0f0f0;
-  border: 1px solid #0ff0e1;
+  border: 1px solid #00ffdd;
+  @include box-shadow;
   cursor: grab;
-  width: 200px;
 }
 
 .ghost {

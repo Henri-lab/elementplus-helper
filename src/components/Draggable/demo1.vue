@@ -85,6 +85,7 @@ const onMove = (event: any, originalEvent: any) => {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   border-radius: 4px;
+  @include box-shadow;
 }
 
 /* 拖拽项的基础样式 */
@@ -127,7 +128,7 @@ const onMove = (event: any, originalEvent: any) => {
 
 /* 不可拖拽的元素样式 */
 .no-drag {
-  color: rgb(244, 4, 4);
-  background-color: gray;
+  opacity: 0.5;
+  background-color: #ff6666;
 }
 </style>

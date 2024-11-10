@@ -46,7 +46,33 @@
     0 0 30px rgba(0, 0, 255, 0.6), 0 0 40px rgba(255, 255, 0, 0.6);
 }
 
-@mixin animate-glowing-border {
+@mixin animate-glowing-border(
+  $color0: #000,
+  $color1: rgba(0, 255, 255, 0.6),
+  $color2: rgba(0, 255, 255, 0.3)
+) {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: $color0;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  border: 2px solid transparent;
+  animation: glow 2s infinite alternate;
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 10px $color1, 0 0 20px $color1, 0 0 30px $color1,
+        0 0 40px $color1;
+    }
+    50% {
+      box-shadow: 0 0 5px $color2, 0 0 10px $color2, 0 0 15px $color2,
+        0 0 20px $color2;
+    }
+  }
+}
+
+@mixin animate-glowing-border-scale($s1: 1, $s2: 1) {
   padding: 10px 20px;
   border-radius: 5px;
   background-color: #000;
@@ -58,41 +84,16 @@
   @keyframes glow {
     0%,
     100% {
+      transform: scale($s1);
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.6),
         0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.6),
         0 0 40px rgba(0, 255, 255, 0.6);
     }
     50% {
+      transform: scale($s2);
       box-shadow: 0 0 5px rgba(0, 255, 255, 0.3),
         0 0 10px rgba(0, 255, 255, 0.3), 0 0 15px rgba(0, 255, 255, 0.3),
         0 0 20px rgba(0, 255, 255, 0.3);
     }
   }
 }
-
-@mixin animate-glowing-border-scale($s1:1, $s2:1) {
-    padding: 10px 20px;
-    border-radius: 5px;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    font-size: 16px;
-    border: 2px solid transparent;
-    animation: glow 2s infinite alternate;
-    @keyframes glow {
-      0%,
-      100% {
-        transform: scale($s1);
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.6),
-          0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(0, 255, 255, 0.6),
-          0 0 40px rgba(0, 255, 255, 0.6);
-      }
-      50% {
-        transform: scale($s2);
-        box-shadow: 0 0 5px rgba(0, 255, 255, 0.3),
-          0 0 10px rgba(0, 255, 255, 0.3), 0 0 15px rgba(0, 255, 255, 0.3),
-          0 0 20px rgba(0, 255, 255, 0.3);
-      }
-    }
-  }
-  
