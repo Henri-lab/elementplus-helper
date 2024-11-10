@@ -95,6 +95,50 @@ const props = defineProps({
           },
         ],
       },
+      {
+        label: 'Node 2',
+        children: [
+          {
+            label: 'Node 2-1',
+            children: [
+              {
+                label: 'Node 2-1-1',
+              },
+              {
+                label: 'Node 2-1-2',
+              },
+            ],
+          },
+          {
+            label: 'Node 2-2',
+          },
+          {
+            label: 'Node 2-3',
+          },
+        ],
+      },
+      {
+        label: 'Node 3',
+        children: [
+          {
+            label: 'Node 3-1',
+            children: [
+              {
+                label: 'Node 3-1-1',
+              },
+              {
+                label: 'Node 3-1-2',
+              },
+            ],
+          },
+          {
+            label: 'Node 3-2',
+          },
+          {
+            label: 'Node 3-3',
+          },
+        ],
+      },
     ],
   },
 });

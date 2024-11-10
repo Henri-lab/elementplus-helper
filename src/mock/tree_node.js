@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-const data = Array.from({ length: 2 }).map(() => ({
+const data = Array.from({ length: 3 }).map(() => ({
     id: faker.number.int(),
     check: faker.datatype.boolean(),
     label: faker.commerce.department() + '体系', // Level 1 Node
