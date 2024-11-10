@@ -1,6 +1,8 @@
 import './assets/main.css';
 import './assets/scss/index.scss';
 
+import './assets/ktStyle.scss';
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 

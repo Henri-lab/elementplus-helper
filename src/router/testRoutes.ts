@@ -70,6 +70,11 @@ const testRoutes: RouteRecordRaw[] = [
         name: 'DraggableDemo3',
         component: () => import('@/components/Draggable/demo3.vue'),
       },
+      {
+        path: 'Tabs',
+        name: 'Tabs',
+        component: () => import('@/components/Tabs/test.vue'),
+      },
     ],
   },
 ];
