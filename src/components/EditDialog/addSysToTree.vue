@@ -8,6 +8,7 @@
     :onSubmit="handleFormSubmit"
     @submitted="onFormSubmitted"
     @closed="resetForm"
+    :autoClose="false"
   >
     <template #form>
       <Form ref="myFormRef" :description="description"></Form>
@@ -17,11 +18,11 @@
 
 <script setup>
 import { ElMessage } from 'element-plus';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import EditDialog from './index.vue';
 import Form from '@/components/Form/index.vue';
 import $bus from '@/utils/bus';
-
+const emits = defineEmits();
 // 打开弹窗
 function openDialog() {
   dialogVisible.value = true;
@@ -30,6 +31,7 @@ function openDialog() {
 function closeDialog() {
   dialogVisible.value = false;
 }
+
 $bus.on('Dialog:addSysToTree:open', () => {
   openDialog();
 });
@@ -43,6 +45,10 @@ const myFormRef = ref(null);
 const formData = ref({
   username: '',
   email: '',
+});
+
+onMounted(() => {
+  console.log('addSysToTreeDialog mounted');
 });
 
 // 缓存表单数据
@@ -80,15 +86,21 @@ const description = [
 ];
 
 // 提交表单
+let submitStatus = false;
 async function handleFormSubmit() {
   const overwrite = false;
-  myFormRef.value.openValidate(overwrite);
+  const { status } = await myFormRef.value.openValidate(overwrite);
+  // console.log('form status:', status);
+  formData.value = myFormRef.value.getFormData();
+  if (status == 'submit:success') {
+    closeDialog();
+  }
   // await new Promise((resolve) => setTimeout(resolve, 1000)); // 假设这是一个异步请求
 }
 
 // 表单提交成功回调
 function onFormSubmitted() {
-  console.log('afterGoodSubmit:', 'cacheFormData:', cacheFormData.value);
+  // console.log('afterGoodSubmit:', 'cacheFormData:', cacheFormData.value);
 }
 
 // 关闭时重置表单

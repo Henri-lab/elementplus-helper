@@ -1,5 +1,4 @@
 <template>
-  
   <ContextMenu
     :targetElement="targetElement"
     :menuItems="menuOptions"

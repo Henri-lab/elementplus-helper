@@ -23,6 +23,10 @@
 import { ref, watch } from 'vue';
 
 const props = defineProps({
+  autoClose: {
+    type: Boolean,
+    default: true,
+  },
   visible: {
     type: Boolean,
     default: false,
@@ -71,7 +75,7 @@ async function handleSubmit() {
   try {
     await props.onSubmit();
     emit('submitted'); // 表单提交成功事件
-    closeDialog();
+    props.autoClose && closeDialog();
   } catch (error) {
     console.error(error);
   } finally {

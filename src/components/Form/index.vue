@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { ElMessage, type FormInstance } from 'element-plus';
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { def_description } from './default';
 
 type DescriptionItem = {
@@ -103,24 +103,47 @@ const getFieldProps = (item: DescriptionItem) => {
 function getFormData() {
   return formData;
 }
-function openValidate(overwrite: boolean) {
+
+const status = ref<string>('default');
+async function openValidate(overwrite: boolean) {
   if (!elFormRef.value) return;
   if (!overwrite) {
-    // 不覆盖默认的 validation logic
-    const validCallBack = (valid: boolean) => {
-      if (valid) {
-        console.log('验证成功，提交表单数据:', formData.value);
-        ElMessage.success('验证成功，已提交');
+    //不覆盖默认验证logic
+    return new Promise<{ validate: () => void; status: string }>((resolve) => {
+      const validCallBack = (valid: boolean) => {
+        if (valid) {
+          console.log('验证成功，提交表单数据:', formData.value);
+          ElMessage.success('验证成功，已提交');
+          status.value = 'submit:success';
+        } else {
+          status.value = 'submit:failure';
+          console.log('验证失败，检查输入');
+          ElMessage.error('验证失败，请检查输入');
+        }
+        // 在验证回调完成后返回结果
+        resolve({
+          validate: elFormRef.value!.validate,
+          status: status.value,
+        });
+      };
+      //在异步代码执行时，例如在调用 validate 方法之前，elFormRef.value可能被改变
+      if (elFormRef.value) {
+        elFormRef.value.validate(validCallBack);
       } else {
-        console.log('验证失败，检查输入');
-        ElMessage.error('验证失败，请检查输入');
+        console.error('can not validate of form!');
       }
-    };
-    elFormRef.value.validate(validCallBack);
+    });
   }
-  return elFormRef.value.validate;
+  // 如果 overwrite 为 true，可以直接返回当前的 validate 方法和 status
+  return {
+    validate: elFormRef.value.validate,
+    status: status.value,
+  };
 }
 
+function getStatus() {
+  return status.value;
+}
 function getResetFields() {
   if (!elFormRef.value) return;
   return elFormRef.value.resetFields;
@@ -130,5 +153,6 @@ defineExpose({
   getFormData,
   openValidate,
   getResetFields,
+  getStatus,
 });
 </script>

@@ -35,7 +35,6 @@
       </span>
     </template>
   </el-tree>
-  <DialogAddSysToTree />
   <!-- 自定义右键菜单 -->
   <div
     v-if="contextMenuVisible"
@@ -66,7 +65,6 @@ import Delete from '@/assets/image/delete.png';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
-import DialogAddSysToTree from '@/components/EditDialog/addSysToTree.vue';
 
 interface Tree {
   id?: number;
