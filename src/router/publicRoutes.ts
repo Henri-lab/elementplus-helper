@@ -95,12 +95,12 @@ const publicRoutes: RouteRecordRaw[] = [
             components: {
               default: () => import('@/layout/display1/index.vue'),
               header: () => import('@/components/Header/index.vue'),
-              main_h: () => import('@/layout/display1/main.vue'),
+              // main_h: () => import('@/layout/display1/main.vue'),
               main_m: () => import('@/components/Tree/TreeOrg.vue'),
               main_f: () =>
                 import('@/components/Table/example/TargetAnalyse.vue'),
               aside: () => import('@/components/Tabs/example/SysAndTarget.vue'),
-              footer: () => import('@/layout/display1/footer.vue'),
+              // footer: () => import('@/layout/display1/footer.vue'),
             },
             meta: {
               title: '页面1',
