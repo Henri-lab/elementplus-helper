@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" ref="formRef">
+  <el-form :model="formData" ref="elFormRef">
     <el-row :gutter="20">
       <el-col v-for="item in description" :span="item.span" :key="item.field">
         <el-form-item
@@ -41,112 +41,24 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive } from 'vue';
+import { def_description } from './default';
 
-const formRef = ref(null);
+const elFormRef = ref(null);
 const props = defineProps({
-  data: {
-    type: Object,
-    default: {},
-  },
   description: {
     type: Array,
-    default: () => [
-      {
-        label: '用户名',
-        field: 'username',
-        span: 12,
-        type: 'input',
-        placeholder: '请输入用户名',
-        style: { width: '100%', height: '40px', backgroundColor: '#f0f0f0' },
-        rules: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-      },
-      {
-        label: '邮箱',
-        field: 'email',
-        span: 12,
-        type: 'input',
-        placeholder: '请输入邮箱地址',
-        style: { width: '100%', height: '40px', color: 'blue' },
-        rules: [
-          { required: true, message: '邮箱不能为空', trigger: 'blur' },
-          { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' },
-        ],
-      },
-      {
-        label: '性别',
-        field: 'gender',
-        span: 24,
-        type: 'select',
-        placeholder: '请选择性别',
-        style: { width: '200px' },
-        options: [
-          { label: '男', value: 'male' },
-          { label: '女', value: 'female' },
-          { label: '其他', value: 'other' },
-        ],
-        rules: [{ required: true, message: '请选择性别', trigger: 'change' }],
-      },
-      {
-        label: '爱好',
-        field: 'hobbies',
-        span: 24,
-        type: 'checkbox',
-        style: { margin: '10px 0', color: 'red' },
-        options: [
-          { label: '阅读', value: 'reading' },
-          { label: '旅行', value: 'traveling' },
-          { label: '运动', value: 'sports' },
-        ],
-        rules: [
-          { required: true, message: '请选择至少一个爱好', trigger: 'change' },
-        ],
-      },
-      {
-        label: '个人简介',
-        field: 'bio',
-        span: 24,
-        type: 'textarea',
-        placeholder: '请输入个人简介',
-        style: { width: '100%', height: '100px', backgroundColor: '#f9f9f9' },
-        rules: [
-          { required: true, message: '个人简介不能为空', trigger: 'blur' },
-        ],
-      },
-      {
-        label: '生日',
-        field: 'birthdate',
-        span: 12,
-        type: 'date-picker',
-        placeholder: '请选择生日',
-        style: { width: '200px' },
-        rules: [{ required: true, message: '请选择生日', trigger: 'change' }],
-      },
-      {
-        label: '城市',
-        field: 'city',
-        span: 12,
-        type: 'select',
-        placeholder: '请选择城市',
-        style: { width: '100%' },
-        options: [
-          { label: '北京', value: 'beijing' },
-          { label: '上海', value: 'shanghai' },
-          { label: '广州', value: 'guangzhou' },
-          { label: '深圳', value: 'shenzhen' },
-        ],
-      },
-    ],
+    default: () => def_description,
   },
 });
-const description = props.description;
-const formData = reactive(props.data);
 
-// 初始化 `formData` 的字段
+const description = reactive(props.description);
+
+// 初始化 `formData` 对象，用 `field` 作为键
+const formData = reactive({});
 description.forEach((item) => {
-  formData[item.field] = item.type === 'checkbox' ? [] : '';
+  formData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
 });
-
 // 根据表单项类型返回对应的组件
 const getComponentType = (type) => {
   switch (type) {
@@ -175,4 +87,22 @@ const getFieldProps = (item) => {
   }
   return props;
 };
+
+function getFormData() {
+  return formData;
+}
+function getValidate(){
+  return elFormRef.value.validate;
+}
+
+function getResetFields(){
+  return elFormRef.value.resetFields;
+}
+
+
+defineExpose({
+  getFormData,
+  getValidate,
+  getResetFields,
+});
 </script>

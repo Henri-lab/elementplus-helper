@@ -3,19 +3,21 @@
   <EditDialog
     v-model:visible="dialogVisible"
     title="新建目标体系"
+    submitButtonText="提交"
+    cancelButtonText="取消"
     :onSubmit="handleFormSubmit"
     @submitted="onFormSubmitted"
     @closed="resetForm"
   >
     <template #form>
-      <Form ref="formRef" :description="description"></Form>
+      <Form ref="myFormRef" :description="description"></Form>
     </template>
   </EditDialog>
 </template>
 
 <script setup>
 import { ElMessage } from 'element-plus';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import EditDialog from './index.vue';
 import Form from '@/components/Form/index.vue';
 import $bus from '@/utils/bus';
@@ -37,11 +39,14 @@ $bus.on('Dialog:addSysToTree:close', () => {
 });
 
 const dialogVisible = ref(false);
-const formRef = ref(null);
+const myFormRef = ref(null);
 const formData = ref({
   username: '',
   email: '',
 });
+
+// 缓存表单数据
+const cacheFormData = computed(() => formData.value);
 
 const description = [
   {
@@ -60,32 +65,45 @@ const description = [
   {
     label: '备注',
     field: 'note',
-    span: 24, // 表单字段占用的栅格宽度
-    type: 'textarea', // 表单类型：可以是 'input', 'select', 'checkbox', 'radio', 等
+    span: 24,
+    type: 'textarea',
     placeholder: '请输入备注',
     style: {
-      width: '500px',
-      height: '200px',
+      width: '94%',
+      height: '100%',
       position: 'absolute',
       top: '10%',
       left: '3.7%',
     },
+    rules: [{ required: true, message: '备注不能为空', trigger: 'blur' }],
   },
 ];
 
 // 提交表单
 async function handleFormSubmit() {
-  await formRef.value.validate();
-  // 假设这是一个异步请求
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  console.log('表单提交数据:', formData.value);
+  formData.value = myFormRef.value.getFormData();
+  const elFormValidate = myFormRef.value.getValidate();
+  // await new Promise((resolve) => setTimeout(resolve, 1000)); // 假设这是一个异步请求
+  elFormValidate((valid) => {
+    if (valid) {
+      console.log('验证成功，提交表单数据:', formData.value);
+      ElMessage.success('验证成功，已提交');
+    } else {
+      console.log('验证失败，检查输入');
+      ElMessage.error('验证失败，请检查输入');
+      return false;
+    }
+  });
 }
 
 // 表单提交成功回调
 function onFormSubmitted() {
-  ElMessage.success('表单提交成功');
+  console.log('cacheFormData:',cacheFormData.value);
 }
 
 // 关闭时重置表单
-function resetForm() {}
+function resetForm() {
+  const reset = myFormRef.value.getResetFields();
+  reset();
+}
 </script>
