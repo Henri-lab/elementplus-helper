@@ -1,5 +1,5 @@
 <template>
-  <el-button @click="openDialog">编辑数据</el-button>
+  <el-button @click="openDialog">打开对话</el-button>
 
   <!-- 自定义表单弹窗 -->
   <EditDialog

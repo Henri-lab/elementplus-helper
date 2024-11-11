@@ -168,7 +168,7 @@ const props = defineProps({
 });
 
 const targetElement = ref(null);
-const filterText = ref('');
+const filterText = ref('tree');
 const treeRef = ref<InstanceType<typeof ElTree>>();
 const thisTree = treeRef;
 async function setContextMenuAeraById(id: string) {
@@ -211,9 +211,14 @@ const context = ref<any>({});
 const getClickedNodeInfo = (node: Tree) => {
   clickedNodeLabel.value = node.label;
   isClickedNodeLeaf.value = !node.children || node.children.length == 0;
-  //   console.log('点击的节点label:', clickedNodeLabel.value);
-  //   console.log('是否是子节点:', isClickedNodeLeaf.value);
-  console.log('点击的节点:', node);
+  // console.log('点击的节点label:', clickedNodeLabel.value);
+  // console.log('是否是子节点:', isClickedNodeLeaf.value);
+  // console.log('点击的节点:', node);
+  context.value.curNode = node;
+};
+
+const getClickedNodeInfo2 = (node: Tree) => {
+  // console.log('点击的节点:', node);
   context.value.curNode = node;
 };
 

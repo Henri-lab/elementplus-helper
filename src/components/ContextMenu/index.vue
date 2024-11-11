@@ -13,12 +13,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 
 const props = defineProps({
   menuItems: {
-    type: Array,
+    type: Array<any>,
     default: () => [
       { label: '删除', action: () => console.log('delete') },
       { label: '编辑', action: () => console.log('edit') },
@@ -48,16 +48,33 @@ const contextMenuStyle = ref({
   left: '0px',
 });
 const targetRef = ref(null);
+const curNode = ref({});
+watch(
+  () => props.context,
+  (ctx) => {
+    // console.log('contextmenu:curNode:', ctx.curNode);
+    curNode.value = ctx.curNode;
+  },
+  { deep: true }
+);
+type node_infos = {
+  curNodeRef: any;
+};
+const node_infos: node_infos = {
+  curNodeRef: curNode,
+};
 
-function handleMenuItemClick(action) {
-  action({
-    curNodeRef: curNode,
-  });
+function handleMenuItemClick(action: () => void) {
+  action();
   menuVisible.value = false;
 }
 
 // 右键点击事件处理
-const handleClickRight = (event) => {
+const handleClickRight = (event: {
+  preventDefault: () => void;
+  clientX: number;
+  clientY: number;
+}) => {
   console.log(event, 'sfsfs');
   event.preventDefault();
 
@@ -84,15 +101,18 @@ function bindContextMenu() {
     console.log('contextmenu is now globally bound');
   } else {
     // 如果 targetElement 是字符串，按选择器查询元素
+    //@ts-ignore
     targetRef.value =
       typeof props.targetElement === 'string'
         ? document.getElementById(props.targetElement)
         : props.targetElement;
 
     if (targetRef.value) {
+      //@ts-ignore
       targetRef.value.addEventListener('contextmenu', handleClickRight);
       console.log(
         'contextmenu is now bound to element:',
+        //@ts-ignore
         targetRef.value.id || targetRef.value
       );
     } else {
@@ -107,9 +127,12 @@ function unbindContextMenu() {
     document.removeEventListener('contextmenu', handleClickRight);
     console.log('contextmenu is now unbound globally');
   } else if (targetRef.value) {
+    //@ts-ignore
     targetRef.value.removeEventListener('contextmenu', handleClickRight);
+
     console.log(
       'contextmenu is now unbound from element:',
+      //@ts-ignore
       targetRef.value.id || targetRef.value
     );
   }
@@ -122,16 +145,6 @@ watch(
     unbindContextMenu();
     bindContextMenu();
   }
-);
-
-const curNode = ref({});
-watch(
-  () => props.context,
-  (ctx) => {
-    // console.log('contextmenu:curNode:', ctx.curNode);
-    curNode.value = ctx.curNode;
-  },
-  { deep: true }
 );
 
 onMounted(() => {

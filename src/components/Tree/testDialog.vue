@@ -35,7 +35,7 @@
       </span>
     </template>
   </el-tree>
-
+  <DialogAddSysToTree />
   <!-- 自定义右键菜单 -->
   <div
     v-if="contextMenuVisible"
@@ -65,6 +65,8 @@ import addone from '@/assets/image/add-one.png';
 import Delete from '@/assets/image/delete.png';
 //@ts-ignore
 import $bus from '@/utils/bus';
+//@ts-ignore
+import DialogAddSysToTree from '@/components/EditDialog/addSysToTree.vue';
 
 interface Tree {
   id?: number;
@@ -187,7 +189,7 @@ const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   // } else {
   //   console.warn('Parent node not found');
   // }
-  
+
   $bus.emit('Dialog:addSysToTree:open');
 };
 

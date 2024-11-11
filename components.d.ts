@@ -74,6 +74,8 @@ declare module 'vue' {
     Tabs: typeof import('./src/components/Tabs/index.vue')['default']
     TargetBasicInfo: typeof import('./src/components/Table/TargetBasicInfo.vue')['default']
     Test: typeof import('./src/components/EditDialog/test.vue')['default']
+    Test2: typeof import('./src/components/Tree/test2.vue')['default']
+    TestDialog: typeof import('./src/components/Tree/testDialog.vue')['default']
     TestStyle: typeof import('./src/components/Tabs/testStyle.vue')['default']
     ThematicMap: typeof import('./src/components/Table/ThematicMap.vue')['default']
     Tree: typeof import('./src/components/Tree/index.vue')['default']

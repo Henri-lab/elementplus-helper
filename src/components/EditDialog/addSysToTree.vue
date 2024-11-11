@@ -1,6 +1,4 @@
 <template>
-  <el-button @click="openDialog">编辑数据</el-button>
-
   <!-- 自定义表单弹窗 -->
   <EditDialog
     v-model:visible="dialogVisible"
@@ -10,7 +8,7 @@
     @closed="resetForm"
   >
     <template #form>
-      <Form></Form>
+      <Form ref="formRef" :description="description"></Form>
     </template>
   </EditDialog>
 </template>
@@ -22,12 +20,20 @@ import EditDialog from './index.vue';
 import Form from '@/components/Form/index.vue';
 import $bus from '@/utils/bus';
 
-$bus.on('Dialog:addSysToTree:open', () => {
+// 打开弹窗
+function openDialog() {
   dialogVisible.value = true;
+}
+// 关闭弹窗
+function closeDialog() {
+  dialogVisible.value = false;
+}
+$bus.on('Dialog:addSysToTree:open', () => {
+  openDialog();
 });
 
 $bus.on('Dialog:addSysToTree:close', () => {
-  dialogVisible.value = false;
+  closeDialog();
 });
 
 const dialogVisible = ref(false);
@@ -37,15 +43,29 @@ const formData = ref({
   email: '',
 });
 
-const rules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
-};
-
-// 打开弹窗
-function openDialog() {
-  dialogVisible.value = true;
-}
+const description = [
+  {
+    label: '用户名',
+    field: 'username',
+    span: 24, // 表单字段占用的栅格宽度
+    type: 'input', // 表单类型：可以是 'input', 'select', 'checkbox', 'radio', 等
+    placeholder: '请输入用户名',
+    rules: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
+  },
+  {
+    label: '目标体系',
+    field: 'city',
+    span: 12,
+    type: 'select',
+    placeholder: '请选择城市',
+    options: [
+      { label: '北京', value: 'beijing' },
+      { label: '上海', value: 'shanghai' },
+      { label: '广州', value: 'guangzhou' },
+      { label: '深圳', value: 'shenzhen' },
+    ],
+  },
+];
 
 // 提交表单
 async function handleFormSubmit() {
@@ -62,6 +82,6 @@ function onFormSubmitted() {
 
 // 关闭时重置表单
 function resetForm() {
-  formRef.value.resetFields();
+  
 }
 </script>
