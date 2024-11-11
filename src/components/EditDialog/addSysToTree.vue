@@ -81,24 +81,14 @@ const description = [
 
 // 提交表单
 async function handleFormSubmit() {
-  formData.value = myFormRef.value.getFormData();
-  const elFormValidate = myFormRef.value.getValidate();
+  const overwrite = false;
+  myFormRef.value.openValidate(overwrite);
   // await new Promise((resolve) => setTimeout(resolve, 1000)); // 假设这是一个异步请求
-  elFormValidate((valid) => {
-    if (valid) {
-      console.log('验证成功，提交表单数据:', formData.value);
-      ElMessage.success('验证成功，已提交');
-    } else {
-      console.log('验证失败，检查输入');
-      ElMessage.error('验证失败，请检查输入');
-      return false;
-    }
-  });
 }
 
 // 表单提交成功回调
 function onFormSubmitted() {
-  console.log('cacheFormData:',cacheFormData.value);
+  console.log('afterGoodSubmit:', 'cacheFormData:', cacheFormData.value);
 }
 
 // 关闭时重置表单
