@@ -6,18 +6,18 @@
 
 <script setup lang="ts">
 //@ts-ignore
-import Tabs from './index.vue';
+import Tabs from '../index.vue';
 //@ts-ignore
-import SysTree from '@/components/Tree/Sys.vue';
+import SysTree from '@/components/Tree/example/Sys.vue';
 //@ts-ignore
-import TargetTree from '@/components/Tree/SingleTarget.vue';
+import TargetTree from '@/components/Tree/example/SingleTarget.vue';
 import { markRaw } from 'vue';
 
 const tabs = [
   {
     label: '目标体系',
     name: 'first',
-    component: markRaw(SysTree),//important!
+    component: markRaw(SysTree), //important!
     icon: 'el-icon-?',
     content: 'content',
   },

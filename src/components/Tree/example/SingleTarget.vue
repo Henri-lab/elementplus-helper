@@ -16,9 +16,9 @@ import { onMounted, ref, watch } from 'vue';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
-import Tree from './index.vue';
+import Tree from '../index.vue';
 //@ts-ignore
-import mockData from '@/mock/tree_node';
+import { noChildrenData as mockData } from '@/mock/tree_node';
 
 const isTest = ref(false);
 const isShowTestBtn = ref(false);

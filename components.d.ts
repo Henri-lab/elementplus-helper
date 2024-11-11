@@ -7,7 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    AddSysToTree: typeof import('./src/components/EditDialog/addSysToTree.vue')['default']
+    AddSysToTree: typeof import('./src/components/EditDialog/example/addSysToTree.vue')['default']
     Base: typeof import('./src/components/DataAndTime/base.vue')['default']
     Button: typeof import('./src/components/EditDialog/button/index.vue')['default']
     'Button.vue': typeof import('./src/components/EditDialog/button.vue/index.vue')['default']
@@ -65,14 +65,14 @@ declare module 'vue' {
     Pagination: typeof import('./src/components/Pagination/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SingleTarget: typeof import('./src/components/Tree/SingleTarget.vue')['default']
-    SubTargetMaintain: typeof import('./src/components/Table/SubTargetMaintain.vue')['default']
+    SingleTarget: typeof import('./src/components/Tree/example/SingleTarget.vue')['default']
+    SubTargetMaintain: typeof import('./src/components/Table/example/SubTargetMaintain.vue')['default']
     SubTargetMantain: typeof import('./src/components/Table/SubTargetMantain.vue')['default']
-    Sys: typeof import('./src/components/Tree/Sys.vue')['default']
-    SysAndTarget: typeof import('./src/components/Tabs/SysAndTarget.vue')['default']
+    Sys: typeof import('./src/components/Tree/example/Sys.vue')['default']
+    SysAndTarget: typeof import('./src/components/Tabs/example/SysAndTarget.vue')['default']
     Table: typeof import('./src/components/Table/index.vue')['default']
     Tabs: typeof import('./src/components/Tabs/index.vue')['default']
-    TargetBasicInfo: typeof import('./src/components/Table/TargetBasicInfo.vue')['default']
+    TargetBasicInfo: typeof import('./src/components/Table/example/TargetBasicInfo.vue')['default']
     Test: typeof import('./src/components/EditDialog/test.vue')['default']
     Test2: typeof import('./src/components/Tree/test2.vue')['default']
     TestDialog: typeof import('./src/components/Tree/testDialog.vue')['default']

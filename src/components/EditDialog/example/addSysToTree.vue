@@ -11,7 +11,7 @@
     :autoClose="false"
   >
     <template #form>
-      <Form ref="myFormRef" :description="description"></Form>
+      <MyForm ref="myFormRef" :description="description"></MyForm>
     </template>
   </EditDialog>
 </template>
@@ -19,8 +19,8 @@
 <script setup>
 import { ElMessage } from 'element-plus';
 import { computed, onMounted, ref } from 'vue';
-import EditDialog from './index.vue';
-import Form from '@/components/Form/index.vue';
+import EditDialog from '../index.vue';
+import MyForm from '@/components/Form/index.vue';
 import $bus from '@/utils/bus';
 const emits = defineEmits();
 // 打开弹窗

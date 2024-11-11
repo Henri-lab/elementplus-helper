@@ -22,3 +22,10 @@ const data = Array.from({ length: 3 }).map(() => ({
 }));
 
 export default data;
+
+
+export const noChildrenData = Array.from({ length: 50}).map(() => ({
+    id: faker.number.int(),
+    check: faker.datatype.boolean(),
+    label: faker.commerce.department() + '目标', 
+}));

@@ -8,26 +8,29 @@
 //@ts-ignore
 import Tabs from './index.vue';
 //@ts-ignore
-import Tree from '@/components/Tree/index.vue';
+import Tree1 from '@/components/Tree/example/Sys.vue';
+//@ts-ignore
+import Tree2 from '@/components/Tree/example/SingleTarget.vue';
+import { markRaw } from 'vue';
 
 const tabs = [
   {
     label: '目标体系',
     name: 'first',
-    component: Tree,
+    component: markRaw(Tree1),
     icon: 'el-icon-?',
     content: 'content',
   },
   {
     label: '单目标',
     name: 'second',
-    component: Tree,
+    component: markRaw(Tree2),
     icon: 'el-icon-?',
     content: 'content',
   },
 ];
 
-const helpInfo = ()=> {
+const helpInfo = () => {
   if (0) {
     return {
       enabled: true,
@@ -36,21 +39,21 @@ const helpInfo = ()=> {
       },
       type: 'error',
     };
-  }else if (1) {
+  } else if (1) {
     return {
       enabled: true,
       createInfo: (name: string) => {
         return `切换至${name}成功`;
       },
-      type:'success',
+      type: 'success',
     };
-  }else {
+  } else {
     return {
       enabled: true,
       createInfo: (name: string) => {
         return `切换至${name}成功`;
       },
-      type:'info',
+      type: 'info',
     };
   }
 };
@@ -58,6 +61,7 @@ const helpInfo = ()=> {
 
 <style lang="scss" scoped>
 .test {
-  height: 1000px;
+  background: rgba(0, 0, 0, 0.429);
+  height: 100%;
 }
 </style>

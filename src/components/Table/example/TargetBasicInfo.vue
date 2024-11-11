@@ -1,15 +1,8 @@
 <template>
-    <div class="table-subtarget-maintain">
-        <EnhancedTable :columns="columns" :initialData="paginatedData" :edit="false" :isAddBtn="false"
-            :isDeleteSelected="false">
-            <template #operation="scope">
-                <el-button @click="handleCustomBtn(scope.row)" size="small">
-                    关联图片
-                </el-button>
-                <el-button @click="handleCustomBtn(scope.row)" size="small">
-                    导出
-                </el-button>
-            </template>
+    <div class="table-target-basic-info">
+        <ToolBarOfTable></ToolBarOfTable>
+
+        <EnhancedTable :columns="columns" :initialData="paginatedData" :isAddBtn="false" :isDeleteSelected="false">
         </EnhancedTable>
         <br>
 
@@ -23,19 +16,21 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import EnhancedTable from './index.vue';
 //@ts-ignore
-import { subTargetMaintainData } from '@/mock/table_test';
+import ToolBarOfTable from '@/components/ToolBar/OfTable.vue'
+import EnhancedTable from '../index.vue';
 //@ts-ignore
-import subTargetMaintainColums from './config/subTargetMaintain'
-import EnhancedPagination from '../Pagination/index.vue';
+import { targetBasicInfoData } from '@/mock/table_test';
+//@ts-ignore
+import targetBasicInfoColumns from '../config/targetBasicInfo'
+import EnhancedPagination from '../../Pagination/index.vue';
 
 
 export default defineComponent({
-    components: { EnhancedTable, EnhancedPagination },
+    components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
     setup() {
-        const columns = subTargetMaintainColums;
-        const data = subTargetMaintainData;// 模拟数据
+        const columns = targetBasicInfoColumns;
+        const data = targetBasicInfoData;// 模拟数据
 
         const handleCustomBtn = (row: any) => {
             console.log('custom button clicked:', row);

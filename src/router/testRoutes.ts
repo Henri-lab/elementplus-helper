@@ -28,12 +28,12 @@ const testRoutes: RouteRecordRaw[] = [
       {
         path: 'TableTargetBasicInfo',
         name: 'targetBasicInfo',
-        component: () => import('@/components/Table/TargetBasicInfo.vue'),
+        component: () => import('@/components/Table/example/TargetBasicInfo.vue'),
       },
       {
         path: 'TableSubTargetMaintain',
         name: 'subTargetMaintain',
-        component: () => import('@/components/Table/SubTargetMaintain.vue'),
+        component: () => import('@/components/Table/example/SubTargetMaintain.vue'),
       },
       {
         path: 'Pagination',
