@@ -51,8 +51,8 @@ const publicRoutes: RouteRecordRaw[] = [
             components: {
               default: () => import('@/layout/display0/index.vue'),
               header: () => import('@/components/Header/index.vue'),
-              main: () => import('@/layout/display0/main.vue'),
-              aside: () => import('@/components/Tabs/SysAndTarget.vue'),
+              main: () => import('@/components/Tabs/example/BInfoAndImage.vue'),
+              aside: () => import('@/components/Tabs/example/SysAndTarget.vue'),
               footer: () => import('@/layout/display0/footer.vue'),
             },
             meta: {
@@ -74,7 +74,7 @@ const publicRoutes: RouteRecordRaw[] = [
         children: [
           {
             path: '@targetValueAnalyse',
-            name: 'display1',
+            name: '@targetValueAnalyse',
             components: {
               default: () => import('@/layout/display1/index.vue'),
               header: () => import('@/layout/display1/header.vue'),
@@ -91,14 +91,15 @@ const publicRoutes: RouteRecordRaw[] = [
           },
           {
             path: 'targetValueAnalyse',
-            name: 'display1',
+            name: 'targetValueAnalyse',
             components: {
               default: () => import('@/layout/display1/index.vue'),
               header: () => import('@/components/Header/index.vue'),
               main_h: () => import('@/layout/display1/main.vue'),
-              main_m: () => import('@/layout/display1/main.vue'),
-              main_f: () => import('@/layout/display1/main.vue'),
-              aside: () => import('@/layout/display1/aside.vue'),
+              main_m: () => import('@/components/Tree/TreeOrg.vue'),
+              main_f: () =>
+                import('@/components/Table/example/TargetAnalyse.vue'),
+              aside: () => import('@/components/Tabs/example/SysAndTarget.vue'),
               footer: () => import('@/layout/display1/footer.vue'),
             },
             meta: {

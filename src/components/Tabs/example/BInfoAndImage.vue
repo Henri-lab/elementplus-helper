@@ -1,10 +1,10 @@
 <template>
-  <div class="tabs-sys-and-singleTarget">
+  <div class="tabs-basicInfos-and-images">
     <Tabs
       :tabs="tabs"
       :isGuard="false"
       :isControlPanel="false"
-      initName="target-sys"
+      initName="basic-infos"
     ></Tabs>
   </div>
 </template>
@@ -13,22 +13,22 @@
 //@ts-ignore
 import Tabs from '../index.vue';
 //@ts-ignore
-import C1 from '@/components/Tree/example/Sys.vue';
+import C1 from '@/components/Table/example/TargetBasicInfo.vue';
 //@ts-ignore
-import C2 from '@/components/Tree/example/SingleTarget.vue';
+import C2 from '@/components/Table/example/ThemeImages.vue';
 import { markRaw } from 'vue';
 
 const tabs = [
   {
-    label: '目标体系',
-    name: 'target-sys',
+    label: '基本信息',
+    name: 'basic-infos', //activie name needs it;
     component: markRaw(C1), //important!
     icon: 'el-icon-?',
     content: 'content',
   },
   {
-    label: '单目标',
-    name: 'single-target',
+    label: '专题图',
+    name: 'theme-images',
     component: markRaw(C2),
     icon: 'el-icon-?',
     content: 'content',

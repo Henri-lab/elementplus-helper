@@ -15,14 +15,14 @@ $h_aside: $height - $h_header;
 @mixin common-header($h: 100px, $L: 20%, $R: 20%, $M: 60%) {
   width: 100%;
   height: $h;
-  background-color: red;
+  // background-color: red;
   background: url(../image/header.png) repeat center;
   @include flexbox(space-between, center, row, wrap);
 
   .left {
     width: $L;
     height: $h;
-    background-color: blue;
+    // background-color: blue;
     opacity: 60%;
     @include flexbox(space-between, center, row, wrap);
   }
@@ -30,7 +30,7 @@ $h_aside: $height - $h_header;
   .right {
     width: $R;
     height: $h;
-    background-color: green;
+    // background-color: green;
     opacity: 60%;
     @include flexbox(space-between, center, row, wrap);
   }

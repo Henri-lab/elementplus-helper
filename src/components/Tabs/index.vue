@@ -32,7 +32,7 @@
     </el-tabs>
 
     <!-- 控制面板 -->
-    <div class="control-panel">
+    <div class="control-panel" v-if="isControlPanel">
       <el-checkbox v-model="stretchTabs">Stretch Tabs</el-checkbox>
       <el-input v-model="newTabName" placeholder="New Tab Name" />
       <el-button type="primary" @click="addTab">Add Tab</el-button>
@@ -45,6 +45,7 @@
 import { ref, reactive, watch, type Component, type PropType } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import type { TabsPaneContext } from 'element-plus';
+import { def_tabsOption } from './default';
 
 type tabsItem = {
   label: string;
@@ -60,6 +61,14 @@ type helpInfo = {
   type: 'info' | 'warning' | 'error' | 'success';
 };
 const props = defineProps({
+  initName: {
+    type: String,
+    default: 'first',
+  },
+  isControlPanel: {
+    type: Boolean,
+    default: true,
+  },
   isGuard: {
     type: Boolean,
     default: true,
@@ -74,40 +83,11 @@ const props = defineProps({
   },
   tabs: {
     type: Array<tabsItem>,
-    default: () => [
-      {
-        label: 'User',
-        name: 'first',
-        component: 'UserComponent',
-        icon: 'el-icon-user',
-        content: 'User content',
-      },
-      {
-        label: 'Config',
-        name: 'second',
-        component: 'ConfigComponent',
-        icon: 'el-icon-setting',
-        content: 'Config content',
-      },
-      {
-        label: 'Role',
-        name: 'third',
-        component: 'RoleComponent',
-        icon: 'el-icon-role',
-        content: 'Role content',
-      },
-      {
-        label: 'Task',
-        name: 'fourth',
-        component: 'TaskComponent',
-        icon: 'el-icon-task',
-        content: 'Task content',
-      },
-    ],
+    default: () => def_tabsOption,
   },
 });
 // 定义 Tab 数据和选项
-const activeName = ref('first');
+const activeName = ref(props.initName);
 const stretchTabs = ref(false);
 const newTabName = ref('New Tab');
 const tabs: Array<tabsItem> = reactive(props.tabs);
@@ -167,11 +147,10 @@ const beforeLeave = async (newTabName: any) => {
 .enhanced-tabs {
   height: 100% !important;
   overflow: scroll;
-//   background: url('@/assets/image/earthDark.png') no-repeat;
+  //   background: url('@/assets/image/earthDark.png') no-repeat;
   background-size: cover;
   position: relative;
   .control-panel {
-   
   }
 }
 </style>

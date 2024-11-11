@@ -6,13 +6,13 @@ const testRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/test/index.vue'),
     children: [
       {
-        path: 'Tree',
-        name: 'Tree',
+        path: 'TreeWithCtxmenu',
+        name: 'TreeWithCtxmenu',
         component: () => import('@/components/Tree/test.vue'),
       },
       {
-        path: 'Tree2',
-        name: 'Tree2',
+        path: 'TreeDialog',
+        name: 'TreeDialog',
         component: () => import('@/components/Tree/testDialog.vue'),
       },
       {

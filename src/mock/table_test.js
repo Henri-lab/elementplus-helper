@@ -26,7 +26,7 @@ const data = Array.from({ length: 5 }).map(() => ({
 export default data;
 
 
-export const targetBasicInfoData = Array.from({ length: 500 }).map(() => ({
+export const targetBasicInfoData = Array.from({ length: 50 }).map(() => ({
   name: faker.location.country(), // 随机生成公司名称
   alias: faker.location.country(), // 随机生成公司别名
   diplomaticName: faker.word.adjective(), // 随机生成外交名称
@@ -35,7 +35,7 @@ export const targetBasicInfoData = Array.from({ length: 500 }).map(() => ({
   type: faker.helpers.arrayElement(['军事', '政治', '文化', '商业', '医疗', '教育', '其他']) // 随机生成目标类型
 }))
 
-export const subTargetMaintainData = Array.from(Array.from({ length: 500 })).map(() => ({
+export const subTargetMaintainData = Array.from(Array.from({ length: 50 })).map(() => ({
   name: faker.lorem.word(5), // 随机生成子目标名称
   affi: faker.lorem.word(5), // 随机生成所属目标
   type: faker.lorem.word(2), // 随机生成子目标类别
@@ -47,4 +47,23 @@ export const subTargetMaintainData = Array.from(Array.from({ length: 500 })).map
   height: faker.number.int({ min: 1000, max: 10000 }), // 随机生成大地高
   alt: faker.number.int({ min: 100, max: 1000 }), // 随机生成海拔
   desc: faker.lorem.sentence(50) // 随机生成说明 
+}))
+
+export const themeImagesData = Array.from({ length: 50 }).map(() => ({
+  name: faker.lorem.word(5),
+  url: faker.lorem.word(5),
+  type: faker.lorem.word(2),
+  preview: faker.lorem.word(3),
+  desc: faker.lorem.sentence(50)
+}))
+
+
+export const targetAnalyseData = Array.from({ length: 50 }).map(() => ({
+  sysName: faker.company.name(), // 假的公司/体系名称
+  name: faker.company.name(), // 假的目标名称
+  type: faker.helpers.arrayElement(['商业', '住宅', '工业', '政府']), // 目标类型
+  population: faker.number.float({ min: 100000, max: 1000000 }), // 人口数
+  density: faker.number.float({ min: 500, max: 5000 }), // 人口密度
+  subName: faker.company.catchPhrase(), // 假的子目标名称
+  subtype: faker.helpers.arrayElement(['服务', '教育', '医疗', '文化']), // 子目标类型
 }))

@@ -27,14 +27,14 @@ import EnhancedTable from '../index.vue';
 //@ts-ignore
 import { subTargetMaintainData } from '@/mock/table_test';
 //@ts-ignore
-import subTargetMaintainColums from '../config/subTargetMaintain'
+import config_columns from '../config/subTargetMaintain'
 import EnhancedPagination from '../../Pagination/index.vue';
 
 
 export default defineComponent({
     components: { EnhancedTable, EnhancedPagination },
     setup() {
-        const columns = subTargetMaintainColums;
+        const columns = config_columns;
         const data = subTargetMaintainData;// 模拟数据
 
         const handleCustomBtn = (row: any) => {

@@ -20,9 +20,9 @@ import { computed, defineComponent, ref } from 'vue';
 import ToolBarOfTable from '@/components/ToolBar/OfTable.vue'
 import EnhancedTable from '../index.vue';
 //@ts-ignore
-import { targetBasicInfoData } from '@/mock/table_test';
+import { targetAnalyseData } from '@/mock/table_test';
 //@ts-ignore
-import config_columns from '../config/targetBasicInfo'
+import config_columns from '../config/targetAnalyse'
 import EnhancedPagination from '../../Pagination/index.vue';
 
 
@@ -30,7 +30,7 @@ export default defineComponent({
     components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
     setup() {
         const columns = config_columns;
-        const data = targetBasicInfoData;// 模拟数据
+        const data = targetAnalyseData;// 模拟数据
 
         const handleCustomBtn = (row: any) => {
             console.log('custom button clicked:', row);
@@ -38,7 +38,7 @@ export default defineComponent({
 
         const totalItems = ref(data.length || 500); // 总条数
         const currentPage = ref(1); // 当前页码
-        const pageSize = ref(10); // 每页条数
+        const pageSize = ref(5); // 每页条数
 
         const allData = data;
 
