@@ -1,6 +1,6 @@
 <template>
     <!-- 右键菜单 -->
-    <div v-if="menuVisible" :style="contextMenuStyle" class="context-menu">
+    <div v-show="menuVisible" :style="contextMenuStyle" class="context-menu">
         <ul>
             <li v-for="(item, index) in menuItems" :key="index" @click="handleMenuItemClick(item.action)">
                 {{ item.label }}
@@ -47,6 +47,7 @@ function handleMenuItemClick(action) {
 
 // 右键点击事件处理
 const handleClickRight = (event) => {
+    console.log(event,'sfsfs')
     event.preventDefault();
 
     menuX.value = event.clientX;
@@ -120,7 +121,7 @@ onBeforeUnmount(() => {
     border: 1px solid #dcdcdc;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
     padding: 8px 0;
-    z-index: 1000;
+    z-index: 99999;
     width: 120px;
 }
 

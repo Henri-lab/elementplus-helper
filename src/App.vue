@@ -51,7 +51,6 @@ export default defineComponent({
 <template>
   <div id="app">
     <AppTest></AppTest>
-    <AppRoot></AppRoot>
     <RouterView />
   </div>
 </template>

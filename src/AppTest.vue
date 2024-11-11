@@ -31,7 +31,10 @@ const isTestBtns = ref(false);
 const handleKeydown = (event) => {
   if (event.key === 'v' || event.key === 'V') {
     // 用户按下了 "v" 键（包括小写和大写）
-    console.log('Pressed "v" key');
+    console.log(
+      '%cWelcome!🎉🎉🎉',
+      'color: white; background-color: blue; font-size: 12px; padding: 4px;'
+    );
     // 在这里可以添加要执行的逻辑
     isTestBar.value = !isTestBar.value;
   }

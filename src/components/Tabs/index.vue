@@ -166,7 +166,7 @@ const beforeLeave = async (newTabName: any) => {
 <style lang="scss" scoped>
 .enhanced-tabs {
   height: 100% !important;
-  background: url('@/assets/image/earthDark.png') no-repeat;
+//   background: url('@/assets/image/earthDark.png') no-repeat;
   background-size: cover;
   position: relative;
   .control-panel {

@@ -1,4 +1,8 @@
 <template>
+  <ContextMenu
+    :targetElement="targetElement"
+    :menuItems="menuOptions"
+  ></ContextMenu>
   <el-input
     v-model="filterText"
     style="width: 240px"
@@ -47,6 +51,11 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 import { ElTree } from 'element-plus';
+
+//@ts-ignore
+import { executeUntilNonEmpty, sleep } from '@/utils/tool';
+//@ts-ignore
+import ContextMenu from '../ContextMenu/index.vue';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
 //@ts-ignore
@@ -62,6 +71,10 @@ const props = defineProps({
   test: {
     type: Boolean,
     default: false,
+  },
+  contextAreaId: {
+    type: String,
+    default: 'idOfTree',
   },
   data: {
     type: Array<any>,
@@ -134,18 +147,52 @@ const props = defineProps({
       },
     ],
   },
+  menuItems: {
+    type: Array,
+    default: [
+      {
+        label: '添加',
+        action: () => {
+          console.log('添加');
+        },
+      },
+      {
+        label: '删除',
+        action: () => {
+          console.log('删除');
+        },
+      },
+    ],
+  },
 });
 
+const targetElement = ref(null);
 const filterText = ref('');
 const treeRef = ref<InstanceType<typeof ElTree>>();
-const thisTree = treeRef.value;
+const thisTree = treeRef;
+async function setContextMenuAeraById(id: string) {
+  targetElement.value = document.getElementById(id) as any;
+}
+watch(
+  () => props.contextAreaId, //先于mounted执行
+  (newId) => {
+    setContextMenuAeraById(newId || 'idOfTree');
+  },
+  {
+    immediate: true,
+  }
+);
+
+onMounted(() => {
+  setContextMenuAeraById(props.contextAreaId || 'idOfTree');
+});
 
 const defaultProps = {
   children: 'children',
   label: 'label',
 };
 
-
+const menuOptions = ref(props.menuItems);
 watch(filterText, (val) => {
   treeRef.value!.filter(val);
 });
@@ -231,7 +278,6 @@ const updateNode = (nodeId: any, updatedProperties: any) => {
 const searchNode = (nodeId: any) => {
   return findNode(data, nodeId);
 };
-
 </script>
 
 <style lang="scss" scoped>

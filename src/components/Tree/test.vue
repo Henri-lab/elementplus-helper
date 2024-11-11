@@ -1,6 +1,11 @@
 <template>
-  <div class="test">
-    <Tree :data="mockData" :test="isTest"></Tree>
+  <div id="TreeTest_henri" class="test">
+    <Tree
+      :data="mockData"
+      :test="isTest"
+      :menuItems="menuItems"
+      contextAreaId="TreeTest_henri"
+    ></Tree>
     <el-button @click="isTest = !isTest">{{
       isTest ? '关闭数据' : '显示数据'
     }}</el-button>
@@ -10,11 +15,81 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 //@ts-ignore
-import Tree from './index.vue';
+// import Tree from './index.vue';
+import Tree from './WithCtxmenu.vue';
 //@ts-ignore
 import mockData from '@/mock/tree_node';
 
 const isTest = ref(false);
+
+const menuItems = [
+  {
+    label: '添加',
+    action: () => {
+      console.log('添加');
+    },
+  },
+  {
+    label: '删除',
+    action: () => {
+      console.log('删除');
+    },
+  },
+  {
+    label: '编辑',
+    action: () => {
+      console.log('编辑');
+    },
+  },
+  {
+    label: '复制',
+    action: () => {
+      console.log('复制');
+    },
+  },
+  {
+    label: '粘贴',
+    action: () => {
+      console.log('粘贴');
+    },
+  },
+  {
+    label: '剪切',
+    action: () => {
+      console.log('剪切');
+    },
+  },
+  {
+    label: '刷新',
+    action: () => {
+      console.log('刷新');
+    },
+  },
+  {
+    label: '保存',
+    action: () => {
+      console.log('保存');
+    },
+  },
+  {
+    label: '取消',
+    action: () => {
+      console.log('取消');
+    },
+  },
+  {
+    label: '帮助',
+    action: () => {
+      console.log('帮助');
+    },
+  },
+  {
+    label: '更多',
+    action: () => {
+      console.log('更多');
+    },
+  },
+];
 </script>
 
 <style lang="scss" scoped></style>

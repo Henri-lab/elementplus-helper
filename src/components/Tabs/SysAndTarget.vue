@@ -11,25 +11,26 @@ import Tabs from './index.vue';
 import SysTree from '@/components/Tree/Sys.vue';
 //@ts-ignore
 import TargetTree from '@/components/Tree/SingleTarget.vue';
+import { markRaw } from 'vue';
 
 const tabs = [
   {
     label: '目标体系',
     name: 'first',
-    component: SysTree,
+    component: markRaw(SysTree),//important!
     icon: 'el-icon-?',
     content: 'content',
   },
   {
     label: '单目标',
     name: 'second',
-    component:TargetTree,
+    component: markRaw(TargetTree),
     icon: 'el-icon-?',
     content: 'content',
   },
 ];
 
-const helpInfo = ()=> {
+const helpInfo = () => {
   if (0) {
     return {
       enabled: true,
@@ -38,21 +39,21 @@ const helpInfo = ()=> {
       },
       type: 'error',
     };
-  }else if (1) {
+  } else if (1) {
     return {
       enabled: true,
       createInfo: (name: string) => {
         return `切换至${name}成功`;
       },
-      type:'success',
+      type: 'success',
     };
-  }else {
+  } else {
     return {
       enabled: true,
       createInfo: (name: string) => {
         return `切换至${name}成功`;
       },
-      type:'info',
+      type: 'info',
     };
   }
 };

@@ -7,12 +7,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddSysToTree: typeof import('./src/components/EditDialog/addSysToTree.vue')['default']
     Base: typeof import('./src/components/DataAndTime/base.vue')['default']
     Button: typeof import('./src/components/EditDialog/button/index.vue')['default']
     'Button.vue': typeof import('./src/components/EditDialog/button.vue/index.vue')['default']
     CodeEditor: typeof import('./src/components/CodeEditor/index.vue')['default']
     ContextMenu: typeof import('./src/components/ContextMenu/index.vue')['default']
-    copy: typeof import('./src/components/ContextMenu/index copy.vue')['default']
+    copy: typeof import('./src/components/Tree/index copy.vue')['default']
     Demo1: typeof import('./src/components/Draggable/demo1.vue')['default']
     Demo2: typeof import('./src/components/Draggable/demo2.vue')['default']
     Demo3: typeof import('./src/components/Draggable/demo3.vue')['default']
@@ -78,5 +79,6 @@ declare module 'vue' {
     Tree: typeof import('./src/components/Tree/index.vue')['default']
     TreeOrg: typeof import('./src/components/Tree/TreeOrg.vue')['default']
     TreeOrg2: typeof import('./src/components/Tree/TreeOrg2.vue')['default']
+    WithCtxmenu: typeof import('./src/components/Tree/WithCtxmenu.vue')['default']
   }
 }
