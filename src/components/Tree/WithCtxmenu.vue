@@ -2,6 +2,7 @@
   <ContextMenu
     :targetElement="targetElement"
     :menuItems="menuOptions"
+    :context="context"
   ></ContextMenu>
   <el-input
     v-model="filterText"
@@ -206,12 +207,14 @@ const data = ref<Tree[]>(props.data);
 
 const clickedNodeLabel = ref('');
 const isClickedNodeLeaf = ref(false);
+const context = ref<any>({});
 const getClickedNodeInfo = (node: Tree) => {
   clickedNodeLabel.value = node.label;
   isClickedNodeLeaf.value = !node.children || node.children.length == 0;
   //   console.log('点击的节点label:', clickedNodeLabel.value);
   //   console.log('是否是子节点:', isClickedNodeLeaf.value);
   console.log('点击的节点:', node);
+  context.value.curNode = node;
 };
 
 // 递归查找节点

@@ -25,8 +25,8 @@ const isTest = ref(false);
 const menuItems = [
   {
     label: '添加',
-    action: () => {
-      console.log('添加');
+    action: ({ curNodeRef }: any) => {
+      console.log('添加', curNodeRef.value);
     },
   },
   {
