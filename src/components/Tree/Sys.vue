@@ -1,5 +1,5 @@
 <template>
-  <DialogAddSysToTree />
+  
   <ContextMenu
     :targetElement="targetElement"
     :menuItems="menuOptions"
@@ -18,7 +18,6 @@ import { onMounted, ref, watch } from 'vue';
 import $bus from '@/utils/bus';
 //@ts-ignore
 import Tree from './index.vue';
-import DialogAddSysToTree from '../EditDialog/addSysToTree.vue';
 //@ts-ignore
 import mockData from '@/mock/tree_node';
 

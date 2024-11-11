@@ -11,6 +11,7 @@
             :is="getComponentType(item.type)"
             v-model="formData[item.field]"
             v-bind="getFieldProps(item)"
+            v-bind:style="item.style"
           >
             <!-- 渲染 el-select 的选项 -->
             <template v-if="item.type === 'select'">
@@ -40,7 +41,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
 const formRef = ref(null);
 const props = defineProps({
@@ -50,13 +51,14 @@ const props = defineProps({
   },
   description: {
     type: Array,
-    default: [
+    default: () => [
       {
         label: '用户名',
         field: 'username',
-        span: 12, // 表单字段占用的栅格宽度
-        type: 'input', // 表单类型：可以是 'input', 'select', 'checkbox', 'radio', 等
+        span: 12,
+        type: 'input',
         placeholder: '请输入用户名',
+        style: { width: '100%', height: '40px', backgroundColor: '#f0f0f0' },
         rules: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
       },
       {
@@ -65,6 +67,7 @@ const props = defineProps({
         span: 12,
         type: 'input',
         placeholder: '请输入邮箱地址',
+        style: { width: '100%', height: '40px', color: 'blue' },
         rules: [
           { required: true, message: '邮箱不能为空', trigger: 'blur' },
           { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' },
@@ -74,14 +77,13 @@ const props = defineProps({
         label: '性别',
         field: 'gender',
         span: 24,
-        type: 'select', // 表单类型为下拉选择框
+        type: 'select',
         placeholder: '请选择性别',
+        style: { width: '200px' },
         options: [
           { label: '男', value: 'male' },
           { label: '女', value: 'female' },
-          { label: '外星人', value: 'alien' },
-          { label: '武装直升机', value: 'x-0' },
-          { label: '沃尔玛购物袋', value: 'x-1' },
+          { label: '其他', value: 'other' },
         ],
         rules: [{ required: true, message: '请选择性别', trigger: 'change' }],
       },
@@ -89,7 +91,8 @@ const props = defineProps({
         label: '爱好',
         field: 'hobbies',
         span: 24,
-        type: 'checkbox', // 多选框
+        type: 'checkbox',
+        style: { margin: '10px 0', color: 'red' },
         options: [
           { label: '阅读', value: 'reading' },
           { label: '旅行', value: 'traveling' },
@@ -105,6 +108,7 @@ const props = defineProps({
         span: 24,
         type: 'textarea',
         placeholder: '请输入个人简介',
+        style: { width: '100%', height: '100px', backgroundColor: '#f9f9f9' },
         rules: [
           { required: true, message: '个人简介不能为空', trigger: 'blur' },
         ],
@@ -115,6 +119,7 @@ const props = defineProps({
         span: 12,
         type: 'date-picker',
         placeholder: '请选择生日',
+        style: { width: '200px' },
         rules: [{ required: true, message: '请选择生日', trigger: 'change' }],
       },
       {
@@ -123,6 +128,7 @@ const props = defineProps({
         span: 12,
         type: 'select',
         placeholder: '请选择城市',
+        style: { width: '100%' },
         options: [
           { label: '北京', value: 'beijing' },
           { label: '上海', value: 'shanghai' },
@@ -135,8 +141,10 @@ const props = defineProps({
 });
 const description = props.description;
 const formData = reactive(props.data);
+
+// 初始化 `formData` 的字段
 description.forEach((item) => {
-  formData[item.field] = '';
+  formData[item.field] = item.type === 'checkbox' ? [] : '';
 });
 
 // 根据表单项类型返回对应的组件
@@ -159,13 +167,12 @@ const getComponentType = (type) => {
 
 // 获取组件的属性
 const getFieldProps = (item) => {
-  if (item.type === 'select' || item.type === 'checkbox') {
-    return { options: item.options };
+  const props = { placeholder: item.placeholder };
+  if (item.type === 'date-picker') {
+    props.type = 'date';
+    props.format = 'YYYY-MM-DD';
+    props['value-format'] = 'YYYY-MM-DD';
   }
-  return { placeholder: item.placeholder };
+  return props;
 };
-
-const emit = defineEmits(['submit']);
-
-const submitForm = () => {};
 </script>

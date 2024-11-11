@@ -2,7 +2,7 @@
   <!-- 自定义表单弹窗 -->
   <EditDialog
     v-model:visible="dialogVisible"
-    title="编辑用户信息"
+    title="新建目标体系"
     :onSubmit="handleFormSubmit"
     @submitted="onFormSubmitted"
     @closed="resetForm"
@@ -45,14 +45,6 @@ const formData = ref({
 
 const description = [
   {
-    label: '用户名',
-    field: 'username',
-    span: 24, // 表单字段占用的栅格宽度
-    type: 'input', // 表单类型：可以是 'input', 'select', 'checkbox', 'radio', 等
-    placeholder: '请输入用户名',
-    rules: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-  },
-  {
     label: '目标体系',
     field: 'city',
     span: 12,
@@ -64,6 +56,20 @@ const description = [
       { label: '广州', value: 'guangzhou' },
       { label: '深圳', value: 'shenzhen' },
     ],
+  },
+  {
+    label: '备注',
+    field: 'note',
+    span: 24, // 表单字段占用的栅格宽度
+    type: 'textarea', // 表单类型：可以是 'input', 'select', 'checkbox', 'radio', 等
+    placeholder: '请输入备注',
+    style: {
+      width: '500px',
+      height: '200px',
+      position: 'absolute',
+      top: '10%',
+      left: '3.7%',
+    },
   },
 ];
 
@@ -81,7 +87,5 @@ function onFormSubmitted() {
 }
 
 // 关闭时重置表单
-function resetForm() {
-  
-}
+function resetForm() {}
 </script>
