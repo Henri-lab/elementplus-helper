@@ -89,6 +89,23 @@ const publicRoutes: RouteRecordRaw[] = [
               icon: 'display1',
             },
           },
+          {
+            path: 'targetValueAnalyse',
+            name: 'display1',
+            components: {
+              default: () => import('@/layout/display1/index.vue'),
+              header: () => import('@/components/Header/index.vue'),
+              main_h: () => import('@/layout/display1/main.vue'),
+              main_m: () => import('@/layout/display1/main.vue'),
+              main_f: () => import('@/layout/display1/main.vue'),
+              aside: () => import('@/layout/display1/aside.vue'),
+              footer: () => import('@/layout/display1/footer.vue'),
+            },
+            meta: {
+              title: '页面1',
+              icon: 'display1',
+            },
+          },
         ],
       },
       {

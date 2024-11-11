@@ -59,7 +59,7 @@ const helpInfo = ()=> {
 </script>
 
 <style lang="scss" scoped>
-.test {
-  height: 1000px;
+.tabs-sys-and-singleTarget {
+  height: 100%;
 }
 </style>

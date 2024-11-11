@@ -2,6 +2,8 @@
 import { onMounted, onBeforeUnmount, defineComponent } from 'vue';
 //@ts-ignore
 import AppTest from './AppTest.vue';
+//@ts-ignore
+
 export default defineComponent({
   components: { AppTest },
   setup() {
@@ -19,7 +21,9 @@ export default defineComponent({
       const scale = Math.min(scaleWidth, scaleHeight);
 
       // 应用缩放比例到根容器
-      const container = document.querySelector('.scale-container') as HTMLElement;
+      const container = document.querySelector(
+        '.scale-container'
+      ) as HTMLElement;
       if (container) {
         container.style.transform = `scale(${scale})`;
         container.style.transformOrigin = 'top left';
@@ -41,14 +45,13 @@ export default defineComponent({
       designHeight,
     };
   },
-}
-)
-
+});
 </script>
 
 <template>
   <div id="app">
     <AppTest></AppTest>
+    <AppRoot></AppRoot>
     <RouterView />
   </div>
 </template>

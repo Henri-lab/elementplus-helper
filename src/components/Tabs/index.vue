@@ -65,7 +65,7 @@ const props = defineProps({
     default: true,
   },
   helpInfo: {
-    type: Object as PropType<helpInfo>|any, //不能直接使用 TypeScript 自定义的类型
+    type: Object as PropType<helpInfo> | any, //不能直接使用 TypeScript 自定义的类型
     default: {
       enabled: false,
       createInfo: () => 'This is a helpInfo',
@@ -168,5 +168,10 @@ const beforeLeave = async (newTabName: any) => {
   height: 100% !important;
   background: url('@/assets/image/earthDark.png') no-repeat;
   background-size: cover;
+  position: relative;
+  .control-panel {
+    position: absolute;
+    bottom: 0;
+  }
 }
 </style>
