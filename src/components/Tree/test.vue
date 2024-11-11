@@ -23,6 +23,7 @@ import mockData from '@/mock/tree_node';
 const isTest = ref(false);
 
 const menuItems = [
+  //context-menu accepts 'action' which accepts 'node-infos'
   {
     label: '添加',
     action: ({ curNodeRef }: any) => {
