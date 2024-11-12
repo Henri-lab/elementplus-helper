@@ -1,4 +1,5 @@
-】<template>
+】
+<template>
   <div class="enhanced-tabs">
     <!-- Tab 列表 -->
     <el-tabs
@@ -22,12 +23,11 @@
         <div class="stringComp comp" v-if="typeof tab.component === 'string'">
           {{ tab.component }}
         </div>
-        <component
-          class="realComp comp"
-          v-else
-          :is="tab.component"
-          v-bind="tab.props" 
-        />
+        <template v-else>
+          <div class="realComp comp">
+            <component :is="tab.component" v-bind="tab.props" />
+          </div>
+        </template>
       </el-tab-pane>
     </el-tabs>
 
@@ -113,7 +113,9 @@ const removeTab = () => {
     const tabIndex = tabs.findIndex((tab) => tab.name === activeName.value);
     if (tabIndex >= 0) {
       tabs.splice(tabIndex, 1);
-      activeName.value = tabs.length ? tabs[Math.max(tabIndex - 1, 0)].name : '';
+      activeName.value = tabs.length
+        ? tabs[Math.max(tabIndex - 1, 0)].name
+        : '';
     }
   }
 };
@@ -135,7 +137,9 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 const beforeLeave = async (newTabName: any) => {
   if (props.isGuard) {
     try {
-      await ElMessageBox.confirm(`Are you sure you want to switch to Tab-${newTabName}?`);
+      await ElMessageBox.confirm(
+        `Are you sure you want to switch to Tab-${newTabName}?`
+      );
       return true;
     } catch {
       return false;

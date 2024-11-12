@@ -7,33 +7,35 @@
           :prop="item.field"
           :rules="item.rules"
         >
-          <component
-            :is="getComponentType(item.type)"
-            v-model="formData[item.field]"
-            v-bind="getFieldProps(item)"
-            v-bind:style="item.style"
-          >
-            <!-- 渲染 el-select 的选项 -->
-            <template v-if="item.type === 'select'">
-              <el-option
-                v-for="option in item.options"
-                :key="option.value"
-                :label="option.label"
-                :value="option.value"
-              />
-            </template>
+          <div style="display: inline-block; width: 100%">
+            <component
+              :is="getComponentType(item.type)"
+              v-model="formData[item.field]"
+              v-bind="getFieldProps(item)"
+              v-bind:style="item.style"
+            >
+              <!-- 渲染 el-select 的选项 -->
+              <template v-if="item.type === 'select'">
+                <el-option
+                  v-for="option in item.options"
+                  :key="option.value"
+                  :label="option.label"
+                  :value="option.value"
+                />
+              </template>
 
-            <!-- 渲染 el-checkbox-group 的选项 -->
-            <template v-if="item.type === 'checkbox'">
-              <el-checkbox
-                v-for="option in item.options"
-                :key="option.value"
-                :label="option.value"
-              >
-                {{ option.label }}
-              </el-checkbox>
-            </template>
-          </component>
+              <!-- 渲染 el-checkbox-group 的选项 -->
+              <template v-if="item.type === 'checkbox'">
+                <el-checkbox
+                  v-for="option in item.options"
+                  :key="option.value"
+                  :label="option.value"
+                >
+                  {{ option.label }}
+                </el-checkbox>
+              </template>
+            </component>
+          </div>
         </el-form-item>
       </el-col>
     </el-row>

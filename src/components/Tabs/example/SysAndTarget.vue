@@ -71,10 +71,10 @@ const helpInfo = () => {
   }
 };
 
-
-onMounted(()=>{
-
-})
+const route = useRoute();
+onMounted(() => {
+  console.log('sffs', route);
+});
 </script>
 
 <style lang="scss" scoped>

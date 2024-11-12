@@ -51,7 +51,6 @@ const props = defineProps({
 const treeData = ref(props.treeData || treeMockData());
 onMounted(() => {
   if (thisTree.value) {
-    console.log('sysTree:onMounted', document.getElementById('sysTree'));
     targetElement.value = document.getElementById('sysTree') as any;
   }
 });
