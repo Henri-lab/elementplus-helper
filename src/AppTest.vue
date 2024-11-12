@@ -3,9 +3,15 @@
     <AppRoot />
     <el-button class="trigger" @click="trigger">快速浏览🌞</el-button>
     <div class="btns" v-if="isTestBtns">
-      <router-link class="item" to="/testComponents"
-        ><el-button>组件测试</el-button></router-link
-      >
+      <router-link class="item" to="/testComponents">
+        <el-button>组件测试</el-button>
+      </router-link>
+      <router-link class="item" to="/layout/display0/targetSystem">
+        <el-button>页面入口</el-button>
+      </router-link>
+      <router-link class="item" to="/openUIComp">
+        <el-button>OpenUI</el-button>
+      </router-link>
     </div>
   </div>
 </template>
