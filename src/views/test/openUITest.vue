@@ -38,7 +38,7 @@ const routerLinks = computed(() => {
 
 <style lang="scss" scoped>
 .luminous-strong {
-  @include strong-glow-text;
+  @include strong-glow-text(#ddf61f, #b99a0f);
 }
 
 .luminous {
