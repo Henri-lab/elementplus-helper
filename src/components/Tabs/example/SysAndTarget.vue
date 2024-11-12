@@ -73,7 +73,7 @@ const helpInfo = () => {
 
 const route = useRoute();
 onMounted(() => {
-  console.log('sffs', route);
+  console.log('route', route);
 });
 </script>
 
