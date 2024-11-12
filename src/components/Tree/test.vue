@@ -1,11 +1,12 @@
+<!-- 使用结合ContextMenu的Tree -->
 <template>
   <div id="TreeTest_henri" class="test">
-    <Tree
+    <TreeWithCtxmenu
       :data="treeData"
       :test="isTest"
       :menuItems="menuItems"
       contextAreaId="TreeTest_henri"
-    ></Tree>
+    ></TreeWithCtxmenu>
     <el-button @click="isTest = !isTest">{{
       isTest ? '关闭数据' : '显示数据'
     }}</el-button>
@@ -15,8 +16,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 //@ts-ignore
-// import Tree from './index.vue';
-import Tree from './WithCtxmenu.vue';
+import TreeWithCtxmenu from './WithCtxmenu.vue';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
 

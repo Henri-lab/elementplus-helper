@@ -6,14 +6,14 @@ const testRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/test/index.vue'),
     children: [
       {
-        path: 'TreeWithCtxmenu',
-        name: 'TreeWithCtxmenu',
+        path: 'Tree',
+        name: 'Tree',
         component: () => import('@/components/Tree/test.vue'),
       },
       {
-        path: 'TreeDialog',
-        name: 'TreeDialog',
-        component: () => import('@/components/Tree/testDialog.vue'),
+        path: 'Tree2',
+        name: 'Tree(basic)',
+        component: () => import('@/components/Tree/test2.vue'),
       },
       {
         path: 'TreeOrg',
@@ -24,26 +24,6 @@ const testRoutes: RouteRecordRaw[] = [
         path: 'Table',
         name: 'Table',
         component: () => import('@/components/Table/test.vue'),
-      },
-      {
-        path: 'TableTargetBasicInfo',
-        name: 'targetBasicInfo',
-        component: () => import('@/components/Table/example/TargetBasicInfo.vue'),
-      },
-      {
-        path: 'TableSubTargetMaintain',
-        name: 'subTargetMaintain',
-        component: () => import('@/components/Table/example/SubTargetMaintain.vue'),
-      },
-      {
-        path: 'Pagination',
-        name: 'Pagination',
-        component: () => import('@/components/Pagination/test.vue'),
-      },
-      {
-        path: 'ContextMenu',
-        name: 'ContextMenu',
-        component: () => import('@/components/ContextMenu/index.vue'),
       },
       {
         path: 'Dialog',
