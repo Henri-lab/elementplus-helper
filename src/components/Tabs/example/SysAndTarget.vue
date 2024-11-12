@@ -16,7 +16,9 @@ import Tabs from '../index.vue';
 import C1 from '@/components/Tree/example/Sys.vue';
 //@ts-ignore
 import C2 from '@/components/Tree/example/SingleTarget.vue';
-import { markRaw } from 'vue';
+import { markRaw, onMounted } from 'vue';
+
+import { useRoute } from 'vue-router';
 
 const tabs = [
   {
@@ -25,6 +27,9 @@ const tabs = [
     component: markRaw(C1), //important!
     icon: 'el-icon-?',
     content: 'content',
+    // props: {
+    //   treeData: [],
+    // },
   },
   {
     label: '单目标',
@@ -32,6 +37,9 @@ const tabs = [
     component: markRaw(C2),
     icon: 'el-icon-?',
     content: 'content',
+    // props: {
+    //   treeData: [],
+    // },
   },
 ];
 
@@ -62,6 +70,11 @@ const helpInfo = () => {
     };
   }
 };
+
+
+onMounted(()=>{
+
+})
 </script>
 
 <style lang="scss" scoped>

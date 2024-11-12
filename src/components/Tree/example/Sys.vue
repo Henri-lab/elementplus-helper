@@ -4,7 +4,7 @@
     :menuItems="menuOptions"
   ></ContextMenu>
   <div id="sysTree" ref="sysTree">
-    <Tree id="idOfSysTree" :data="mockData" :test="isTest" ref="sysTree"></Tree>
+    <Tree id="idOfSysTree" :data="treeData" :test="isTest" ref="sysTree"></Tree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'sysTree:关闭数据' : 'sysTree:显示数据' }}
     </button>
@@ -18,7 +18,7 @@ import $bus from '@/utils/bus';
 //@ts-ignore
 import Tree from '../index.vue';
 //@ts-ignore
-import mockData from '@/mock/tree_node';
+import treeMockData from '@/mock/tree_node';
 
 const isTest = ref(false);
 
@@ -41,7 +41,14 @@ const menuOptions = [
     },
   },
 ];
+const props = defineProps({
+  treeData: {
+    type: Array<any>,
+    default: null,
+  },
+});
 
+const treeData = ref(props.treeData || treeMockData());
 onMounted(() => {
   if (thisTree.value) {
     console.log('sysTree:onMounted', document.getElementById('sysTree'));

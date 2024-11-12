@@ -1,4 +1,4 @@
-<template>
+】<template>
   <div class="enhanced-tabs">
     <!-- Tab 列表 -->
     <el-tabs
@@ -19,14 +19,14 @@
           </span>
         </template>
         <!-- 动态加载的组件内容 -->
-        <div class="stringComp comp" v-if="typeof tab.component == 'string'">
+        <div class="stringComp comp" v-if="typeof tab.component === 'string'">
           {{ tab.component }}
         </div>
         <component
-          class="comp"
+          class="realComp comp"
           v-else
           :is="tab.component"
-          :content="tab.content"
+          v-bind="tab.props" 
         />
       </el-tab-pane>
     </el-tabs>
@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, type Component, type PropType } from 'vue';
+import { ref, reactive, type Component, type PropType } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import type { TabsPaneContext } from 'element-plus';
 import { def_tabsOption } from './default';
@@ -53,6 +53,7 @@ type tabsItem = {
   component: Component | string;
   icon?: string;
   content?: string;
+  props?: Record<string, any>; // 自定义组件属性
 };
 
 type helpInfo = {
@@ -74,7 +75,7 @@ const props = defineProps({
     default: true,
   },
   helpInfo: {
-    type: Object as PropType<helpInfo> | any, //不能直接使用 TypeScript 自定义的类型
+    type: Object as PropType<helpInfo> | any,
     default: {
       enabled: false,
       createInfo: () => 'This is a helpInfo',
@@ -82,10 +83,11 @@ const props = defineProps({
     },
   },
   tabs: {
-    type: Array<tabsItem>,
+    type: Array as PropType<tabsItem[]>,
     default: () => def_tabsOption,
   },
 });
+
 // 定义 Tab 数据和选项
 const activeName = ref(props.initName);
 const stretchTabs = ref(false);
@@ -95,7 +97,12 @@ const tabs: Array<tabsItem> = reactive(props.tabs);
 // 动态添加 Tab
 const addTab = () => {
   const name = `tab-${Date.now()}`;
-  tabs.push({ label: newTabName.value, name, component: 'NewComponent' });
+  tabs.push({
+    label: newTabName.value,
+    name,
+    component: 'NewComponent',
+    props: { exampleProp: 'Hello World' }, // 添加自定义属性
+  });
   activeName.value = name;
   newTabName.value = '';
 };
@@ -103,14 +110,10 @@ const addTab = () => {
 // 动态删除 Tab
 const removeTab = () => {
   if (!props.isGuard) {
-    const tabIndex = tabs.findIndex(
-      (tab: { name: string }) => tab.name === activeName.value
-    );
+    const tabIndex = tabs.findIndex((tab) => tab.name === activeName.value);
     if (tabIndex >= 0) {
       tabs.splice(tabIndex, 1);
-      activeName.value = tabs.length
-        ? tabs[Math.max(tabIndex - 1, 0)].name
-        : '';
+      activeName.value = tabs.length ? tabs[Math.max(tabIndex - 1, 0)].name : '';
     }
   }
 };
@@ -120,7 +123,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
   if (props.helpInfo.enabled) {
     const createInfo = props.helpInfo.createInfo;
     const messageType = props.helpInfo.type;
-    let info = createInfo ? createInfo(tab.props.name) : '';
+    const info = createInfo ? createInfo(tab.props.name) : '';
     ElMessage({
       message: `${info}`,
       type: messageType,
@@ -132,9 +135,7 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 const beforeLeave = async (newTabName: any) => {
   if (props.isGuard) {
     try {
-      await ElMessageBox.confirm(
-        `Are you sure you want to switch to Tab-${newTabName}?`
-      );
+      await ElMessageBox.confirm(`Are you sure you want to switch to Tab-${newTabName}?`);
       return true;
     } catch {
       return false;
@@ -147,7 +148,6 @@ const beforeLeave = async (newTabName: any) => {
 .enhanced-tabs {
   height: 100% !important;
   overflow: scroll;
-  //   background: url('@/assets/image/earthDark.png') no-repeat;
   background-size: cover;
   position: relative;
   .control-panel {

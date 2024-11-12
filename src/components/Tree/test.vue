@@ -1,7 +1,7 @@
 <template>
   <div id="TreeTest_henri" class="test">
     <Tree
-      :data="mockData"
+      :data="treeData"
       :test="isTest"
       :menuItems="menuItems"
       contextAreaId="TreeTest_henri"
@@ -18,7 +18,7 @@ import { ref, watch } from 'vue';
 // import Tree from './index.vue';
 import Tree from './WithCtxmenu.vue';
 //@ts-ignore
-import mockData from '@/mock/tree_node';
+import treeMockData from '@/mock/tree_node';
 
 const isTest = ref(false);
 
@@ -91,6 +91,14 @@ const menuItems = [
     },
   },
 ];
+
+const props = defineProps({
+  treeData: {
+    type: Array<any>,
+    default: null,
+  },
+});
+const treeData = ref(props.treeData || treeMockData());
 </script>
 
 <style lang="scss" scoped></style>

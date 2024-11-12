@@ -11,7 +11,7 @@
 import { defineComponent } from 'vue';
 import EnhancedTable from './index.vue';
 //@ts-ignore
-import mockData from '@/mock/table_test';
+import tableMockData from '@/mock/table_test';
 
 export default defineComponent({
     components: { EnhancedTable },
@@ -21,7 +21,7 @@ export default defineComponent({
             { label: '年龄', prop: 'age', width: 80 },
             { label: '职位', prop: 'job' }
         ];
-        const data = mockData;
+        const data = tableMockData();
 
         const handleCustomBtn = (row: any) => {
             console.log('custom button clicked:', row);

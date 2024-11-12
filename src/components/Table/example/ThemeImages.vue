@@ -28,7 +28,7 @@ import { computed, defineComponent, ref } from 'vue';
 import ToolBarOfTable from '@/components/ToolBar/OfTable.vue';
 import EnhancedTable from '../index.vue';
 //@ts-ignore
-import { themeImagesData } from '@/mock/table_test';
+import tableMockData from '@/mock/table_test';
 //@ts-ignore
 import config_columns from '../config/themeImages';
 import EnhancedPagination from '../../Pagination/index.vue';
@@ -37,7 +37,7 @@ export default defineComponent({
   components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
   setup() {
     const columns = config_columns;
-    const data = themeImagesData; // 模拟数据
+    const data = tableMockData('themeImages'); // 模拟数据
 
     const handleCustomBtn = (row: any) => {
       console.log('custom button clicked:', row);

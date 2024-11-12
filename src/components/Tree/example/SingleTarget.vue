@@ -4,7 +4,7 @@
     :menuItems="menuOptions"
   ></ContextMenu>
   <div id="singleTargetTree" ref="singleTargetTree">
-    <Tree :data="mockData" :test="isTest"></Tree>
+    <Tree :data="treeData" :test="isTest"></Tree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'singleTargetTree:关闭数据' : 'singleTargetTree:显示数据' }}
     </button>
@@ -18,7 +18,7 @@ import $bus from '@/utils/bus';
 //@ts-ignore
 import Tree from '../index.vue';
 //@ts-ignore
-import { noChildrenData as mockData } from '@/mock/tree_node';
+import treeMockData from '@/mock/tree_node';
 
 const isTest = ref(false);
 const isShowTestBtn = ref(false);
@@ -40,6 +40,15 @@ const menuOptions = [
     },
   },
 ];
+
+const props = defineProps({
+  treeData: {
+    type: Array<any>,
+    default: null,
+  },
+});
+
+const treeData = ref(!!props.treeData || treeMockData('noChildren'));
 onMounted(() => {
   if (thisTree.value) {
     targetElement.value = document.getElementById('singleTargetTree') as any;

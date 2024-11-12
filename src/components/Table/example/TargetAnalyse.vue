@@ -20,7 +20,7 @@ import { computed, defineComponent, ref } from 'vue';
 import ToolBarOfTable from '@/components/ToolBar/OfTable.vue'
 import EnhancedTable from '../index.vue';
 //@ts-ignore
-import { targetAnalyseData } from '@/mock/table_test';
+import tableMockData from '@/mock/table_test';
 //@ts-ignore
 import config_columns from '../config/targetAnalyse'
 import EnhancedPagination from '../../Pagination/index.vue';
@@ -30,7 +30,7 @@ export default defineComponent({
     components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
     setup() {
         const columns = config_columns;
-        const data = targetAnalyseData;// 模拟数据
+        const data = tableMockData('targetAnalyse');// 模拟数据
 
         const handleCustomBtn = (row: any) => {
             console.log('custom button clicked:', row);
