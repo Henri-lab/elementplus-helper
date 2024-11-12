@@ -4,37 +4,38 @@
     style="width: 240px"
     placeholder="Filter keyword"
   />
-  <el-tree
-    id="idOfTree"
-    ref="treeRef"
-    auto-expand-parent
-    class="filter-tree"
-    :data="data"
-    :props="defaultProps"
-    :default-expand-all="false"
-    :filter-node-method="filterNode"
-    @node-click="getClickedNodeInfo"
-    @node-contextmenu="handleContextMenu"
-  >
-    <template #default="{ node }">
-      <span class="tree-node">
-        <div class="checkbox">
-          <el-checkbox v-model="node.data.check" :checked="node.data.check" />
-        </div>
-        <span class="label">{{ node.label }}</span>
-        <div class="operations image">
-          <el-image :src="connection" style="height: 16px" fit="cover" />
-          <el-image
-            :src="addone"
-            style="height: 16px; margin: 0 5px"
-            fit="none"
-            @click="handleAddOne(node)"
-          />
-          <el-image :src="Delete" style="height: 16px" fit="cover" />
-        </div>
-      </span>
-    </template>
-  </el-tree>
+  <div :id="idOfTree" v-bind="$attrs">
+    <el-tree
+      ref="treeRef"
+      auto-expand-parent
+      class="filter-tree"
+      :data="data"
+      :props="defaultProps"
+      :default-expand-all="false"
+      :filter-node-method="filterNode"
+      @node-click="getClickedNodeInfo"
+      @node-contextmenu="handleContextMenu"
+    >
+      <template #default="{ node }">
+        <span class="tree-node">
+          <div class="checkbox">
+            <el-checkbox v-model="node.data.check" :checked="node.data.check" />
+          </div>
+          <span class="label">{{ node.label }}</span>
+          <div class="operations image">
+            <el-image :src="connection" style="height: 16px" fit="cover" />
+            <el-image
+              :src="addone"
+              style="height: 16px; margin: 0 5px"
+              fit="none"
+              @click="handleAddOne(node)"
+            />
+            <el-image :src="Delete" style="height: 16px" fit="cover" />
+          </div>
+        </span>
+      </template>
+    </el-tree>
+  </div>
   <!-- 自定义右键菜单 -->
   <div
     v-if="contextMenuVisible"
@@ -65,6 +66,9 @@ import Delete from '@/assets/image/delete.png';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
+import { useAttrs } from 'vue';
+
+const attrs = useAttrs();
 
 interface Tree {
   id?: number;
@@ -74,6 +78,10 @@ interface Tree {
 }
 
 const props = defineProps({
+  idOfTree: {
+    type: String,
+    default: 'idOfTree',
+  },
   test: {
     type: Boolean,
     default: false,

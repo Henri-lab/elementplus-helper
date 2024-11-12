@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue';
 
 const props = defineProps({
   menuItems: {
@@ -147,8 +147,9 @@ watch(
   }
 );
 
-onMounted(() => {
+onMounted(async () => {
   document.addEventListener('click', handleClick);
+  await nextTick(); //important;slove the problem that cannot get the default 'targetElement'
   bindContextMenu();
 });
 
