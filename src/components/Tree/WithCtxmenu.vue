@@ -65,6 +65,8 @@ import addone from '@/assets/image/add-one.png';
 //@ts-ignore
 import Delete from '@/assets/image/delete.png';
 import { useAttrs } from 'vue';
+//@ts-ignore
+import { def_menuItems, def_treeData } from './default';
 
 const attrs = useAttrs();
 
@@ -87,91 +89,11 @@ const props = defineProps({
   },
   data: {
     type: Array<any>,
-    default: () => [
-      {
-        label: 'Node 1',
-        children: [
-          {
-            label: 'Node 1-1',
-            children: [
-              {
-                label: 'Node 1-1-1',
-              },
-              {
-                label: 'Node 1-1-2',
-              },
-            ],
-          },
-          {
-            label: 'Node 1-2',
-          },
-          {
-            label: 'Node 1-3',
-          },
-        ],
-      },
-      {
-        label: 'Node 2',
-        children: [
-          {
-            label: 'Node 2-1',
-            children: [
-              {
-                label: 'Node 2-1-1',
-              },
-              {
-                label: 'Node 2-1-2',
-              },
-            ],
-          },
-          {
-            label: 'Node 2-2',
-          },
-          {
-            label: 'Node 2-3',
-          },
-        ],
-      },
-      {
-        label: 'Node 3',
-        children: [
-          {
-            label: 'Node 3-1',
-            children: [
-              {
-                label: 'Node 3-1-1',
-              },
-              {
-                label: 'Node 3-1-2',
-              },
-            ],
-          },
-          {
-            label: 'Node 3-2',
-          },
-          {
-            label: 'Node 3-3',
-          },
-        ],
-      },
-    ],
+    default: () => def_treeData,
   },
   menuItems: {
     type: Array,
-    default: [
-      {
-        label: '添加',
-        action: () => {
-          console.log('添加');
-        },
-      },
-      {
-        label: '删除',
-        action: () => {
-          console.log('删除');
-        },
-      },
-    ],
+    default: def_menuItems,
   },
 });
 
