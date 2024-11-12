@@ -48,11 +48,11 @@ const form = ref({
 })
 
 const searchByTargetName = () => {
-    $bus.emit('Table:searchByTargetName', form.value.targetName)
+    $bus.emit('$:Table:searchByTargetName', form.value.targetName)
 }
 
 const add_row = () => {
-    $bus.emit('Table:add_row')
+    $bus.emit('$:Table:add_row')
 }
 
 

@@ -4,9 +4,11 @@ import { onMounted, onBeforeUnmount, defineComponent } from 'vue';
 import AppTest from './AppTest.vue';
 //@ts-ignore
 import AppDialogs from './AppDialogs.vue';
+//@ts-ignore
+import AppBus from './AppBus.vue';
 
 export default defineComponent({
-  components: { AppTest, AppDialogs},
+  components: { AppTest, AppDialogs, AppBus },
   setup() {
     const designWidth = 1920; // 设计图的宽度
     const designHeight = 1080; // 设计图的高度
@@ -51,8 +53,9 @@ export default defineComponent({
 
 <template>
   <div id="app">
-    <AppTest></AppTest>
-    <AppDialogs></AppDialogs>
+    <AppTest />
+    <AppBus />
+    <AppDialogs />
     <RouterView />
   </div>
 </template>

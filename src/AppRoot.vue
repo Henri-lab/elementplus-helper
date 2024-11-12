@@ -15,11 +15,11 @@ const matched = ref(false); // 匹配状态
 
 const fail = () => {
   matched.value = false;
-  $bus.emit('Test:showTestButton', false);
+  $bus.emit('$:Test:showTestButton', false);
 };
 const success = () => {
   matched.value = true;
-  $bus.emit('Test:showTestButton', true);
+  $bus.emit('$:Test:showTestButton', true);
   setTimeout(() => (matched.value = false), 3000); // 3秒后隐藏匹配信息
 };
 // 处理按键输入

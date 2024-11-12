@@ -110,7 +110,7 @@ export default defineComponent({
     };
 
     const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
-      $bus.emit('Dialog:addSysToTree:open');
+      $bus.emit('$:Dialog:addSysToTree:open');
     };
 
     const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {

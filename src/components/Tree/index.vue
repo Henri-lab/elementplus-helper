@@ -188,15 +188,13 @@ const handleMenuAction = (action: string) => {
 
 // 添加子节点
 const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
-  // const parentNode = findNode(data.value, parentNodeId);
-  // if (parentNode) {
-  //   parentNode.children = parentNode.children || [];
-  //   parentNode.children.push(newNode);
-  // } else {
-  //   console.warn('Parent node not found');
-  // }
-
-  $bus.emit('Dialog:addSysToTree:open');
+  const parentNode = findNode(data.value, parentNodeId);
+  if (parentNode) {
+    parentNode.children = parentNode.children || [];
+    parentNode.children.push(newNode);
+  } else {
+    console.warn('Parent node not found');
+  }
 };
 
 // 删除节点
