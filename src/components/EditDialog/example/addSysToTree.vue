@@ -94,7 +94,10 @@ async function handleFormSubmit() {
   formData.value = myFormRef.value.getFormData();
   if (status == 'submit:success') {
     closeDialog();
+    $bus.emit('$:Dialog->Tree:addNode', formData.value);
+    $bus.emit('$:Dialog->Tree:updateNode', formData.value);
   }
+
   // await new Promise((resolve) => setTimeout(resolve, 1000)); // 假设这是一个异步请求
 }
 

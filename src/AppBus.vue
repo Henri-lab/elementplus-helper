@@ -1,4 +1,4 @@
-<script set>
+<script setup>
 import $bus from './utils/bus';
 $bus.on('$:Dialog:addSysToTree:open', (arg) => {
   $bus.emit('Dialog:addSysToTree:open', arg);
@@ -23,4 +23,17 @@ $bus.on('$:Table:searchByTargetName', (arg) => {
 $bus.on('$:Test:showTestButton', (arg) => {
   $bus.emit('Test:showTestButton', arg);
 });
+
+$bus.on('$:Dialog->Tree:addNode', (arg) => {
+  const label = arg.city || '<?>';
+  arg.label = label;
+  $bus.emit('Dialog->Tree:addNode', arg);
+});
+
+$bus.on('$:Dialog->Tree:updateNode', (arg) => {
+  const label = arg.city || '<?>';
+  arg.label = label;
+  $bus.emit('Dialog->Tree:updateNode', arg);
+});
 </script>
+<template></template>

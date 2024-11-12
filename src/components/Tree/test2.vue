@@ -73,6 +73,20 @@ import { def_treeData } from './default';
 
 const attrs = useAttrs();
 
+$bus.on('Dialog->Tree:addNode', (formData: any) => {
+  addNode(selectedNode.value!.id, {
+    id: Date.now(),
+    label: formData.label,
+  });
+});
+
+$bus.on('Dialog->Tree:updateNode', (formData: any) => {
+  updateNode(selectedNode.value!.id, {
+    id: Date.now(),
+    label: formData.label,
+  });
+});
+
 interface Tree {
   id?: number;
   label: string;
@@ -138,11 +152,11 @@ const handleContextMenu = (event: MouseEvent, node: Tree) => {
 const handleMenuAction = (action: string) => {
   if (selectedNode.value) {
     if (action === 'add') {
-      addNode(selectedNode.value.id, { id: Date.now(), label: '新节点' });
+      $bus.emit('$:Dialog:addSysToTree:open');
     } else if (action === 'delete') {
       deleteNode(selectedNode.value.id, data.value);
     } else if (action === 'edit') {
-      updateNode(selectedNode.value.id, { label: '编辑节点' });
+      $bus.emit('$:Dialog:addSysToTree:open');
     }
     contextMenuVisible.value = false; // 操作完成后隐藏菜单
   }
@@ -157,8 +171,6 @@ const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   } else {
     console.warn('Parent node not found');
   }
-
-  $bus.emit('$:Dialog:addSysToTree:open');
 };
 
 // 删除节点
