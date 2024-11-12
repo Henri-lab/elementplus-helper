@@ -6,18 +6,6 @@
       <router-link class="item" to="/testComponents"
         ><el-button>组件测试</el-button></router-link
       >
-      <router-link class="item" to="/layout/display0/@targetSystem"
-        ><el-button>目标体系布局</el-button></router-link
-      >
-      <router-link class="item" to="/layout/display0/targetSystem"
-        ><el-button>目标体系内容</el-button></router-link
-      >
-      <router-link class="item" to="/layout/display1/@targetValueAnalyse"
-        ><el-button>目标价值分析布局</el-button></router-link
-      >
-      <router-link class="item" to="/layout/display1/targetValueAnalyse"
-        ><el-button>目标价值分析内容</el-button></router-link
-      >
     </div>
   </div>
 </template>

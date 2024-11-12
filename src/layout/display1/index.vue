@@ -14,9 +14,6 @@
                         <RouterView name="main_m" class="main_m"></RouterView>
                         <RouterView name="main_f" class="main_f"></RouterView>
                     </el-main>
-                    <el-footer>
-                        <RouterView name="footer"></RouterView>
-                    </el-footer>
                 </el-container>
             </el-container>
         </el-container>

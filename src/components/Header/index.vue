@@ -28,7 +28,7 @@ import DataAndTime from '../DataAndTime/base.vue';
 const routerLinks = [
   { path: '/layout/display0/targetSystem', name: '目标体系' },
   { path: '/layout/display1/targetValueAnalyse', name: '目标价值分析' },
-  { path: '/layout/display2/dataMaintain', name: '数据维护' },
+  { path: '/layout/display0/dataMaintain', name: '数据维护' },
 ];
 </script>
 
