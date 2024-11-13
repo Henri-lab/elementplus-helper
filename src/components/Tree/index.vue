@@ -33,8 +33,8 @@
             <el-input
               v-else
               v-model="nodeEditingValues[data.id]"
-              class="label-edit"
-              @blur="saveLabel(data, node)"
+              class="label-editing"
+              @dblclick="cancelEditing(data, node)"
               @keyup.enter="saveLabel(data, node)"
               @keyup.esc="cancelEditing(data, node)"
             />
@@ -44,8 +44,14 @@
                 :src="addone"
                 style="height: 16px; margin: 0 5px"
                 fit="none"
+                @click="addNode(data.id, { id: Date.now(), label: '新节点' })"
               />
-              <el-image :src="Delete" style="height: 16px" fit="cover" />
+              <el-image
+                :src="Delete"
+                style="height: 16px"
+                fit="cover"
+                @click="deleteNode(data.id, data)"
+              />
             </div>
           </span>
         </template>
@@ -76,8 +82,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { ElTree, ElInput } from 'element-plus';
+import { nextTick, ref, watch } from 'vue';
+import { ElTree, ElInput, ElMessage } from 'element-plus';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
 //@ts-ignore
@@ -119,7 +125,6 @@ const selectedNode = ref<Tree | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
 const data = ref<Tree[]>(props.data);
 const treeContainerRef = ref<HTMLElement | null>(null);
-
 // Store the editing state of each node by ID
 const nodeEditingStatus = ref<Record<number, boolean>>({});
 const nodeEditingValues = ref<Record<number, string>>({});
@@ -133,30 +138,6 @@ const filterNode = ((value: string, data: Tree): boolean => {
   if (!value) return true;
   return data.label.includes(value);
 }) as any;
-
-// Enable editing mode for a node
-const enableEditing = (nodeData: Tree, node?: any) => {
-  nodeEditingStatus.value[nodeData.id!] = true;
-  nodeEditingValues.value[nodeData.id!] = nodeData.label;
-};
-
-// Save the label to the actual tree data and exit editing mode
-const saveLabel = (nodeData: Tree, node?: any) => {
-  const updatedNode = findNode(data.value, nodeData.id);
-  if (updatedNode) {
-    updatedNode.label = nodeEditingValues.value[nodeData.id!];
-    console.log(updatedNode, 'update');
-
-    // Trigger reactivity by ‘replacing the array’
-    data.value = [...data.value];
-  }
-  nodeEditingStatus.value[nodeData.id!] = false;
-};
-
-// Cancel editing without saving
-const cancelEditing = (nodeData: Tree, node?: any) => {
-  nodeEditingStatus.value[nodeData.id!] = false;
-};
 
 // Handle right-click menu and position it within the component container
 const handleContextMenu = (event: MouseEvent, node: Tree) => {
@@ -193,6 +174,7 @@ const handleMenuAction = (action: string) => {
   }
 };
 
+//node operation methods:add delete edit find
 // Add a child node
 const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   const parentNode = findNode(data.value, parentNodeId);
@@ -201,8 +183,13 @@ const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
     parentNode.children.push(newNode);
     data.value = [...data.value];
   }
+  // After updating the data, set the new node as the current one
+  // nextTick(() => {
+  //   if (treeRef.value) {
+  //     treeRef.value.setCurrentKey(newNode.id);
+  //   }
+  // });
 };
-
 // Delete a node
 const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
   for (let i = 0; i < nodes.length; i++) {
@@ -217,7 +204,27 @@ const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
   }
   return false;
 };
+// Enable editing mode for a node
+const enableEditing = (nodeData: Tree, node?: any) => {
+  nodeEditingStatus.value[nodeData.id!] = true;
+  nodeEditingValues.value[nodeData.id!] = nodeData.label;
+};
 
+// Save the label to the actual tree data and exit editing mode
+const saveLabel = (nodeData: Tree, node?: any) => {
+  const updatedNode = findNode(data.value, nodeData.id);
+  if (updatedNode) {
+    updatedNode.label = nodeEditingValues.value[nodeData.id!];
+    ElMessage.success('修改成功');
+    // Trigger reactivity by ‘replacing the array’
+    data.value = [...data.value];
+  }
+  nodeEditingStatus.value[nodeData.id!] = false;
+};
+// Cancel editing without saving
+const cancelEditing = (nodeData: Tree, node?: any) => {
+  nodeEditingStatus.value[nodeData.id!] = false;
+};
 // Find a node by ID
 const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
   for (const node of nodes) {
@@ -246,6 +253,10 @@ const getClickedNodeInfo = (node: Tree) => {
       .label {
         margin-right: 10px;
         cursor: pointer;
+      }
+      .label-editing {
+        @include animate-glowing-border;
+        padding: 0;
       }
 
       .operations {
