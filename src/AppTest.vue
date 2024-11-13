@@ -14,11 +14,11 @@
       </router-link>
       <div class="routerInfo">
         <div class="route-compInfo">
-          <h3>匹配的组件信息：</h3>
+          <h3 style="background: pink">route_comp_path:</h3>
           <h2>{{ matchedComponents }}</h2>
         </div>
-        <span>当前路由：</span>
-        <span>{{ route.path }}</span>
+        <span style="background: pink">route-name:</span>
+        <span>{{ route.name }}</span>
       </div>
     </div>
   </div>
@@ -57,7 +57,6 @@ const matchedComponents = computed(() => {
   route.matched.forEach((record) => {
     Object.assign(components, record.components);
   });
-  console.log(components.default.__file);
   return components.default.__file;
 });
 
