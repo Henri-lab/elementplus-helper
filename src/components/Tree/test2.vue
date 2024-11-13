@@ -101,7 +101,7 @@ const props = defineProps({
   },
   test: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   data: {
     type: Array as () => Tree[],
