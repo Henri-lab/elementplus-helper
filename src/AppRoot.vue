@@ -43,8 +43,6 @@ const handleKeydown = (event: KeyboardEvent) => {
 
 // 监听和移除键盘事件
 onMounted(() => {
-  console.log('demo1 onMounted');
-
   window.addEventListener('keydown', handleKeydown);
 });
 
