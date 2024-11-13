@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 //@ts-ignore
-import TreeWithCtxmenu from './WithCtxmenu.vue';
+import TreeWithCtxmenu from '../WithCtxmenu.vuee';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
 //@ts-ignore
