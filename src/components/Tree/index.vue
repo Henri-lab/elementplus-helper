@@ -96,10 +96,10 @@ import { def_treeData } from './default';
 import { useAttrs } from 'vue';
 const attrs = useAttrs();
 
-interface Tree {
+interface TreeNode {
   id?: number;
   label: string;
-  children?: Tree[];
+  children?: TreeNode[];
   check?: boolean;
 }
 
@@ -113,7 +113,7 @@ const props = defineProps({
     default: false,
   },
   data: {
-    type: Array as () => Tree[],
+    type: Array as () => TreeNode[],
     default: () => def_treeData,
   },
 });
@@ -122,9 +122,9 @@ const filterText = ref('tree-index');
 const treeRef = ref<InstanceType<typeof ElTree>>();
 const contextMenuVisible = ref(false);
 const menuPosition = ref({ x: 0, y: 0 });
-const selectedNode = ref<Tree | null>(null);
+const selectedNode = ref<TreeNode | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
-const data = ref<Tree[]>(props.data);
+const data = ref<TreeNode[]>(props.data);
 const treeContainerRef = ref<HTMLElement | null>(null);
 // Store the editing state of each node by ID
 const nodeEditingStatus = ref<Record<number, boolean>>({});
@@ -135,13 +135,13 @@ watch(filterText, (val) => {
   treeRef.value!.filter(val);
 });
 
-const filterNode = ((value: string, data: Tree): boolean => {
+const filterNode = ((value: string, data: TreeNode): boolean => {
   if (!value) return true;
   return data.label.includes(value);
 }) as any;
 
 // Handle right-click menu and position it within the component container
-const handleContextMenu = (event: MouseEvent, node: Tree) => {
+const handleContextMenu = (event: MouseEvent, node: TreeNode) => {
   event.preventDefault();
   selectedNode.value = node;
 
@@ -177,7 +177,7 @@ const handleMenuAction = (action: string) => {
 
 //node operation methods:add delete edit find
 // Add a child node
-const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
+const addNode = (parentNodeId: number | undefined, newNode: TreeNode) => {
   const parentNode = findNode(data.value, parentNodeId);
   if (parentNode) {
     parentNode.children = parentNode.children || [];
@@ -192,7 +192,7 @@ const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   // });
 };
 // Delete a node
-const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
+const deleteNode = (nodeId: number | undefined, nodes: TreeNode[]) => {
   for (let i = 0; i < nodes.length; i++) {
     if (nodes[i].id === nodeId) {
       nodes.splice(i, 1);
@@ -206,13 +206,13 @@ const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
   return false;
 };
 // Enable editing mode for a node
-const enableEditing = (nodeData: Tree, node?: any) => {
+const enableEditing = (nodeData: TreeNode, node?: any) => {
   nodeEditingStatus.value[nodeData.id!] = true;
   nodeEditingValues.value[nodeData.id!] = nodeData.label;
 };
 
 // Save the label to the actual tree data and exit editing mode
-const saveLabel = (nodeData: Tree, node?: any) => {
+const saveLabel = (nodeData: TreeNode, node?: any) => {
   const updatedNode = findNode(data.value, nodeData.id);
   if (updatedNode) {
     updatedNode.label = nodeEditingValues.value[nodeData.id!];
@@ -223,11 +223,11 @@ const saveLabel = (nodeData: Tree, node?: any) => {
   nodeEditingStatus.value[nodeData.id!] = false;
 };
 // Cancel editing without saving
-const cancelEditing = (nodeData: Tree, node?: any) => {
+const cancelEditing = (nodeData: TreeNode, node?: any) => {
   nodeEditingStatus.value[nodeData.id!] = false;
 };
 // Find a node by ID
-const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
+const findNode = (nodes: TreeNode[], nodeId: number | undefined): TreeNode | null => {
   for (const node of nodes) {
     if (node.id === nodeId) return node;
     if (node.children) {
@@ -239,7 +239,7 @@ const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
 };
 
 // Get clicked node info
-const getClickedNodeInfo = (node: Tree) => {
+const getClickedNodeInfo = (node: TreeNode) => {
   // console.log('点击的节点:', node);
 };
 
