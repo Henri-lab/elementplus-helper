@@ -19,16 +19,22 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import AppRoot from './AppRoot.vue';
-
 const isTestBar = ref(false);
 const isTestBtns = ref(false);
 const handleKeydown = (event) => {
   if (event.key === 'v' || event.key === 'V') {
     // 用户按下了 "v" 键（包括小写和大写）
-    console.log(
-      '%cWelcome!🎉🎉🎉',
-      'color: white; background-color: blue; font-size: 12px; padding: 4px;'
-    );
+    if (!isTestBar.value) {
+      console.log(
+        '%cWelcome!🎉🎉🎉',
+        'color: black; background-color: wheat; font-size: 12px; padding: 4px;'
+      );
+    } else {
+      console.log(
+        '%cBye!🌛🌛🌛',
+        'color: wheat; background-color: black; font-size: 12px; padding: 4px;'
+      );
+    }
     // 在这里可以添加要执行的逻辑
     isTestBar.value = !isTestBar.value;
   }
@@ -48,9 +54,7 @@ const trigger = () => {
 };
 
 //其他测试
-onMounted(() => {
-
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
