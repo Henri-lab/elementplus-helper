@@ -1,63 +1,82 @@
 <template>
-  <el-input
-    v-model="filterText"
-    style="width: 240px"
-    placeholder="Filter keyword"
-  />
-  <div :id="idOfTree" v-bind="$attrs">
-    <el-tree
-      ref="treeRef"
-      auto-expand-parent
-      class="filter-tree"
-      :data="data"
-      :props="defaultProps"
-      :default-expand-all="false"
-      :filter-node-method="filterNode"
-      @node-click="getClickedNodeInfo"
-      @node-contextmenu="handleContextMenu"
-    >
-      <template #default="{ node }">
-        <span class="tree-node">
-          <div class="checkbox">
-            <el-checkbox v-model="node.data.check" :checked="node.data.check" />
-          </div>
-          <span class="label">{{ node.label }}</span>
-          <div class="operations image">
-            <el-image :src="connection" style="height: 16px" fit="cover" />
-            <el-image
-              :src="addone"
-              style="height: 16px; margin: 0 5px"
-              fit="none"
-              @click="handleAddOne(node)"
+  <div ref="treeContainerRef" class="tree-container">
+    <el-input
+      v-model="filterText"
+      style="width: 240px"
+      placeholder="Filter keyword"
+    />
+    <div :id="idOfTree" v-bind="$attrs">
+      <el-tree
+        ref="treeRef"
+        auto-expand-parent
+        class="filter-tree"
+        :data="data"
+        :props="defaultProps"
+        :default-expand-all="false"
+        :filter-node-method="filterNode"
+        @node-click="getClickedNodeInfo"
+        @node-contextmenu="handleContextMenu"
+      >
+        <template #default="{ node }">
+          <span class="tree-node">
+            <div class="checkbox">
+              <el-checkbox
+                v-model="node.data.check"
+                :checked="node.data.check"
+              />
+            </div>
+            <!-- Conditionally render label or input based on editing state -->
+            <span
+              v-if="!nodeEditingStatus[node.id]"
+              class="label"
+              @dblclick="enableEditing(node)"
+            >
+              {{ node.label }}
+            </span>
+            <el-input
+              v-else
+              v-model="nodeEditingValues[node.id]"
+              class="label-edit"
+              @blur="saveLabel(node)"
+              @keyup.enter="saveLabel(node)"
+              @keyup.esc="cancelEditing(node)"
             />
-            <el-image :src="Delete" style="height: 16px" fit="cover" />
-          </div>
-        </span>
-      </template>
-    </el-tree>
-  </div>
+            <div class="operations image">
+              <el-image :src="connection" style="height: 16px" fit="cover" />
+              <el-image
+                :src="addone"
+                style="height: 16px; margin: 0 5px"
+                fit="none"
+              />
+              <el-image :src="Delete" style="height: 16px" fit="cover" />
+            </div>
+          </span>
+        </template>
+      </el-tree>
+    </div>
 
-  <!-- 自定义右键菜单 -->
-  <div
-    v-if="contextMenuVisible"
-    class="context-menu"
-    :style="{ top: `${menuPosition.y}px`, left: `${menuPosition.x}px` }"
-  >
-    <ul>
-      <li @click="handleMenuAction('add')">添加子节点</li>
-      <li @click="handleMenuAction('delete')">删除节点</li>
-      <li @click="handleMenuAction('edit')">编辑节点</li>
-    </ul>
-  </div>
+    <!-- 自定义右键菜单 -->
+    <div
+      v-if="contextMenuVisible"
+      class="context-menu"
+      :style="{ top: `${menuPosition.y}px`, left: `${menuPosition.x}px` }"
+    >
+      <ul class="ul">
+        <li class="li" @click="handleMenuAction('add')">添加子节点</li>
+        <li class="li" @click="handleMenuAction('delete')">删除节点</li>
+        <li class="li" @click="handleMenuAction('edit')">编辑节点</li>
+      </ul>
+    </div>
 
-  <div class="test" v-if="props.test">
-    {{ data }}
+    <div class="test" v-if="props.test">
+      {{ data }}
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import { ElTree } from 'element-plus';
+import { ElTree, ElInput } from 'element-plus';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
 //@ts-ignore
@@ -97,13 +116,17 @@ const filterText = ref('tree-index');
 const treeRef = ref<InstanceType<typeof ElTree>>();
 const contextMenuVisible = ref(false);
 const menuPosition = ref({ x: 0, y: 0 });
-const selectedNode = ref<Tree | null>(null); // 保存当前右键点击的节点
+const selectedNode = ref<Tree | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
-
-// 数据是响应式的
 const data = ref<Tree[]>(props.data);
 
-// 监听输入框过滤关键字
+const treeContainerRef = ref<HTMLElement | null>(null); // Reference to the container
+
+// Store the editing state of each node by ID
+const nodeEditingStatus = ref<Record<number, boolean>>({});
+const nodeEditingValues = ref<Record<number, string>>({});
+
+// Watch filter text input and filter nodes accordingly
 watch(filterText, (val) => {
   treeRef.value!.filter(val);
 });
@@ -113,26 +136,56 @@ const filterNode = ((value: string, data: Tree): boolean => {
   return data.label.includes(value);
 }) as any;
 
-const handleAddOne = (node: any) => {
-  console.log('addone');
+// Enable editing mode for a node
+const enableEditing = (node: Tree) => {
+  nodeEditingStatus.value[node.id!] = true;
+  nodeEditingValues.value[node.id!] = node.label; // Load current label into editable value
 };
 
-// 处理右键菜单的显示
+// Save the label and exit editing mode
+const saveLabel = (node: Tree) => {
+  // node.label = nodeEditingValues.value[node.id!];//bug
+  // it’s generally better to update the data object by replacing the entire node in the array,
+  // as Vue’s reactivity system may not always track individual properties correctly when working with nested objects in a reactive array.
+  const updatedNode = findNode(data.value, node.id);
+  console.log('updated node', updatedNode,node.id);
+  
+  if (updatedNode) {
+    updatedNode.label = nodeEditingValues.value[node.id!];
+    
+    data.value = [...data.value]; // sloution：trigger reactivity by replacing the entire data array
+  }
+  nodeEditingStatus.value[node.id!] = false;
+};
+
+// Cancel editing without saving
+const cancelEditing = (node: Tree) => {
+  nodeEditingStatus.value[node.id!] = false;
+};
+
+// Handle right-click menu and position it within the component container
 const handleContextMenu = (event: MouseEvent, node: Tree) => {
-  event.preventDefault(); // 阻止默认右键菜单
-  selectedNode.value = node; // 保存当前右键点击的节点
-  menuPosition.value = { x: event.clientX, y: event.clientY }; // 设置菜单位置
-  contextMenuVisible.value = true;
+  event.preventDefault(); // Prevent the default context menu
+  selectedNode.value = node; // Store the current right-clicked node
 
-  // 在点击页面其他位置时关闭右键菜单
-  const closeContextMenu = () => {
-    contextMenuVisible.value = false;
-    document.removeEventListener('click', closeContextMenu);
-  };
-  document.addEventListener('click', closeContextMenu);
+  if (treeContainerRef.value) {
+    const containerRect = treeContainerRef.value.getBoundingClientRect();
+    const relativeX = event.clientX - containerRect.left;
+    const relativeY = event.clientY - containerRect.top;
+
+    menuPosition.value = { x: relativeX, y: relativeY }; // Set the position relative to the container
+    contextMenuVisible.value = true;
+
+    // Close the menu when clicking elsewhere
+    const closeContextMenu = () => {
+      contextMenuVisible.value = false;
+      document.removeEventListener('click', closeContextMenu);
+    };
+    document.addEventListener('click', closeContextMenu);
+  }
 };
 
-// 处理右键菜单项的操作
+// Handle menu actions
 const handleMenuAction = (action: string) => {
   if (selectedNode.value) {
     if (action === 'add') {
@@ -140,13 +193,13 @@ const handleMenuAction = (action: string) => {
     } else if (action === 'delete') {
       deleteNode(selectedNode.value.id, data.value);
     } else if (action === 'edit') {
-      updateNode(selectedNode.value.id, { label: '编辑节点' });
+      enableEditing(selectedNode.value); // Enable editing mode
     }
-    contextMenuVisible.value = false; // 操作完成后隐藏菜单
+    contextMenuVisible.value = false; // Hide the menu after an action
   }
 };
 
-// 添加子节点
+// Add a child node
 const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   const parentNode = findNode(data.value, parentNodeId);
   if (parentNode) {
@@ -157,7 +210,7 @@ const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   }
 };
 
-// 删除节点
+// Delete a node
 const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
   for (let i = 0; i < nodes.length; i++) {
     if (nodes[i].id === nodeId) {
@@ -171,20 +224,7 @@ const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
   return false;
 };
 
-// 更新节点
-const updateNode = (
-  nodeId: number | undefined,
-  updatedProperties: Partial<Tree>
-) => {
-  const node = findNode(data.value, nodeId);
-  if (node) {
-    Object.assign(node, updatedProperties);
-  } else {
-    console.warn('Node not found');
-  }
-};
-
-// 查找节点
+// Find a node by ID
 const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
   for (const node of nodes) {
     if (node.id === nodeId) return node;
@@ -196,47 +236,50 @@ const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
   return null;
 };
 
+// Get clicked node info
 const getClickedNodeInfo = (node: Tree) => {
   console.log('点击的节点:', node);
 };
 </script>
 
 <style lang="scss" scoped>
-.filter-tree {
-  @include filter-tree;
-  .tree-node {
-    @include flexbox;
+.tree-container {
+  position: relative;
+  .filter-tree {
+    @include filter-tree;
+    .tree-node {
+      @include flexbox;
 
-    .label {
-      margin-right: 10px;
-      cursor: pointer;
-    }
+      .label {
+        margin-right: 10px;
+        cursor: pointer;
+      }
 
-    .operations {
-      background-color: $bg_color;
+      .operations {
+        background-color: $bg_color;
+      }
     }
   }
-}
-
-.context-menu {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 5px;
-  width: 120px;
-  z-index: 1000;
-}
-.context-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.context-menu li {
-  padding: 8px;
-  cursor: pointer;
-}
-.context-menu li:hover {
-  background-color: #f0f0f0;
+  .context-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    width: 120px;
+    z-index: 1000;
+    .ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      .li {
+        padding: 8px;
+        cursor: pointer;
+        &:hover {
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
 }
 </style>

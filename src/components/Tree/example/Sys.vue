@@ -1,8 +1,4 @@
 <template>
-  <ContextMenu
-    :targetElement="targetElement"
-    :menuItems="menuOptions"
-  ></ContextMenu>
   <div id="sysTree" ref="sysTree">
     <Tree id="idOfSysTree" :data="treeData" :test="isTest" ref="sysTree"></Tree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
@@ -27,20 +23,6 @@ const isShowTestBtn = ref(false);
 const targetElement = ref(null);
 const sysTree = ref(null);
 const thisTree = sysTree;
-const menuOptions = [
-  {
-    label: '添加',
-    action: ({ curNodeRef }: any) => {
-      console.log('添加', curNodeRef.value);
-    },
-  },
-  {
-    label: '删除',
-    action: () => {
-      console.log('删除');
-    },
-  },
-];
 const props = defineProps({
   treeData: {
     type: Array<any>,
