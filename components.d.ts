@@ -75,7 +75,7 @@ declare module 'vue' {
     Form: typeof import('./src/components/Form/index.vue')['default']
     Header: typeof import('./src/components/Header/index.vue')['default']
     Idex: typeof import('./src/components/Form/idex.vue')['default']
-    'Index deving': typeof import('./src/components/Tree/index deving.vue')['default']
+    Index1: typeof import('./src/components/Tree/history/index1.vue')['default']
     Index2: typeof import('./src/components/Tree/index2.vue')['default']
     'MatainA&B&C': typeof import('./src/components/Tabs/example/MatainA&B&C.vue')['default']
     MindMapNode: typeof import('./src/components/Recursion/MindMapNode.vue')['default']

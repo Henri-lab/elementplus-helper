@@ -17,6 +17,7 @@
         @node-click="getClickedNodeInfo"
         @node-contextmenu="handleContextMenu"
       >
+        <!-- data here is called node，node here is called nodeInfo-->
         <template #default="{ data, node }">
           <span class="tree-node">
             <div class="checkbox">
@@ -35,7 +36,7 @@
               v-model="nodeEditingValues[data.id]"
               class="label-editing"
               @dblclick="cancelEditing(data, node)"
-              @keyup.enter="saveLabel(data, node)"
+              @keyup.enter="handleSaveLabel(data, node)"
               @keyup.esc="cancelEditing(data, node)"
             />
             <div class="operations image">
@@ -44,13 +45,13 @@
                 :src="addone"
                 style="height: 16px; margin: 0 5px"
                 fit="none"
-                @click="addNode(data.id, { id: Date.now(), label: '新节点' })"
+                @click="handleAddNode('fromImage', data, node)"
               />
               <el-image
                 :src="Delete"
                 style="height: 16px"
                 fit="cover"
-                @click="deleteNode(data.id, data)"
+                @click="handleDeleteNode('fromImage', data, node)"
               />
             </div>
           </span>
@@ -85,37 +86,73 @@
 import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { ElTree, ElInput, ElMessage } from 'element-plus';
 //@ts-ignore
+import $bus from '@/utils/bus';
+//@ts-ignore
 import connection from '@/assets/image/connection.png';
 //@ts-ignore
 import addone from '@/assets/image/add-one.png';
 //@ts-ignore
 import Delete from '@/assets/image/delete.png';
 import { def_treeData } from './default';
+//@ts-ignore
+import mockData from '@/mock/tree_node';
+//@ts-ignore
+import type { ITreeNode, IOperationParams } from './interface';
+import { addNode } from './tool/add';
+import { deleteNode } from './tool/del';
+//@ts-ignore
+import { updateNode, saveLabel } from './tool/update';
+import { findNode } from './tool/find';
+//@ts-ignore
+import { getKeysByValue } from '@/utils/tool';
 
 //convery property 'id' of vdom
 import { useAttrs } from 'vue';
 const attrs = useAttrs();
 
-interface TreeNode {
-  id?: number;
-  label: string;
-  children?: TreeNode[];
-  check?: boolean;
-}
+type TreeNode = ITreeNode;
+$bus.on('Dialog->Tree:addNode', (formData: any) => {});
 
+//update and edit is the same in this case
+$bus.on('Dialog->Tree:updateNode', (formData: any) => {});
 const props = defineProps({
-  idOfTree: {
-    type: String,
-    default: 'idOfTree',
-  },
   test: {
     type: Boolean,
     default: false,
   },
+  idOfTree: {
+    type: String,
+    default: 'idOfTree',
+  },
   data: {
     type: Array as () => TreeNode[],
-    default: () => def_treeData,
+    default: () => mockData() as TreeNode[],
   },
+  ctxmenuActions: {
+    type: Object,
+    default: {},
+  },
+  dialog: {
+    type: Boolean,
+    default: false,
+  },
+  newNode: {
+    type: Object,
+    default: { id: Date.now(), label: '??' },
+  },
+  uptateSuccessText: {
+    type: String,
+    default: 'Update successfully',
+  },
+  updateFailText: {
+    type: String,
+    default: 'Update failed',
+  },
+  addSuccessText: {
+    type: String,
+    default: 'Add successfully',
+  },
+  
 });
 
 const filterText = ref('tree-index');
@@ -126,9 +163,53 @@ const selectedNode = ref<TreeNode | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
 const data = ref<TreeNode[]>(props.data);
 const treeContainerRef = ref<HTMLElement | null>(null);
+const contextMenuActions = ref<any>(props.ctxmenuActions);
+const enableDialog = ref(props.dialog);
+const newNode = ref<any>(props.newNode);
+const updateSuccessText = ref(props.uptateSuccessText);
+const updateFailText = ref(props.updateFailText);
+const addSuccessText = ref(props.addSuccessText);
 // Store the editing state of each node by ID
 const nodeEditingStatus = ref<Record<number, boolean>>({});
 const nodeEditingValues = ref<Record<number, string>>({});
+
+const handleAddNode = (
+  type?: string,
+  parentNode?: ITreeNode,
+  //@ts-ignore
+  nodeInfo?: any
+) => {
+  const condition1 = type === 'fromImage' && parentNode;
+  const parentNodeId = condition1 ? parentNode.id : selectedNode.value?.id;
+
+  if (parentNodeId) {
+    //@ts-ignore
+    addNode({
+      nodesRef: data,
+      parentNodeId: parentNodeId,
+      newNode: { id: Date.now(), label: 'New Node' },
+    });
+    ElMessage.success(addSuccessText.value);
+  }
+};
+
+const handleDeleteNode = (
+  type?: string,
+  parentNode?: ITreeNode,
+  //@ts-ignore
+  nodeInfo?: any
+) => {
+  const condition1 = type === 'fromImage' && parentNode;
+  if (condition1) {
+    deleteNode({ nodesRef: data, nodeId: parentNode.id })
+      ? ElMessage.success('Node deleted')
+      : ElMessage.error('Node not found');
+  } else if (selectedNode.value) {
+    deleteNode({ nodesRef: data, nodeId: selectedNode.value.id })
+      ? ElMessage.success('Node deleted')
+      : ElMessage.error('Node not found');
+  }
+};
 
 // Watch filter text input and filter nodes accordingly
 watch(filterText, (val) => {
@@ -165,105 +246,54 @@ const handleContextMenu = (event: MouseEvent, node: TreeNode) => {
 const handleMenuAction = (action: string) => {
   if (selectedNode.value) {
     if (action === 'add') {
-      addNode(selectedNode.value.id, { id: Date.now(), label: '新节点' });
+      enableDialog.value
+        ? $bus.emit('$:Dialog:addSysToTree:open')
+        : handleAddNode();
     } else if (action === 'delete') {
-      deleteNode(selectedNode.value.id, data.value);
+      handleDeleteNode();
     } else if (action === 'edit') {
-      enableEditing(selectedNode.value);
+      enableDialog.value
+        ? $bus.emit('$:Dialog:addSysToTree:open')
+        : enableEditing(selectedNode.value);
     }
     contextMenuVisible.value = false;
   }
 };
 
-//node operation methods:add delete edit find
-// Add a child node
-const addNode = (parentNodeId: number | undefined, newNode: TreeNode) => {
-  const parentNode = findNode(data.value, parentNodeId);
-  if (parentNode) {
-    parentNode.children = parentNode.children || [];
-    parentNode.children.push(newNode);
-    data.value = [...data.value];
-  }
-  // After updating the data, set the new node as the current one
-  // nextTick(() => {
-  //   if (treeRef.value) {
-  //     treeRef.value.setCurrentKey(newNode.id);
-  //   }
-  // });
-};
-// Delete a node
-const deleteNode = (nodeId: number | undefined, nodes: TreeNode[]) => {
-  for (let i = 0; i < nodes.length; i++) {
-    if (nodes[i].id === nodeId) {
-      nodes.splice(i, 1);
-      data.value = [...data.value];
-      return true;
-    } else if (nodes[i].children) {
-      const deleted = deleteNode(nodeId, nodes[i].children!);
-      if (deleted) return true;
-    }
-  }
-  return false;
-};
 // Enable editing mode for a node
-const enableEditing = (nodeData: TreeNode, node?: any) => {
-  nodeEditingStatus.value[nodeData.id!] = true;
-  nodeEditingValues.value[nodeData.id!] = nodeData.label;
+const enableEditing = (node: TreeNode, nodeInfo?: any) => {
+  nodeEditingStatus.value[node.id!] = true;
+  nodeEditingValues.value[node.id!] = node.label;
 };
 
 // Save the label to the actual tree data and exit editing mode
-const saveLabel = (nodeData: TreeNode, node?: any) => {
-  const updatedNode = findNode(data.value, nodeData.id);
-  if (updatedNode) {
-    updatedNode.label = nodeEditingValues.value[nodeData.id!];
-    ElMessage.success('修改成功');
-    // Trigger reactivity by ‘replacing the array’
-    data.value = [...data.value];
+const handleSaveLabel = (node: TreeNode, nodeInfo: any) => {
+  const newLabel = nodeEditingValues.value[node.id!];
+  nodeEditingStatus.value[node.id!] = false;
+  const success = saveLabel({ nodesRef: data, nodeId: node.id, newLabel });
+  if (success) {
+    ElMessage.success(updateSuccessText.value);
+  } else {
+    ElMessage.error(updateFailText.value);
   }
-  nodeEditingStatus.value[nodeData.id!] = false;
+  console.log(success ? 'Label saved' : 'Node not found');
 };
 // Cancel editing without saving
-const cancelEditing = (nodeData: TreeNode, node?: any) => {
-  nodeEditingStatus.value[nodeData.id!] = false;
+const cancelEditing = (node: TreeNode, nodeInfo?: any) => {
+  nodeEditingStatus.value[node.id!] = false;
 };
-// Find a node by ID
-const findNode = (nodes: TreeNode[], nodeId: number | undefined): TreeNode | null => {
-  for (const node of nodes) {
-    if (node.id === nodeId) return node;
-    if (node.children) {
-      const found = findNode(node.children, nodeId);
-      if (found) return found;
-    }
-  }
-  return null;
+// Find a node by which is editing
+const findNodeEditing = () => {
+  return getKeysByValue(nodeEditingStatus.value, true);
 };
 
-// Get clicked node info
+// Get clicked node info(for test)
 const getClickedNodeInfo = (node: TreeNode) => {
-  // console.log('点击的节点:', node);
+  // console.log('点击的节点:', node);//ok
+  // console.log('editing', findNodeEditing());//ok
+  // console.log(nodeEditingStatus.value);//ok
+  // console.log('editing nodeId arr:', findNodeEditing());//ok
 };
-
-// function cancelEditingAll(e: any) {
-//   e.stopPropagation();
-//   const className = e.target.className;
-//   // console.log(e.target.className);
-//   // Check if the click is outside the tree container
-//   if (
-//     treeContainerRef.value &&
-//     !treeContainerRef.value.contains(e.target as Node)
-//   ) {
-//     // If clicked outside, cancel editing for all nodes
-//     data.value.forEach((node) => {
-//       nodeEditingStatus.value[node.id!] = false;
-//     });
-//   }
-// }
-// onMounted(() => {
-//   document.addEventListener('dblclick', cancelEditingAll);
-// });
-// onBeforeMount(() => {
-//   document.removeEventListener('dblclick', cancelEditingAll);
-// });
 </script>
 <style lang="scss" scoped>
 .tree-container {

@@ -8,11 +8,12 @@ export const addNode = ({
   parentNodeId,
   newNode,
 }: IOperationParams): boolean => {
+
   const parentNode = findNode({ nodesRef, nodeId: parentNodeId });
   if (parentNode && newNode) {
     parentNode.children = parentNode.children || [];
     parentNode.children.push(newNode); // Add new node to children
-    nodesRef.value = [...nodesRef.value]; // Trigger reactivity 
+    nodesRef.value = [...nodesRef.value]; // Trigger reactivity
     return true;
   }
   console.warn('Parent node not found or newNode is missing');
