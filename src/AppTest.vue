@@ -46,6 +46,11 @@ onBeforeUnmount(() => {
 const trigger = () => {
   isTestBtns.value = !isTestBtns.value;
 };
+
+//其他测试
+onMounted(() => {
+
+});
 </script>
 
 <style lang="scss" scoped>

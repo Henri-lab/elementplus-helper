@@ -1,22 +1,58 @@
-// 日期格式化🐦
-export function parseTime(time, pattern) {
-  if (arguments.length === 0 || !time) {
-    return null
+export async function JsonFormat(objOrStr: any) {
+  const JSON5 = await import('json5');
+  const prettier = await import('prettier');
+  let parsedJson, formattedJson;
+  if (typeof objOrStr === 'string') {
+    // Parse relaxed JSON with JSON5j
+    parsedJson = JSON5.parse(objOrStr);
+    // Format the parsed JSON with Prettier
+    formattedJson = prettier.format(JSON.stringify(parsedJson), {
+      parser: 'json',
+      printWidth: 80,
+      tabWidth: 2,
+    });
+  } else if (objOrStr instanceof Object) {
+    // Format the object with Prettier
+    formattedJson = prettier.format(safeStringify(objOrStr), {
+      parser: 'json',
+      printWidth: 80,
+      tabWidth: 2,
+    });
   }
-  const format = pattern || '{y}-{m}-{d} {h}:{i}:{s}'
-  let date
+  return formattedJson;
+}
+export function safeStringify(obj: any) {
+  const cache = new Set();
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.has(value)) return; // Circular reference found, discard key
+      cache.add(value);
+    }
+    return value;
+  });
+}
+// 日期格式化🐦
+export function parseTime(time: string | number | Date, pattern: string) {
+  if (arguments.length === 0 || !time) {
+    return null;
+  }
+  const format = pattern || '{y}-{m}-{d} {h}:{i}:{s}';
+  let date;
   if (typeof time === 'object') {
-    date = time
+    date = time;
   } else {
-    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
-      time = parseInt(time)
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
+      time = parseInt(time);
     } else if (typeof time === 'string') {
-      time = time.replace(new RegExp(/-/gm), '/').replace('T', ' ').replace(new RegExp(/\.[\d]{3}/gm), '');
+      time = time
+        .replace(new RegExp(/-/gm), '/')
+        .replace('T', ' ')
+        .replace(new RegExp(/\.[\d]{3}/gm), '');
     }
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
-      time = time * 1000
+    if (typeof time === 'number' && time.toString().length === 10) {
+      time = time * 1000;
     }
-    date = new Date(time)
+    date = new Date(time);
   }
   const formatObj = {
     y: date.getFullYear(),
@@ -25,18 +61,23 @@ export function parseTime(time, pattern) {
     h: date.getHours(),
     i: date.getMinutes(),
     s: date.getSeconds(),
-    a: date.getDay()
-  }
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
-    // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
-    if (result.length > 0 && value < 10) {
-      value = '0' + value
+    a: date.getDay(),
+  };
+  const time_str = format.replace(
+    /{(y|m|d|h|i|s|a)+}/g,
+    (result: string | any[], key: string) => {
+      let value = formatObj[key];
+      // Note: getDay() returns 0 on Sunday
+      if (key === 'a') {
+        return ['日', '一', '二', '三', '四', '五', '六'][value];
+      }
+      if (result.length > 0 && value < 10) {
+        value = '0' + value;
+      }
+      return value || 0;
     }
-    return value || 0
-  })
-  return time_str
+  );
+  return time_str;
 }
 
 // 添加日期范围
@@ -47,11 +88,16 @@ export function parseTime(time, pattern) {
 
 // const updatedParams = addDateRange(params, dateRange, propName);
 // console.log(updatedParams); // 输出: { params: { beginDate: '2023-01-01', endDate: '2023-01-31' } }
-export function addDateRange(params, dateRange, propName) {
+export function addDateRange(params: any, dateRange: any[], propName: string) {
   let search = params;
-  search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {};
+  search.params =
+    typeof search.params === 'object' &&
+    search.params !== null &&
+    !Array.isArray(search.params)
+      ? search.params
+      : {};
   dateRange = Array.isArray(dateRange) ? dateRange : [];
-  if (typeof (propName) === 'undefined') {
+  if (typeof propName === 'undefined') {
     search.params['beginTime'] = dateRange[0];
     search.params['endTime'] = dateRange[1];
   } else {
@@ -62,7 +108,10 @@ export function addDateRange(params, dateRange, propName) {
 }
 
 // 数据合并
-export function mergeRecursive(final, source) {
+export function mergeRecursive(
+  final: { [x: string]: any },
+  source: { [x: string]: any }
+) {
   for (let p in source) {
     try {
       if (source[p].constructor == Object) {
@@ -75,7 +124,7 @@ export function mergeRecursive(final, source) {
     }
   }
   return final;
-};
+}
 
 // 树形数据转换
 /**
@@ -121,11 +170,11 @@ const treeStructure = handleTree(employees);
   }
 ]
  */
-export function handleTree(data, id, parentId, children) {
+export function handleTree(data: any, id: any, parentId: any, children: any) {
   let config = {
     id: id || 'id',
     parentId: parentId || 'parentId',
-    childrenList: children || 'children'
+    childrenList: children || 'children',
   };
 
   let childrenListMap = {};
@@ -152,7 +201,7 @@ export function handleTree(data, id, parentId, children) {
     adaptToChildrenList(t);
   }
 
-  function adaptToChildrenList(o) {
+  function adaptToChildrenList(o: { [x: string]: any }) {
     if (childrenListMap[o[config.id]] !== null) {
       o[config.childrenList] = childrenListMap[o[config.id]];
     }
@@ -184,38 +233,40 @@ const queryString = tansParams(params);
 'name=John%20Doe&age=30&address[city]=New%20York&address[zip]=10001&tags=programming&tags=coding'
 */
 // %20 代表空格 (ASCII 码 32)
-export function tansParams(params) {
-  let result = ''
+export function tansParams(params: { [x: string]: any }) {
+  let result = '';
   for (const propName of Object.keys(params)) {
     const value = params[propName];
-    let part = encodeURIComponent(propName) + "=";
-    if (value !== null && value !== "" && typeof (value) !== "undefined") {
+    let part = encodeURIComponent(propName) + '=';
+    if (value !== null && value !== '' && typeof value !== 'undefined') {
       if (typeof value === 'object') {
         for (const key of Object.keys(value)) {
-          if (value[key] !== null && value[key] !== "" && typeof (value[key]) !== 'undefined') {
+          if (
+            value[key] !== null &&
+            value[key] !== '' &&
+            typeof value[key] !== 'undefined'
+          ) {
             let params = propName + '[' + key + ']';
-            let subPart = encodeURIComponent(params) + "=";
-            result += subPart + encodeURIComponent(value[key]) + "&";//注意会遗留一个&
+            let subPart = encodeURIComponent(params) + '=';
+            result += subPart + encodeURIComponent(value[key]) + '&'; //注意会遗留一个&
           }
         }
       } else {
-        result += part + encodeURIComponent(value) + "&";
+        result += part + encodeURIComponent(value) + '&';
       }
     }
   }
-  return result.slice(0, -1)
+  return result.slice(0, -1);
 }
 
 // 返回项目路径（保险：将路径中多余的/去掉）
-export function getNormalPath(p) {
+export function getNormalPath(p: string) {
   if (p.length === 0 || !p || p == 'undefined') {
-    return p
-  };
-  let res = p.replace('//', '/')
+    return p;
+  }
+  let res = p.replace('//', '/');
   if (res[res.length - 1] === '/') {
-    return res.slice(0, res.length - 1)
+    return res.slice(0, res.length - 1);
   }
   return res;
 }
-
-

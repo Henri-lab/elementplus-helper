@@ -69,7 +69,11 @@
     </div>
 
     <div class="test" v-if="props.test">
+      <el-divider>treeData</el-divider>
+      <br />
+      <!-- {{ format_data }} -->
       {{ data }}
+      <br />
     </div>
   </div>
 </template>
@@ -87,6 +91,8 @@ import Delete from '@/assets/image/delete.png';
 import $bus from '@/utils/bus';
 import { def_treeData } from './default';
 import { useAttrs } from 'vue';
+//@ts-ignore
+// import { JsonFormat } from '@/utils/format';
 
 const attrs = useAttrs();
 
@@ -104,7 +110,7 @@ const props = defineProps({
   },
   test: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   data: {
     type: Array as () => Tree[],
@@ -119,13 +125,11 @@ const menuPosition = ref({ x: 0, y: 0 });
 const selectedNode = ref<Tree | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
 const data = ref<Tree[]>(props.data);
-
 const treeContainerRef = ref<HTMLElement | null>(null); // Reference to the container
 
 // Store the editing state of each node by ID
 const nodeEditingStatus = ref<Record<number, boolean>>({});
 const nodeEditingValues = ref<Record<number, string>>({});
-
 // Watch filter text input and filter nodes accordingly
 watch(filterText, (val) => {
   treeRef.value!.filter(val);
@@ -148,11 +152,11 @@ const saveLabel = (node: Tree) => {
   // it’s generally better to update the data object by replacing the entire node in the array,
   // as Vue’s reactivity system may not always track individual properties correctly when working with nested objects in a reactive array.
   const updatedNode = findNode(data.value, node.id);
-  console.log('updated node', updatedNode,node.id);
-  
+  console.log('updated node', updatedNode, node.id);
+
   if (updatedNode) {
     updatedNode.label = nodeEditingValues.value[node.id!];
-    
+
     data.value = [...data.value]; // sloution：trigger reactivity by replacing the entire data array
   }
   nodeEditingStatus.value[node.id!] = false;
@@ -240,6 +244,18 @@ const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
 const getClickedNodeInfo = (node: Tree) => {
   console.log('点击的节点:', node);
 };
+
+//================================================================
+//@root权限使用
+// const format_data = ref<any>('');
+// watch(
+//   () => data,
+//   async (data) => {
+//     format_data.value = (await JsonFormat(data)) || data || 'fail loading bind-data';
+//   },
+//   { immediate: true, deep: true }
+// );
+//================================================================
 </script>
 
 <style lang="scss" scoped>
@@ -281,5 +297,10 @@ const getClickedNodeInfo = (node: Tree) => {
       }
     }
   }
+}
+
+.test{
+  background: black;
+  color: red;
 }
 </style>
