@@ -95,6 +95,8 @@ declare module 'vue' {
     Test: typeof import('./src/components/EditDialog/test.vue')['default']
     test2: typeof import('./src/components/Tree/test2.vue')['default']
     Test2: typeof import('./src/components/Tree/test2.vue')['default']
+    Test22: typeof import('./src/components/Tree/test2-2.vue')['default']
+    'Test22-': typeof import('./src/components/Tree/test2-2-.vue')['default']
     TestStyle: typeof import('./src/components/Tabs/testStyle.vue')['default']
     ThematicMap: typeof import('./src/components/Table/ThematicMap.vue')['default']
     ThemeImages: typeof import('./src/components/Table/example/ThemeImages.vue')['default']
@@ -103,5 +105,6 @@ declare module 'vue' {
     TreeOrg: typeof import('./src/components/Tree/TreeOrg.vue')['default']
     TreeOrg2: typeof import('./src/components/Tree/TreeOrg2.vue')['default']
     WithCtxmenu: typeof import('./src/components/Tree/WithCtxmenu.vue')['default']
+    WithDialog: typeof import('./src/components/Tree/WithDialog.vue')['default']
   }
 }

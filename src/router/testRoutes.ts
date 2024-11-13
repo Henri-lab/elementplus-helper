@@ -7,13 +7,23 @@ const testRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: 'Tree',
-        name: 'Tree',
-        component: () => import('@/components/Tree/test.vue'),
+        name: 'Tree(basic)',
+        component: () => import('@/components/Tree/index.vue'),
       },
       {
         path: 'Tree2',
-        name: 'Tree(basic)',
-        component: () => import('@/components/Tree/test2.vue'),
+        name: 'Tree(apply)',
+        component: () => import('@/components/Tree/test2-2.vue'),
+      },
+      {
+        path: 'TreeDialog',
+        name: 'Tree(Dialog)',
+        component: () => import('@/components/Tree/WithDialog.vue'),
+      },
+      {
+        path: 'TreeCtx',
+        name: 'Tree(Ctx)',
+        component: () => import('@/components/Tree/WithCtxmenu.vue'),
       },
       {
         path: 'TreeOrg',
