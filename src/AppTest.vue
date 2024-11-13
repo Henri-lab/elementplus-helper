@@ -12,13 +12,24 @@
       <router-link class="item" to="/openUIComp">
         <el-button>OpenUI</el-button>
       </router-link>
+      <div class="routerInfo">
+        <div class="route-compInfo">
+          <h3>匹配的组件信息：</h3>
+          <h2>{{ matchedComponents }}</h2>
+        </div>
+        <span>当前路由：</span>
+        <span>{{ route.path }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import AppRoot from './AppRoot.vue';
+
+const route = useRoute();
 const isTestBar = ref(false);
 const isTestBtns = ref(false);
 const handleKeydown = (event) => {
@@ -39,6 +50,16 @@ const handleKeydown = (event) => {
     isTestBar.value = !isTestBar.value;
   }
 };
+
+// 获取当前匹配的组件信息
+const matchedComponents = computed(() => {
+  const components = {};
+  route.matched.forEach((record) => {
+    Object.assign(components, record.components);
+  });
+  console.log(components.default.__file);
+  return components.default.__file;
+});
 
 // 绑定事件
 onMounted(() => {
