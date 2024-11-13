@@ -21,6 +21,15 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import $bus from '@/utils/bus';
+
+$bus.on('EditDialog:open', (arg) => {
+  openDialog();
+});
+
+$bus.on('EditDialog:close', () => {
+  closeDialog();
+});
 
 const props = defineProps({
   autoClose: {

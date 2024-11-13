@@ -6,6 +6,9 @@
     >
       welcome testing components!
     </div>
+    <p style="{font-size: 16px ;color:white;}">
+      el-plus组合层/功能配置层/数据配置层
+    </p>
     <br />
     <div class="test-btns">
       <div class="item" v-for="link in routerLinks" :key="link.path">
@@ -51,7 +54,6 @@ const routerLinks = computed(() => {
   gap: 10px;
   height: 200px;
   overflow: scroll;
-
 
   .item {
     padding: 10px;

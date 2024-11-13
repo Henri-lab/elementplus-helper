@@ -46,6 +46,12 @@
 import { ElMessage, type FormInstance } from 'element-plus';
 import { computed, onMounted, reactive, ref } from 'vue';
 import { def_description } from './default';
+//@ts-ignore
+import $bus from '@/utils/bus';
+
+$bus.on('Form:Get:FormDataRef', () => {
+  $bus.emit('$:Public:formDataRef', { formData, formName: props.formName });
+});
 
 type DescriptionItem = {
   label: string;
@@ -64,7 +70,12 @@ const props = defineProps({
     type: Array<DescriptionItem>,
     default: () => def_description,
   },
+  formName: {
+    type: String,
+    default: 'default',
+  },
 });
+const emits = defineEmits(['submit']);
 
 const description = reactive(props.description);
 
@@ -114,12 +125,10 @@ async function openValidate(overwrite: boolean) {
     return new Promise<{ validate: () => void; status: string }>((resolve) => {
       const validCallBack = (valid: boolean) => {
         if (valid) {
-          console.log('验证成功，提交表单数据:', formData.value);
           ElMessage.success('验证成功，已提交');
           status.value = 'submit:success';
         } else {
           status.value = 'submit:failure';
-          console.log('验证失败，检查输入');
           ElMessage.error('验证失败，请检查输入');
         }
         // 在验证回调完成后返回结果

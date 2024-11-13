@@ -126,10 +126,15 @@ const attrs = useAttrs();
 
 type TreeNode = ITreeNode;
 type HistoryStackItem = IHistoryStackItem;
-$bus.on('Dialog->Tree:addNode', (formData: any) => {});
+$bus.on('Dialog->Tree:addNode', (formData: any) => {
+  console.log('addNode',formData);
+
+});
 
 //update and edit is the same in this case
-$bus.on('Dialog->Tree:updateNode', (formData: any) => {});
+$bus.on('Dialog->Tree:updateNode', (formData: any) => {
+  console.log('updateNode', formData);
+});
 const props = defineProps({
   test: {
     type: Boolean,

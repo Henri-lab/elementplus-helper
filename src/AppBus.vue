@@ -35,5 +35,14 @@ $bus.on('$:Dialog->Tree:updateNode', (arg) => {
   arg.label = label;
   $bus.emit('Dialog->Tree:updateNode', arg);
 });
+
+
+$bus.on('$:EditDialog:SlotForm:open',(arg)=>{
+  $bus.emit('EditDialog:SlotForm:open',arg);
+});
+
+$bus.on('$:EditDialog:SlotForm:close',(arg)=>{
+  $bus.emit('EditDialog:SlotForm:close',arg);
+});
 </script>
 <template></template>

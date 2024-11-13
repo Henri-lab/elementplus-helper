@@ -1,6 +1,7 @@
 <template>
   <div class="app-dialogs">
-    <DialogAddSysToTree />
+    <!-- <DialogAddSysToTree /> -->
+    <EditDialogSlotForm />
   </div>
 </template>
 
@@ -8,6 +9,8 @@
 import { ref } from 'vue';
 //@ts-ignore
 import DialogAddSysToTree from './components/EditDialog/example/addSysToTree.vue';
+//@ts-ignore
+import EditDialogSlotForm from '@/components/EditDialog/forms/SlotForm.vue';
 </script>
 
 <style scoped></style>
