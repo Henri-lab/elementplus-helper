@@ -72,16 +72,18 @@
         <li class="li" @click="handleMenuAction('redo')">撤销更改</li>
       </ul>
     </div>
-    <div class="test" v-if="props.test" v-draggable>
-      <el-divider>treeData</el-divider>
-      <br />
-      <!-- {{ format_data }} -->
-      {{ data }}
-      <br />
-      <el-divider>historyStack</el-divider>
-      <br />
-      {{ historyStack }}
-      <br />
+    <div class="test-wrapper">
+      <div class="test" v-show="props.test" v-draggable v-resizable>
+        <el-divider>treeData</el-divider>
+        <br />
+        <!-- {{ format_data }} -->
+        {{ data }}
+        <br />
+        <el-divider>historyStack</el-divider>
+        <br />
+        {{ historyStack }}
+        <br />
+      </div>
     </div>
   </div>
 </template>
@@ -393,7 +395,7 @@ const getClickedNodeInfo = (node: TreeNode) => {
   position: fixed;
   width: 500px;
   height: 500px;
-  z-index: 9999999999999999; //16位
+  z-index: 9999999999999999 !important; //16位
   @include multicolor-glowing-border;
   border-radius: 5%;
 }
