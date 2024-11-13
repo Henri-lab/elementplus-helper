@@ -1,6 +1,12 @@
 <template>
   <div id="sysTree" ref="sysTree">
-    <BasicTree id="idOfSysTree" :data="treeData" :test="isTest" ref="sysTree"></BasicTree>
+    <BasicTree
+      id="idOfSysTree"
+      :data="treeData"
+      :test="isTest"
+      ref="sysTree"
+      dialog
+    ></BasicTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'sysTree:关闭数据' : 'sysTree:显示数据' }}
     </button>

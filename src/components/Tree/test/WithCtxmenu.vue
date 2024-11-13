@@ -97,7 +97,7 @@ const props = defineProps({
   },
 });
 
-const targetElement = ref(null);
+const targetElement = ref('');
 const filterText = ref('tree');
 const treeRef = ref<InstanceType<typeof ElTree>>();
 const thisTree = treeRef;
