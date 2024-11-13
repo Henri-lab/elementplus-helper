@@ -8,12 +8,12 @@ const testRoutes: RouteRecordRaw[] = [
       {
         path: 'Tree',
         name: 'Tree(basic)',
-        component: () => import('@/components/Tree/index.vue'),
+        component: () => import('@/components/Tree/index copy.vue'),
       },
       {
-        path: 'Tree2',
-        name: 'Tree(apply)',
-        component: () => import('@/components/Tree/test2-2.vue'),
+        path: 'TreeApply',
+        name: 'Tree(basic+)',
+        component: () => import('@/components/Tree/testBasic.vue'),
       },
       {
         path: 'TreeDialog',
