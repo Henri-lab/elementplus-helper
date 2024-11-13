@@ -1,6 +1,6 @@
 <template>
   <div id="singleTargetTree" ref="singleTargetTree">
-    <Tree :data="treeData" :test="isTest"></Tree>
+    <BasicTree :data="treeData" :test="isTest"></BasicTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'singleTargetTree:关闭数据' : 'singleTargetTree:显示数据' }}
     </button>
@@ -12,7 +12,7 @@ import { onMounted, ref, watch } from 'vue';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
-import Tree from '../index.vue';
+import BasicTree from '../index.vue';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
 

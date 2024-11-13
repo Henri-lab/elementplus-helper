@@ -17,29 +17,26 @@
         @node-click="getClickedNodeInfo"
         @node-contextmenu="handleContextMenu"
       >
-        <template #default="{ node }">
+        <template #default="{ data, node }">
           <span class="tree-node">
             <div class="checkbox">
-              <el-checkbox
-                v-model="node.data.check"
-                :checked="node.data.check"
-              />
+              <el-checkbox v-model="data.check" :checked="data.check" />
             </div>
             <!-- Conditionally render label or input based on editing state -->
             <span
-              v-if="!nodeEditingStatus[node.id]"
+              v-if="!nodeEditingStatus[data.id]"
               class="label"
-              @dblclick="enableEditing(node)"
+              @dblclick="enableEditing(data, node)"
             >
-              {{ node.label }}
+              {{ data.label }}
             </span>
             <el-input
               v-else
-              v-model="nodeEditingValues[node.id]"
+              v-model="nodeEditingValues[data.id]"
               class="label-edit"
-              @blur="saveLabel(node)"
-              @keyup.enter="saveLabel(node)"
-              @keyup.esc="cancelEditing(node)"
+              @blur="saveLabel(data, node)"
+              @keyup.enter="saveLabel(data, node)"
+              @keyup.esc="cancelEditing(data, node)"
             />
             <div class="operations image">
               <el-image :src="connection" style="height: 16px" fit="cover" />
@@ -79,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { ElTree, ElInput } from 'element-plus';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
@@ -87,12 +84,8 @@ import connection from '@/assets/image/connection.png';
 import addone from '@/assets/image/add-one.png';
 //@ts-ignore
 import Delete from '@/assets/image/delete.png';
-//@ts-ignore
-import $bus from '@/utils/bus';
 import { def_treeData } from './default';
 import { useAttrs } from 'vue';
-//@ts-ignore
-// import { JsonFormat } from '@/utils/format';
 
 const attrs = useAttrs();
 
@@ -110,7 +103,7 @@ const props = defineProps({
   },
   test: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   data: {
     type: Array as () => Tree[],
@@ -125,11 +118,12 @@ const menuPosition = ref({ x: 0, y: 0 });
 const selectedNode = ref<Tree | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
 const data = ref<Tree[]>(props.data);
-const treeContainerRef = ref<HTMLElement | null>(null); // Reference to the container
+const treeContainerRef = ref<HTMLElement | null>(null);
 
 // Store the editing state of each node by ID
 const nodeEditingStatus = ref<Record<number, boolean>>({});
 const nodeEditingValues = ref<Record<number, string>>({});
+
 // Watch filter text input and filter nodes accordingly
 watch(filterText, (val) => {
   treeRef.value!.filter(val);
@@ -141,46 +135,42 @@ const filterNode = ((value: string, data: Tree): boolean => {
 }) as any;
 
 // Enable editing mode for a node
-const enableEditing = (node: Tree) => {
-  nodeEditingStatus.value[node.id!] = true;
-  nodeEditingValues.value[node.id!] = node.label; // Load current label into editable value
+const enableEditing = (nodeData: Tree, node?: any) => {
+  nodeEditingStatus.value[nodeData.id!] = true;
+  nodeEditingValues.value[nodeData.id!] = nodeData.label;
 };
 
-// Save the label and exit editing mode
-const saveLabel = (node: Tree) => {
-  // node.label = nodeEditingValues.value[node.id!];//bug
-  // it’s generally better to update the data object by replacing the entire node in the array,
-  // as Vue’s reactivity system may not always track individual properties correctly when working with nested objects in a reactive array.
-  const updatedNode = findNode(data.value, node.id);
-  console.log('updated node', updatedNode, node.id);
-
+// Save the label to the actual tree data and exit editing mode
+const saveLabel = (nodeData: Tree, node?: any) => {
+  const updatedNode = findNode(data.value, nodeData.id);
   if (updatedNode) {
-    updatedNode.label = nodeEditingValues.value[node.id!];
+    updatedNode.label = nodeEditingValues.value[nodeData.id!];
+    console.log(updatedNode, 'update');
 
-    data.value = [...data.value]; // sloution：trigger reactivity by replacing the entire data array
+    // Trigger reactivity by ‘replacing the array’
+    data.value = [...data.value];
   }
-  nodeEditingStatus.value[node.id!] = false;
+  nodeEditingStatus.value[nodeData.id!] = false;
 };
 
 // Cancel editing without saving
-const cancelEditing = (node: Tree) => {
-  nodeEditingStatus.value[node.id!] = false;
+const cancelEditing = (nodeData: Tree, node?: any) => {
+  nodeEditingStatus.value[nodeData.id!] = false;
 };
 
 // Handle right-click menu and position it within the component container
 const handleContextMenu = (event: MouseEvent, node: Tree) => {
-  event.preventDefault(); // Prevent the default context menu
-  selectedNode.value = node; // Store the current right-clicked node
+  event.preventDefault();
+  selectedNode.value = node;
 
   if (treeContainerRef.value) {
     const containerRect = treeContainerRef.value.getBoundingClientRect();
-    const relativeX = event.clientX - containerRect.left;
-    const relativeY = event.clientY - containerRect.top;
-
-    menuPosition.value = { x: relativeX, y: relativeY }; // Set the position relative to the container
+    menuPosition.value = {
+      x: event.clientX - containerRect.left,
+      y: event.clientY - containerRect.top,
+    };
     contextMenuVisible.value = true;
 
-    // Close the menu when clicking elsewhere
     const closeContextMenu = () => {
       contextMenuVisible.value = false;
       document.removeEventListener('click', closeContextMenu);
@@ -197,9 +187,9 @@ const handleMenuAction = (action: string) => {
     } else if (action === 'delete') {
       deleteNode(selectedNode.value.id, data.value);
     } else if (action === 'edit') {
-      enableEditing(selectedNode.value); // Enable editing mode
+      enableEditing(selectedNode.value);
     }
-    contextMenuVisible.value = false; // Hide the menu after an action
+    contextMenuVisible.value = false;
   }
 };
 
@@ -209,8 +199,7 @@ const addNode = (parentNodeId: number | undefined, newNode: Tree) => {
   if (parentNode) {
     parentNode.children = parentNode.children || [];
     parentNode.children.push(newNode);
-  } else {
-    console.warn('Parent node not found');
+    data.value = [...data.value];
   }
 };
 
@@ -219,6 +208,7 @@ const deleteNode = (nodeId: number | undefined, nodes: Tree[]) => {
   for (let i = 0; i < nodes.length; i++) {
     if (nodes[i].id === nodeId) {
       nodes.splice(i, 1);
+      data.value = [...data.value];
       return true;
     } else if (nodes[i].children) {
       const deleted = deleteNode(nodeId, nodes[i].children!);
@@ -242,22 +232,9 @@ const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
 
 // Get clicked node info
 const getClickedNodeInfo = (node: Tree) => {
-  console.log('点击的节点:', node);
+  // console.log('点击的节点:', node);
 };
-
-//================================================================
-//@root权限使用
-// const format_data = ref<any>('');
-// watch(
-//   () => data,
-//   async (data) => {
-//     format_data.value = (await JsonFormat(data)) || data || 'fail loading bind-data';
-//   },
-//   { immediate: true, deep: true }
-// );
-//================================================================
 </script>
-
 <style lang="scss" scoped>
 .tree-container {
   position: relative;
@@ -299,7 +276,7 @@ const getClickedNodeInfo = (node: Tree) => {
   }
 }
 
-.test{
+.test {
   background: black;
   color: red;
 }
