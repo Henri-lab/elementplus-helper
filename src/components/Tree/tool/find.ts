@@ -1,20 +1,25 @@
-import type { ITreeNode } from '../interface';
+import { ref } from 'vue';
+import type { ITreeNode, IOperationParams } from '../interface';
 type TreeNode = ITreeNode;
 // Find a node by ID
-export const findNode = (
-  nodes: Tree[],
-  nodeId: number | undefined
-): Tree | null => {
+export const findNode = ({
+  nodesRef,
+  nodeId,
+}: IOperationParams): TreeNode | null => {
+  const nodes = nodesRef.value;
   for (const node of nodes) {
-    if (node.id === nodeId) return node;
+    if (node.id === nodeId) {
+      return node; // Node found
+    }
     if (node.children) {
-      const found = findNode(node.children, nodeId);
-      if (found) return found;
+      // Recursive search in children nodes
+      const found = findNode({ nodesRef: ref(node.children), nodeId });
+      if (found) {
+        return found;
+      }
     }
   }
-  return null;
+  return null; // Node not found
 };
 
-export const findNodeEditing = (arg: any) => {
-  return arg.nodeEditingStatus.value;
-};
+

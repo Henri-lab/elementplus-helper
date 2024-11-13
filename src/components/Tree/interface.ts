@@ -1,4 +1,4 @@
-import type { Ref } from "vue";
+import type { Ref } from 'vue';
 
 export interface ITreeNode {
   id?: number;
@@ -7,10 +7,12 @@ export interface ITreeNode {
   check?: boolean;
 }
 
-export interface OperationParams {
+export interface IOperationParams {
   nodesRef: Ref<ITreeNode[]>;
   nodeId?: number;
   parentNodeId?: number;
   newNode?: ITreeNode;
   updatedProperties?: Partial<ITreeNode>;
+  //single updated fields
+  newLabel?: string;
 }

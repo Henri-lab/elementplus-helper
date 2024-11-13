@@ -15,4 +15,13 @@ function executeUntilNonEmpty(func: () => any, resTo: any, interval = 200) {
   }, interval);
 }
 
-export { sleep, executeUntilNonEmpty };
+function getKeyByValue(
+  obj: Record<string, any>,
+  value: any
+): string | undefined {
+  return Object.entries(obj).find(([key, val]) => val === value)?.[0];
+}
+function getKeysByValue(obj: Record<string, any>, value: any): string[] {
+  return Object.keys(obj).filter((key) => obj[key] === value);
+}
+export { sleep, executeUntilNonEmpty, getKeyByValue, getKeysByValue };
