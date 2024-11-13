@@ -152,7 +152,18 @@ const props = defineProps({
     type: String,
     default: 'Add successfully',
   },
-  
+  nodeDefaultLabel: {
+    type: String,
+    default: 'New Node',
+  },
+  deleteSuccessText: {
+    type: String,
+    default: 'Delete successfully',
+  },
+  deleteFailText: {
+    type: String,
+    default: 'Delete failed',
+  },
 });
 
 const filterText = ref('tree-index');
@@ -169,6 +180,9 @@ const newNode = ref<any>(props.newNode);
 const updateSuccessText = ref(props.uptateSuccessText);
 const updateFailText = ref(props.updateFailText);
 const addSuccessText = ref(props.addSuccessText);
+const nodeDefaultLabel = ref(props.nodeDefaultLabel);
+const deleteSuccessText = ref(props.deleteSuccessText);
+const deleteFailText = ref(props.deleteFailText);
 // Store the editing state of each node by ID
 const nodeEditingStatus = ref<Record<number, boolean>>({});
 const nodeEditingValues = ref<Record<number, string>>({});
@@ -187,7 +201,7 @@ const handleAddNode = (
     addNode({
       nodesRef: data,
       parentNodeId: parentNodeId,
-      newNode: { id: Date.now(), label: 'New Node' },
+      newNode: { id: Date.now(), label: nodeDefaultLabel.value },
     });
     ElMessage.success(addSuccessText.value);
   }
@@ -202,12 +216,12 @@ const handleDeleteNode = (
   const condition1 = type === 'fromImage' && parentNode;
   if (condition1) {
     deleteNode({ nodesRef: data, nodeId: parentNode.id })
-      ? ElMessage.success('Node deleted')
-      : ElMessage.error('Node not found');
+      ? ElMessage.success(deleteSuccessText.value)
+      : ElMessage.error(deleteFailText.value);
   } else if (selectedNode.value) {
     deleteNode({ nodesRef: data, nodeId: selectedNode.value.id })
-      ? ElMessage.success('Node deleted')
-      : ElMessage.error('Node not found');
+      ? ElMessage.success(deleteSuccessText.value)
+      : ElMessage.error(deleteFailText.value);
   }
 };
 
