@@ -9,7 +9,7 @@ export interface ITreeNode {
 
 export interface IOperationParams {
   nodesRef: Ref<ITreeNode[]>;
-  nodeId?: number;
+  nodeId?: number|undefined;
   parentNodeId?: number;
   newNode?: ITreeNode;
   updatedProperties?: Partial<ITreeNode>;
@@ -21,5 +21,11 @@ export interface IOperationParams {
 
 export interface IHistoryStackItem {
   action: string;
-  payload: any;
+  payload: {
+    id?: number;
+    newLabel?: string;
+    previousLabel?: string;
+    parentId?: number
+    nodeData?: ITreeNode;
+  };
 }

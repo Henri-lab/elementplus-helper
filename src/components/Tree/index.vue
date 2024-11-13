@@ -29,7 +29,7 @@
               class="label"
               @dblclick="enableEditing(data, node)"
             >
-              {{ data.label }}
+              {{ test ? `(${data.id})-🌟-${data.label} ` : data.label }}
             </span>
             <el-input
               v-else
@@ -79,6 +79,10 @@
       <!-- {{ format_data }} -->
       {{ data }}
       <br />
+      <el-divider>historyStack</el-divider>
+      <br />
+      {{ historyStack }}
+      <br />
     </div>
   </div>
 </template>
@@ -105,8 +109,10 @@ import type {
   //@ts-ignore
   IHistoryStackItem,
 } from './interface';
-import { addNode } from './tool/add';
-import { deleteNode } from './tool/del';
+//@ts-ignore
+import { addNodeWithHistory, addNode } from './tool/add';
+//@ts-ignore
+import { deleteNodeWithHistory, deleteNode } from './tool/del';
 //@ts-ignore
 import { updateNode, saveLabel, undoAction } from './tool/update';
 import { findNode } from './tool/find';
@@ -126,7 +132,7 @@ $bus.on('Dialog->Tree:updateNode', (formData: any) => {});
 const props = defineProps({
   test: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   idOfTree: {
     type: String,
@@ -209,10 +215,11 @@ const handleAddNode = (
 
   if (parentNodeId) {
     //@ts-ignore
-    addNode({
+    addNodeWithHistory({
       nodesRef: data,
       parentNodeId: parentNodeId,
       newNode: { id: Date.now(), label: nodeDefaultLabel.value },
+      historyStack,
     });
     ElMessage.success(addSuccessText.value);
   }
@@ -226,11 +233,19 @@ const handleDeleteNode = (
 ) => {
   const condition1 = type === 'fromImage' && parentNode;
   if (condition1) {
-    deleteNode({ nodesRef: data, nodeId: parentNode.id })
+    deleteNodeWithHistory({
+      nodesRef: data,
+      nodeId: parentNode.id,
+      historyStack,
+    })
       ? ElMessage.success(deleteSuccessText.value)
       : ElMessage.error(deleteFailText.value);
   } else if (selectedNode.value) {
-    deleteNode({ nodesRef: data, nodeId: selectedNode.value.id })
+    deleteNodeWithHistory({
+      nodesRef: data,
+      nodeId: selectedNode.value.id,
+      historyStack,
+    })
       ? ElMessage.success(deleteSuccessText.value)
       : ElMessage.error(deleteFailText.value);
   }
@@ -375,5 +390,6 @@ const getClickedNodeInfo = (node: TreeNode) => {
 .test {
   background: black;
   color: red;
+  overflow: scroll;
 }
 </style>

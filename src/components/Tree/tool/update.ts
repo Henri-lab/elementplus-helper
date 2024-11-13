@@ -3,6 +3,7 @@ import type { IOperationParams, ITreeNode } from '../interface';
 import { findNode } from './find';
 import { ElMessage } from 'element-plus';
 import { deleteNode } from './del';
+import { addNode } from './add';
 type TreeNode = ITreeNode;
 
 export const updateNode = ({
@@ -56,9 +57,21 @@ export const undoAction = ({
 
   const { action, payload } = lastAction;
   if (action === 'add') {
+    // 撤销添加：执行删除操作
+    console.log('执行删除操作', payload);
+    
     deleteNode({ nodesRef: nodesRef, nodeId: payload.id });
     ElMessage.success('撤销添加');
+  } else if (action === 'delete') {
+    // 撤销删除：恢复删除的节点
+    addNode({
+      nodesRef: nodesRef,
+      parentNodeId: payload.parentId,
+      newNode: payload.nodeData,
+    });
+    ElMessage.success('撤销删除');
   } else if (action === 'update') {
+    // 撤销更新：恢复之前的标签
     saveLabel({
       nodesRef: nodesRef,
       nodeId: payload.id,
