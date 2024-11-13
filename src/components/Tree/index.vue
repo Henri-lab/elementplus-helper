@@ -69,6 +69,7 @@
         <li class="li" @click="handleMenuAction('add')">添加子节点</li>
         <li class="li" @click="handleMenuAction('delete')">删除节点</li>
         <li class="li" @click="handleMenuAction('edit')">编辑节点</li>
+        <li class="li" @click="handleMenuAction('redo')">撤销更改</li>
       </ul>
     </div>
 
@@ -96,12 +97,18 @@ import Delete from '@/assets/image/delete.png';
 import { def_treeData } from './default';
 //@ts-ignore
 import mockData from '@/mock/tree_node';
-//@ts-ignore
-import type { ITreeNode, IOperationParams } from './interface';
+import type {
+  //@ts-ignore
+  ITreeNode,
+  //@ts-ignore
+  IOperationParams,
+  //@ts-ignore
+  IHistoryStackItem,
+} from './interface';
 import { addNode } from './tool/add';
 import { deleteNode } from './tool/del';
 //@ts-ignore
-import { updateNode, saveLabel } from './tool/update';
+import { updateNode, saveLabel, undoAction } from './tool/update';
 import { findNode } from './tool/find';
 //@ts-ignore
 import { getKeysByValue } from '@/utils/tool';
@@ -111,6 +118,7 @@ import { useAttrs } from 'vue';
 const attrs = useAttrs();
 
 type TreeNode = ITreeNode;
+type HistoryStackItem = IHistoryStackItem;
 $bus.on('Dialog->Tree:addNode', (formData: any) => {});
 
 //update and edit is the same in this case
@@ -166,6 +174,9 @@ const props = defineProps({
   },
 });
 
+//state stack of operation
+const historyStack = ref<HistoryStackItem[]>([]);
+//state other
 const filterText = ref('tree-index');
 const treeRef = ref<InstanceType<typeof ElTree>>();
 const contextMenuVisible = ref(false);
@@ -269,6 +280,8 @@ const handleMenuAction = (action: string) => {
       enableDialog.value
         ? $bus.emit('$:Dialog:addSysToTree:open')
         : enableEditing(selectedNode.value);
+    } else if (action === 'redo') {
+      undoAction({ nodesRef: data, historyStack });
     }
     contextMenuVisible.value = false;
   }
@@ -283,14 +296,19 @@ const enableEditing = (node: TreeNode, nodeInfo?: any) => {
 // Save the label to the actual tree data and exit editing mode
 const handleSaveLabel = (node: TreeNode, nodeInfo: any) => {
   const newLabel = nodeEditingValues.value[node.id!];
+  const previousLabel = node.label; // cache last value
   nodeEditingStatus.value[node.id!] = false;
   const success = saveLabel({ nodesRef: data, nodeId: node.id, newLabel });
+
   if (success) {
-    ElMessage.success(updateSuccessText.value);
+    historyStack.value.push({
+      action: 'update',
+      payload: { id: node.id, previousLabel },
+    });
+    ElMessage.success(props.uptateSuccessText);
   } else {
-    ElMessage.error(updateFailText.value);
+    ElMessage.error(props.updateFailText);
   }
-  console.log(success ? 'Label saved' : 'Node not found');
 };
 // Cancel editing without saving
 const cancelEditing = (node: TreeNode, nodeInfo?: any) => {

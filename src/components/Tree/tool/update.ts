@@ -1,6 +1,8 @@
-import type { Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import type { IOperationParams, ITreeNode } from '../interface';
 import { findNode } from './find';
+import { ElMessage } from 'element-plus';
+import { deleteNode } from './del';
 type TreeNode = ITreeNode;
 
 export const updateNode = ({
@@ -36,6 +38,33 @@ export const saveLabel = ({
   } else {
     console.warn('Node not found');
     return false;
+  }
+};
+
+// 撤销操作方法
+export const undoAction = ({
+  nodesRef,
+  historyStack = ref([]),
+}: IOperationParams) => {
+  if (historyStack.value.length === 0) {
+    ElMessage.info('没有操作可撤销');
+    return;
+  }
+
+  const lastAction = historyStack.value.pop();
+  if (!lastAction) return;
+
+  const { action, payload } = lastAction;
+  if (action === 'add') {
+    deleteNode({ nodesRef: nodesRef, nodeId: payload.id });
+    ElMessage.success('撤销添加');
+  } else if (action === 'update') {
+    saveLabel({
+      nodesRef: nodesRef,
+      nodeId: payload.id,
+      newLabel: payload.previousLabel,
+    });
+    ElMessage.success('撤销更新');
   }
 };
 

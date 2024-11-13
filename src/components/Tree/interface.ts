@@ -13,6 +13,13 @@ export interface IOperationParams {
   parentNodeId?: number;
   newNode?: ITreeNode;
   updatedProperties?: Partial<ITreeNode>;
+  //undo params need
+  historyStack?: Ref<IHistoryStackItem[]>;
   //single updated fields
   newLabel?: string;
+}
+
+export interface IHistoryStackItem {
+  action: string;
+  payload: any;
 }
