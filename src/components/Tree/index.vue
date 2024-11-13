@@ -72,8 +72,7 @@
         <li class="li" @click="handleMenuAction('redo')">撤销更改</li>
       </ul>
     </div>
-
-    <div class="test" v-if="props.test">
+    <div class="test" v-if="props.test" v-draggable>
       <el-divider>treeData</el-divider>
       <br />
       <!-- {{ format_data }} -->
@@ -391,5 +390,11 @@ const getClickedNodeInfo = (node: TreeNode) => {
   background: black;
   color: red;
   overflow: scroll;
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  z-index: 9999999999999999; //16位
+  @include multicolor-glowing-border;
+  border-radius: 5%;
 }
 </style>
