@@ -23,7 +23,7 @@ const testRoutes: RouteRecordRaw[] = [
       {
         path: 'TreeCtx',
         name: 'Tree(Ctx)',
-        component: () => import('@/components/Tree/WithCtxmenu.vue'),
+        component: () => import('@/components/Tree/test/WithCtxmenu.vue'),
       },
       {
         path: 'TreeOrg',

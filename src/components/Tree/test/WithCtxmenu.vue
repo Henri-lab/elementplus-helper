@@ -57,7 +57,7 @@ import { ElTree } from 'element-plus';
 //@ts-ignore
 import { executeUntilNonEmpty, sleep } from '@/utils/tool';
 //@ts-ignore
-import ContextMenu from '../ContextMenu/index.vue';
+import ContextMenu from '@/components/ContextMenu/index.vue';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
 //@ts-ignore
@@ -66,7 +66,7 @@ import addone from '@/assets/image/add-one.png';
 import Delete from '@/assets/image/delete.png';
 import { useAttrs } from 'vue';
 //@ts-ignore
-import { def_menuItems, def_treeData } from './default;
+import { def_menuItems, def_treeData } from '../default';
 
 const attrs = useAttrs();
 
@@ -133,7 +133,7 @@ const filterNode = (value: string, data: Tree) => {
   return data.label.includes(value);
 };
 
-const data = ref<Tree[]>(props.data);
+const data = ref<Tree[]>(props.data!);
 
 const clickedNodeLabel = ref('');
 const isClickedNodeLeaf = ref(false);
