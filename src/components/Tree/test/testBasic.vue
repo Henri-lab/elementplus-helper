@@ -17,7 +17,7 @@ import { onMounted, ref, watch } from 'vue';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
-import BasicTree from './index.vue';
+import BasicTree from '../index.vue';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
 

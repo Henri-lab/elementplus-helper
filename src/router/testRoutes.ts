@@ -13,22 +13,22 @@ const testRoutes: RouteRecordRaw[] = [
       {
         path: 'TreeApply',
         name: 'Tree(basic+)',
-        component: () => import('@/components/Tree/testBasic.vue'),
+        component: () => import('@/components/Tree/test/testBasic.vue'),
       },
       {
         path: 'TreeDialog',
         name: 'Tree(Dialog)',
-        component: () => import('@/components/Tree/WithDialog.vue'),
+        component: () => import('@/components/Tree/test/WithDialog.vue'),
       },
       {
         path: 'TreeCtx',
         name: 'Tree(Ctx)',
-        component: () => import('@/components/Tree/WithCtxmenu.vue'),
+        component: () => import('@/components/Tree/test/WithCtxmenu.vue'),
       },
       {
         path: 'TreeOrg',
         name: 'TreeOrg',
-        component: () => import('@/components/Tree/TreeOrg.vue'),
+        component: () => import('@/components/TreeOrg/TreeOrg.vue'),
       },
       {
         path: 'Table',

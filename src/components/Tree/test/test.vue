@@ -20,7 +20,7 @@ import TreeWithCtxmenu from './WithCtxmenu.vue';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
 //@ts-ignore
-import { def_menuItems } from './default';
+import { def_menuItems } from '../default';
 const isTest = ref(false);
 
 const menuItems = def_menuItems;

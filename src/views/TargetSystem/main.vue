@@ -7,7 +7,7 @@
 
 <script setup>
 import BasFeaTheme from '@/components/Tabs/example/Bas&Fea&Theme.vue';
-import TreeOrg from '@/components/Tree/TreeOrg.vue';
+import TreeOrg from '@/components/TreeOrg/TreeOrg.vue';
 </script>
 
 <style lang="scss" scoped></style>

@@ -73,7 +73,7 @@ const publicRoutes: RouteRecordRaw[] = [
             name: 'targetValueAnalyse',
             components: {
               header: () => import('@/components/Header/index.vue'),
-              main_m: () => import('@/components/Tree/TreeOrg.vue'),
+              main_m: () => import('@/components/TreeOrg/TreeOrg.vue'),
               main_f: () =>
                 import('@/components/Table/example/TargetAnalyse.vue'),
               aside: () => import('@/components/Tabs/example/Sys&Target.vue'),
