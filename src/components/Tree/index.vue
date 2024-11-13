@@ -82,7 +82,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, ref, watch } from 'vue';
+import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { ElTree, ElInput, ElMessage } from 'element-plus';
 //@ts-ignore
 import connection from '@/assets/image/connection.png';
@@ -91,8 +91,9 @@ import addone from '@/assets/image/add-one.png';
 //@ts-ignore
 import Delete from '@/assets/image/delete.png';
 import { def_treeData } from './default';
-import { useAttrs } from 'vue';
 
+//convery property 'id' of vdom
+import { useAttrs } from 'vue';
 const attrs = useAttrs();
 
 interface Tree {
@@ -241,6 +242,28 @@ const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
 const getClickedNodeInfo = (node: Tree) => {
   // console.log('点击的节点:', node);
 };
+
+// function cancelEditingAll(e: any) {
+//   e.stopPropagation();
+//   const className = e.target.className;
+//   // console.log(e.target.className);
+//   // Check if the click is outside the tree container
+//   if (
+//     treeContainerRef.value &&
+//     !treeContainerRef.value.contains(e.target as Node)
+//   ) {
+//     // If clicked outside, cancel editing for all nodes
+//     data.value.forEach((node) => {
+//       nodeEditingStatus.value[node.id!] = false;
+//     });
+//   }
+// }
+// onMounted(() => {
+//   document.addEventListener('dblclick', cancelEditingAll);
+// });
+// onBeforeMount(() => {
+//   document.removeEventListener('dblclick', cancelEditingAll);
+// });
 </script>
 <style lang="scss" scoped>
 .tree-container {
