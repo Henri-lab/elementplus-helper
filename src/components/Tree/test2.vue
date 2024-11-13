@@ -50,7 +50,8 @@
     </ul>
   </div>
 
-  <div class="test" v-if="props.test">
+  <div class="btn"><button @click="test = !test">treeData(@dev)</button></div>
+  <div class="test" v-show="test" v-draggable>
     {{ data }}
   </div>
 </template>
@@ -101,7 +102,7 @@ const props = defineProps({
   },
   test: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   data: {
     type: Array as () => Tree[],
@@ -215,6 +216,8 @@ const findNode = (nodes: Tree[], nodeId: number | undefined): Tree | null => {
 const getClickedNodeInfo = (node: Tree) => {
   console.log('点击的节点:', node);
 };
+
+const test = ref(props.test);
 </script>
 
 <style lang="scss" scoped>
@@ -254,5 +257,17 @@ const getClickedNodeInfo = (node: Tree) => {
 }
 .context-menu li:hover {
   background-color: #f0f0f0;
+}
+.test {
+  position: absolute;
+  top: 500px;
+  right: 200px;
+  width: 400px;
+  height: 400px;
+  overflow: scroll;
+  background: wheat;
+  color: black;
+  @include glowing-border;
+  border-radius: 10%;
 }
 </style>
