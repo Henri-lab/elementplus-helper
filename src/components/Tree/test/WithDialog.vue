@@ -70,7 +70,7 @@ import $bus from '@/utils/bus';
 //@ts-ignore
 import { useAttrs } from 'vue';
 
-import { def_treeData } from './default';
+import { def_treeData } from '../default';
 
 const attrs = useAttrs();
 
