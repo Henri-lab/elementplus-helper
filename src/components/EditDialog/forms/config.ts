@@ -1,5 +1,5 @@
 import $bus from '@/utils/bus';
-export const des1 = [
+export const description_addNewSysForm = [
   {
     label: '用户名',
     field: 'username',

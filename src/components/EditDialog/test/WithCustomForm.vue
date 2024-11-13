@@ -7,9 +7,9 @@
 <script setup>
 import { onMounted, watch } from 'vue';
 import $bus from '@/utils/bus';
-import { des1, open } from '../forms/config';
+import { description_addNewSysForm, open } from '../forms/config';
 
 const handleClick = () => {
-  open(des1, 'from ~ src/components/EditDialog/test/WithCustomForm.vue');
+  open(description_addNewSysForm, 'from ~ src/components/EditDialog/test/WithCustomForm.vue');
 };
 </script>

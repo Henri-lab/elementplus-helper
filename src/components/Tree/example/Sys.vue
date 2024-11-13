@@ -6,6 +6,7 @@
       :test="isTest"
       ref="sysTree"
       dialog
+      @beforeAddNewNode="handleBeforeAddNode"
     ></BasicTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'sysTree:关闭数据' : 'sysTree:显示数据' }}
@@ -21,6 +22,11 @@ import $bus from '@/utils/bus';
 import BasicTree from '../index.vue';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
+import {
+  description_addNewSysForm,
+  open,
+  //@ts-ignore
+} from '@/components/EditDialog/forms/config.ts';
 
 const isTest = ref(false);
 
@@ -42,6 +48,18 @@ onMounted(() => {
     targetElement.value = document.getElementById('sysTree') as any;
   }
 });
+
+const handleBeforeAddNode = (nodeData: any) => {
+  const { nodesRef, node } = nodeData;
+  console.log(
+    'handleBeforeAddNode\n',
+    'selectNode:',
+    node,
+    'treeData:\n',
+    nodesRef.value
+  );
+  open(description_addNewSysForm, 'sysTree');
+};
 
 //@ts-ignore
 $bus.on('Test:showTestButton', (isShow: boolean) => {

@@ -127,14 +127,20 @@ const attrs = useAttrs();
 type TreeNode = ITreeNode;
 type HistoryStackItem = IHistoryStackItem;
 $bus.on('Dialog->Tree:addNode', (formData: any) => {
-  console.log('addNode',formData);
-
+  console.log('addNode', formData);
 });
 
 //update and edit is the same in this case
 $bus.on('Dialog->Tree:updateNode', (formData: any) => {
   console.log('updateNode', formData);
 });
+
+const emits = defineEmits([
+  'beforeAddNewNode',
+  'afterAddNewNode',
+  'beforeUpdateNewNode',
+  'afterUpdateNewNode',
+]);
 const props = defineProps({
   test: {
     type: Boolean,
@@ -292,15 +298,19 @@ const handleContextMenu = (event: MouseEvent, node: TreeNode) => {
 const handleMenuAction = (action: string) => {
   if (selectedNode.value) {
     if (action === 'add') {
-      enableDialog.value
-        ? $bus.emit('$:Dialog:addSysToTree:open')
-        : handleAddNode();
+      if (enableDialog.value) {
+        emits('beforeAddNewNode', { nodesRef: data, node: selectedNode.value });
+      } else {
+        handleAddNode();
+      }
     } else if (action === 'delete') {
       handleDeleteNode();
     } else if (action === 'edit') {
-      enableDialog.value
-        ? $bus.emit('$:Dialog:addSysToTree:open')
-        : enableEditing(selectedNode.value);
+      if (enableDialog.value) {
+        emits('beforeUpdateNewNode');
+      } else {
+        enableEditing(selectedNode.value);
+      }
     } else if (action === 'redo') {
       undoAction({ nodesRef: data, historyStack });
     }
