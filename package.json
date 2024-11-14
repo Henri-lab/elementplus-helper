@@ -11,7 +11,9 @@
     "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "type-check": "vue-tsc --build --force",
+    "dev:react": "cd src/_react && vite",
+    "dev:all": "npm-run-all -p dev dev:react"
   },
   "dependencies": {
     "@element-plus/icons-vue": "2.0.10",
@@ -50,6 +52,7 @@
     "jsdom": "^25.0.1",
     "json5": "^2.2.3",
     "nock": "^13.5.5",
+    "npm-run-all": "^4.1.5",
     "npm-run-all2": "^7.0.1",
     "prettier": "^3.3.3",
     "sass": "^1.80.6",
