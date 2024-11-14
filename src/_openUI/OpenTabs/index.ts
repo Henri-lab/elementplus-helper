@@ -33,7 +33,7 @@ type HelpInfo = {
   type: 'info' | 'warning' | 'error' | 'success';
 };
 
-export function createEnhancedTabsComponent() {
+export default function createEnhancedTabsComponent() {
   return defineComponent({
     name: 'EnhancedTabs',
     props: {

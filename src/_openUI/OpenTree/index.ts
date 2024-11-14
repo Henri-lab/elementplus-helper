@@ -159,7 +159,10 @@ export default defineComponent({
       }
       return null;
     };
-
+    onMounted(()=>{
+      console.log('openUI-OpenTree',this);
+      
+    })
     return {
       filterText,
       treeRef,

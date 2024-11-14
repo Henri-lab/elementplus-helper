@@ -1,18 +1,27 @@
-import { defineComponent, markRaw, h, reactive, toRefs } from 'vue';
-import Tabs from '../index.vue';
+import {
+  defineComponent,
+  markRaw,
+  h,
+  reactive,
+  toRefs,
+  type Component,
+} from 'vue';
+import Tabs from './index.ts';
 
 interface TabConfig {
   label: string;
   name: string;
-  componentPath: string;
-  icon?: string;      // 可选的图标
-  content?: string;   // 可选的内容
-  initName?: string;  // 初始激活项的名称（可以用第一个 Tab 配置的 name 作为默认激活项）
+  // componentPath: string;
+  component: Component | string;
+  icon?: string; // 可选的图标
+  content?: string; // 可选的内容
+  initName?: string; // 初始激活项的名称（可以用第一个 Tab 配置的 name 作为默认激活项）
 }
 
 // 动态加载组件
-const loadComponent = async (path: string) => {
+const loadComponentPath = async (path: string) => {
   const component = await import(path);
+  console.log('path', component);
   return markRaw(component.default || component);
 };
 
@@ -28,9 +37,12 @@ export function createTabsComponent(tabsConfig: TabConfig[]) {
           tabsConfig.map(async (tab) => ({
             label: tab.label,
             name: tab.name,
-            component: await loadComponent(tab.componentPath),
+            component:
+              typeof tab.component === 'string'
+                ? await loadComponentPath(tab.component)
+                : tab.component,
             icon: tab.icon || 'el-icon-default', // 默认图标，可自定义
-            content: tab.content || '',           // 自定义内容
+            content: tab.content || '', // 自定义内容
           }))
         )
       );

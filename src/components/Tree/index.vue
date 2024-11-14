@@ -357,6 +357,7 @@ const getClickedNodeInfo = (node: TreeNode) => {
   // console.log(nodeEditingStatus.value);//ok
   // console.log('editing nodeId arr:', findNodeEditing());//ok
 };
+
 </script>
 <style lang="scss" scoped>
 .tree-container {

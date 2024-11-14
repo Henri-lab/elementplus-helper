@@ -6,6 +6,7 @@ import AppTest from './AppTest.vue';
 import AppDialogs from './AppDialogs.vue';
 //@ts-ignore
 import AppBus from './AppBus.vue';
+import Module from 'module';
 
 export default defineComponent({
   components: { AppTest, AppDialogs, AppBus },

@@ -10,6 +10,7 @@ import { ElTree, ElInput, ElCheckbox, ElImage, ElMessageBox, ElMessage } from 'e
 import connection from '@/assets/image/connection.png';
 import addone from '@/assets/image/add-one.png';
 import Delete from '@/assets/image/delete.png';
+import treeMockData from '@/mock/tree_node';
 
 interface TreeNode {
   id?: number;
@@ -27,7 +28,7 @@ export default defineComponent({
     },
     data: {
       type: Array as PropType<TreeNode[]>,
-      default: () => [],
+      default: () => treeMockData(),
     },
     menuItems: {
       type: Array as PropType<{ label: string; action: string }[]>,
