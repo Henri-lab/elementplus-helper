@@ -9,7 +9,7 @@ export const serverOption = {
             rewrite: (p) => p.replace(/^\/dev/, ''),
         },
         '/react': {
-            target: "http://127.0.0.1:3031",
+            target: "http://127.0.0.1:3001",
             changeOrigin: true,
             rewrite: (p) => p.replace(/^\/react/, ''),
         }, //  React subproject

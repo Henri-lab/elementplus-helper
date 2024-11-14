@@ -2,6 +2,8 @@
   <div class="test-bar" v-if="isTestBar">
     <AppRoot />
     <el-button class="trigger" @click="trigger">快速浏览🌞</el-button>
+    <el-button @click="redirectToOtherPort">React项目😌</el-button>
+
     <div class="btns" v-if="isTestBtns">
       <router-link class="item" to="/testComponents">
         <el-button>组件测试</el-button>
@@ -12,14 +14,14 @@
       <router-link class="item" to="/openUIComp">
         <el-button>OpenUI</el-button>
       </router-link>
-      <div class="routerInfo">
-        <div class="route-compInfo">
-          <h3 style="background: pink">route_comp_path:</h3>
-          <h2>{{ matchedComponents }}</h2>
-        </div>
-        <span style="background: pink">route-name:</span>
-        <span>{{ route.name }}</span>
+    </div>
+    <div class="routerInfo">
+      <div class="route-compInfo">
+        <h3 style="background: pink">route_comp_path:</h3>
+        <h2>{{ matchedComponents }}</h2>
       </div>
+      <span style="background: pink">route-name:</span>
+      <span>{{ route.name }}</span>
     </div>
   </div>
 </template>
@@ -59,7 +61,9 @@ const matchedComponents = computed(() => {
   });
   return components.default.__file;
 });
-
+const redirectToOtherPort = () => {
+  window.location.href = 'http://localhost:3001'; // 目标端口地址
+};
 // 绑定事件
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown);

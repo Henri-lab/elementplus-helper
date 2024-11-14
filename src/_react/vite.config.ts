@@ -5,6 +5,11 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
   plugins: [react()],
   root: __dirname,
+  resolve: {
+    alias: {
+      '#': '/src', // 
+    },
+  },
   build: {
     outDir: '../dist/_react', // Output the build files in a separate folder
   },

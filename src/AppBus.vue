@@ -1,8 +1,5 @@
 <script setup>
 import $bus from './utils/bus';
-$bus.on('$:Dialog:addSysToTree:open', (arg) => {
-  $bus.emit('Dialog:addSysToTree:open', arg);
-});
 
 $bus.on('$:Table:add_row', (arg) => {
   $bus.emit('Table:add_row', arg);

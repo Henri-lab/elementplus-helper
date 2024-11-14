@@ -1,7 +1,8 @@
 import vue from "@vitejs/plugin-vue";
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 export const useVuePlugin = () => {
-    return [vue()];
+    return [vue(), vueJsx()];
 };
 // # @vitejs/plugin-vue 配置
 

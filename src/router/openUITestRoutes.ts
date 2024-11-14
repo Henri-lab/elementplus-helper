@@ -9,7 +9,7 @@ const testRoutes: RouteRecordRaw[] = [
         path: 'TreeWithCtxmenu',
         name: 'TreeWithCtxmenu',
         //@ts-ignore 
-        component: () => import('@/OpenUI/OpenTree/index.ts'),
+        component: () => import('@openUI/OpenTree/index.tsx'),
       },
     ],
   },
