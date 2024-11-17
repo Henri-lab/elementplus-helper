@@ -7,7 +7,7 @@ import AppDialogs from './AppDialogs.vue';
 //@ts-ignore
 import AppBus from './AppBus.vue';
 import Module from 'module';
-
+import { getInitialsFromChinese } from './utils/format';
 export default defineComponent({
   components: { AppTest, AppDialogs, AppBus },
   setup() {
@@ -38,6 +38,8 @@ export default defineComponent({
     onMounted(() => {
       adjustScale();
       window.addEventListener('resize', adjustScale);
+      const pinyin = getInitialsFromChinese('银行');
+      console.log('pinyin', pinyin);
     });
 
     onBeforeUnmount(() => {

@@ -1,3 +1,27 @@
+import pinyin from 'pinyin';
+export async function getInitialsFromChinese(phrase: string): Promise<string> {
+  // let pinyin = await import('pinyin');
+  // if (!pinyin) {
+  //   throw new Error('pinyin is not installed.');
+  // }
+  if (typeof phrase !== 'string') {
+    throw new Error('Input must be a string.');
+  }
+  const result: string[] = [];
+  for (const char of phrase) {
+    const chineseRegex = /[\u4e00-\u9fa5]/;
+    if (chineseRegex.test(char)) {
+      // 使用 pinyin 库获取拼音
+      const pinyinResult = pinyin(char, { style: pinyin.STYLE_FIRST_LETTER });
+      result.push(pinyinResult[0][0]); // 获取首字母
+    } else {
+      result.push(char.toUpperCase()); // 非汉字转大写保留
+    }
+  }
+
+  return result.join('');
+}
+
 export async function JsonFormat(objOrStr: any) {
   const JSON5 = await import('json5');
   const prettier = await import('prettier');
@@ -54,7 +78,7 @@ export function parseTime(time: string | number | Date, pattern: string) {
     }
     date = new Date(time);
   }
-  const formatObj = {
+  const formatObj: any = {
     y: date.getFullYear(),
     m: date.getMonth() + 1,
     d: date.getDate(),
@@ -177,8 +201,8 @@ export function handleTree(data: any, id: any, parentId: any, children: any) {
     childrenList: children || 'children',
   };
 
-  let childrenListMap = {};
-  let nodeIds = {};
+  let childrenListMap: any = {};
+  let nodeIds: any = {};
   let tree = [];
 
   for (let d of data) {
