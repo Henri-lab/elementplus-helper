@@ -35,6 +35,7 @@ $bus.on('$:Dialog->Tree:updateNode', (arg) => {
 
 
 $bus.on('$:EditDialog:SlotForm:open',(arg)=>{
+  console.log('$:EditDialog:SlotForm:open',arg);
   $bus.emit('EditDialog:SlotForm:open',arg);
 });
 

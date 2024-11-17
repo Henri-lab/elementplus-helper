@@ -6,6 +6,8 @@
       :test="isTest"
       ref="sysTree"
       dialog
+      formType="'test-form'"
+      formName="sysTreeAddForm"
     ></BasicTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'sysTree:关闭数据' : 'sysTree:显示数据' }}

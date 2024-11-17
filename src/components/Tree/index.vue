@@ -144,7 +144,7 @@ const emits = defineEmits([
 const props = defineProps({
   test: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   idOfTree: {
     type: String,
@@ -161,6 +161,14 @@ const props = defineProps({
   dialog: {
     type: Boolean,
     default: false,
+  },
+  formType: {
+    type: String,
+    default: 'default',
+  },
+  formName: {
+    type: String,
+    default: 'default',
   },
   newNode: {
     type: Object,
@@ -192,29 +200,37 @@ const props = defineProps({
   },
 });
 
+//core
+const treeContainerRef = ref<HTMLElement | null>(null);
+const treeRef = ref<InstanceType<typeof ElTree>>();
+const data = ref<TreeNode[]>(props.data);
 //state stack of operation
 const historyStack = ref<HistoryStackItem[]>([]);
 //state other
 const filterText = ref('tree-index');
-const treeRef = ref<InstanceType<typeof ElTree>>();
+//context
 const contextMenuVisible = ref(false);
+const contextMenuActions = ref<any>(props.ctxmenuActions);
 const menuPosition = ref({ x: 0, y: 0 });
+//node operations
 const selectedNode = ref<TreeNode | null>(null);
 const defaultProps = { children: 'children', label: 'label' };
-const data = ref<TreeNode[]>(props.data);
-const treeContainerRef = ref<HTMLElement | null>(null);
-const contextMenuActions = ref<any>(props.ctxmenuActions);
-const enableDialog = ref(props.dialog);
 const newNode = ref<any>(props.newNode);
+// Store the editing state of each node by ID
+const nodeEditingStatus = ref<Record<number, boolean>>({});
+const nodeEditingValues = ref<Record<number, string>>({});
+//dialog form
+const enableDialog = ref(props.dialog);
+const dialogFormType = ref(props.formType);
+const dialogFormName = ref(props.formName);
+//message after operations
 const updateSuccessText = ref(props.uptateSuccessText);
 const updateFailText = ref(props.updateFailText);
 const addSuccessText = ref(props.addSuccessText);
 const nodeDefaultLabel = ref(props.nodeDefaultLabel);
 const deleteSuccessText = ref(props.deleteSuccessText);
 const deleteFailText = ref(props.deleteFailText);
-// Store the editing state of each node by ID
-const nodeEditingStatus = ref<Record<number, boolean>>({});
-const nodeEditingValues = ref<Record<number, string>>({});
+
 
 const handleAddNode = (
   type?: string,
@@ -300,6 +316,12 @@ const handleMenuAction = (action: string) => {
     if (action === 'add') {
       if (enableDialog.value) {
         emits('beforeAddNewNode', { nodesRef: data, node: selectedNode.value });
+        $bus.emit('$:EditDialog:SlotForm:open', {
+          formType: dialogFormType.value,
+          formName: dialogFormName.value,
+          nodesRef: data,
+          node: selectedNode.value,
+        });
       } else {
         handleAddNode();
       }
@@ -357,7 +379,6 @@ const getClickedNodeInfo = (node: TreeNode) => {
   // console.log(nodeEditingStatus.value);//ok
   // console.log('editing nodeId arr:', findNodeEditing());//ok
 };
-
 </script>
 <style lang="scss" scoped>
 .tree-container {

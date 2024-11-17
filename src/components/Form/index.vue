@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" ref="elFormRef">
+  <el-form :model="formData" ref="elFormRef" @click="getFormInfo">
     <el-row :gutter="20">
       <el-col v-for="item in description" :span="item.span" :key="item.field">
         <el-form-item
@@ -44,44 +44,45 @@
 
 <script setup lang="ts">
 import { ElMessage, type FormInstance } from 'element-plus';
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { def_description } from './default';
+import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
+import { getDescriptionByName } from './config';
 //@ts-ignore
 import $bus from '@/utils/bus';
 
 $bus.on('Form:Get:FormDataRef', () => {
-  $bus.emit('$:Public:formDataRef', { formData, formName: props.formName });
+  $bus.emit('$:Public:formDataRef', {
+    formData,
+    formName: props.formName,
+    formType: props.formType,
+  });
 });
 
-type DescriptionItem = {
-  label: string;
-  field: string;
-  span: number;
-  type: string;
-  placeholder?: string;
-  style?: Record<string, string>;
-  data?: any;
-  rules?: Array<any>;
-  options?: Array<any>;
-};
 const elFormRef = ref<FormInstance | null>(null);
 const props = defineProps({
   description: {
-    type: Array<DescriptionItem>,
+    type: Array<IDescriptionItem>,
     default: () => def_description,
   },
   formName: {
     type: String,
     default: 'default',
   },
+  formType: {
+    type: String,
+    default: 'default',
+  },
 });
 const emits = defineEmits(['submit']);
 
-const description = reactive(props.description);
+let description = reactive(props.description);
+const formType = ref(props.formType);
+const formName = ref(props.formName);
 
 // 初始化 `formData` 对象，用 `field` 作为键
 const formData = reactive<any>({});
-description.forEach((item: DescriptionItem) => {
+description.forEach((item: IDescriptionItem) => {
   formData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
 });
 // 根据表单项类型返回对应的组件
@@ -102,8 +103,28 @@ const getComponentType = (type: string) => {
   }
 };
 
+const getFormInfo = () => {
+  console.log(
+    `%cformType:${props.formType};formName:${props.formName}`,
+    `color:wheat;background-color:black;border:1px solid orange;`
+  );
+};
+
+watch(
+  () => formName,
+  () => {
+    // console.log('formName changed! is', formName.value);
+    description = getDescriptionByName(formName.value);
+    // console.log('description changed! is', description);
+    
+  },
+  {
+    immediate: true,
+  }
+);
+
 // 获取组件的属性
-const getFieldProps = (item: DescriptionItem) => {
+const getFieldProps = (item: IDescriptionItem) => {
   const props: any = { placeholder: item.placeholder };
   if (item.type === 'date-picker') {
     props.type = 'date';

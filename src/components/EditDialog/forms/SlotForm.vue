@@ -13,7 +13,8 @@
     <template #form>
       <MyCoustomForm
         :description="description"
-        :name="formName"
+        :formName="formName"
+        :formType="formType"
         ref="myFormRef"
       ></MyCoustomForm>
     </template>
@@ -34,13 +35,15 @@ import { sleep } from '@/utils/tool';
 
 const description = ref(null);
 const formName = ref('DialogForm' + Date.now());
-
+const formType = ref('DialogForm' + Date.now());
 const formData = ref({});
 $bus.on('EditDialog:SlotForm:open', (arg: any) => {
   console.log('$bus@EditDialog:SlotForm:open', arg);
   openDialog();
   description.value = arg.description;
+  formData.value = arg.formData;
   formName.value = arg.formName;
+  formType.value = arg.formType;
 });
 
 $bus.on('EditDialog:SlotForm:close', (arg: any) => {
@@ -74,9 +77,7 @@ async function handleFormSubmit() {
 }
 
 // 表单提交成功回调
-function onFormSubmitted() {
-  
-}
+function onFormSubmitted() {}
 
 // 关闭时重置表单
 async function resetForm() {}

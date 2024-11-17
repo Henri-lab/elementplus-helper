@@ -1,0 +1,37 @@
+import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
+
+export const descriptions = [
+  {
+    type: 'tree->dialog->form',
+    name: 'sysTreeAddForm',
+    description: {
+      label: '目标体系树节点添加备注',
+      field: 'notes',
+      span: 24,
+      type: 'textarea',
+      placeholder: '请输入备注信息',
+      style: { width: '100%', height: '100px', backgroundColor: '#f9f9f9' },
+      data: '', // 初始值
+      rules: [{ required: true, message: '不能为空', trigger: 'blur' }],
+    },
+  },
+];
+export const getDescriptionByName = (name: string): IDescriptionItem[] => {
+  const res = descriptions.find((item) => item.name === name);
+  if (res) {
+    return [res.description];
+  }
+  return [];
+};
+
+export const getDescriptionByType = (
+  type: string
+): Array<IDescriptionItem> | [] => {
+  let res: Array<IDescriptionItem> = [];
+  descriptions.forEach((item) => {
+    if (item.description.type === type) {
+      res.push(item.description);
+    }
+  });
+  return res;
+};
