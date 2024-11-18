@@ -22,6 +22,7 @@ $bus.on('$:Test:showTestButton', (arg) => {
 });
 
 $bus.on('$:Dialog->Tree:addNode', (arg) => {
+  arg.formData.label = arg.formData.notes; //test
   $bus.emit('Dialog->Tree:addNode', arg);
 });
 
@@ -29,13 +30,12 @@ $bus.on('$:Dialog->Tree:updateNode', (arg) => {
   $bus.emit('Dialog->Tree:updateNode', arg);
 });
 
-
-$bus.on('$:EditDialog:SlotForm:open',(arg)=>{
-  $bus.emit('EditDialog:SlotForm:open',arg);
+$bus.on('$:EditDialog:SlotForm:open', (arg) => {
+  $bus.emit('EditDialog:SlotForm:open', arg);
 });
 
-$bus.on('$:EditDialog:SlotForm:close',(arg)=>{
-  $bus.emit('EditDialog:SlotForm:close',arg);
+$bus.on('$:EditDialog:SlotForm:close', (arg) => {
+  $bus.emit('EditDialog:SlotForm:close', arg);
 });
 </script>
 <template></template>

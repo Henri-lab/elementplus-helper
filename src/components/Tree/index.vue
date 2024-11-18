@@ -12,6 +12,7 @@
         class="filter-tree"
         :data="data"
         :props="defaultProps"
+        node-key="id"
         :default-expand-all="false"
         :filter-node-method="filterNode"
         @node-click="getClickedNodeInfo"
@@ -252,6 +253,8 @@ const handleAddNode = (
       },
       historyStack,
     });
+    // expand the nodes
+    treeRef.value.store.getNode(parentNodeId).expanded = true;
     ElMessage.success(addSuccessText.value);
   }
 };
