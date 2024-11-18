@@ -116,7 +116,7 @@ declare module 'vue' {
     TreeOrg2: typeof import('./src/components/TreeOrg/TreeOrg2.vue')['default']
     WithCtxmenu: typeof import('./src/components/Tree/test/WithCtxmenu.vue')['default']
     WithCustomForm: typeof import('./src/components/Dialog/test/WithCustomForm.vue')['default']
-    WithDialog: typeof import('./src/components/Tree/deprecated/WithDialog.vue')['default']
+    WithDialog: typeof import('./src/components/Tree/test/WithDialog.vue')['default']
     WithDialog2: typeof import('./src/components/Tree/test/WithDialog2.vue')['default']
   }
 }
