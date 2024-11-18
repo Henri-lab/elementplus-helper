@@ -1,4 +1,5 @@
-export const def_description = [
+import type { IDescriptionItem } from './interface';
+export const def_description: IDescriptionItem[] = [
   {
     label: '用户名',
     field: 'username',
@@ -89,5 +90,3 @@ export const def_description = [
     ],
   },
 ];
-
-

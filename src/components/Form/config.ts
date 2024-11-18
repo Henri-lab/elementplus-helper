@@ -1,6 +1,6 @@
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
 
-export const descriptions = [
+export const descriptionInfos = [
   {
     type: 'tree->dialog->form',
     name: 'sysTreeAddForm',
@@ -16,22 +16,3 @@ export const descriptions = [
     },
   },
 ];
-export const getDescriptionByName = (name: string): IDescriptionItem[] => {
-  const res = descriptions.find((item) => item.name === name);
-  if (res) {
-    return [res.description];
-  }
-  return [];
-};
-
-export const getDescriptionByType = (
-  type: string
-): Array<IDescriptionItem> | [] => {
-  let res: Array<IDescriptionItem> = [];
-  descriptions.forEach((item) => {
-    if (item.description.type === type) {
-      res.push(item.description);
-    }
-  });
-  return res;
-};

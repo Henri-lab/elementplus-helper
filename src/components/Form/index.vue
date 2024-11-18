@@ -47,7 +47,7 @@ import { ElMessage, type FormInstance } from 'element-plus';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { def_description } from './default';
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
-import { getDescriptionByName } from './config';
+import { getDescriptionByName } from './tool';
 //@ts-ignore
 import $bus from '@/utils/bus';
 
@@ -81,10 +81,20 @@ const formType = ref(props.formType);
 const formName = ref(props.formName);
 
 // 初始化 `formData` 对象，用 `field` 作为键
-const formData = reactive<any>({});
-description.forEach((item: IDescriptionItem) => {
-  formData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
-});
+let formData = reactive<any>({}); //内部数据绑定
+let copyFormData = {}; //传递数据绑定，只保留指定属性
+const createOrUpdateFormDataByDescription = (
+  description: IDescriptionItem[]
+) => {
+  copyFormData = formData;
+  description.forEach((item: IDescriptionItem) => {
+    formData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
+    copyFormData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
+  });
+  return copyFormData;
+};
+createOrUpdateFormDataByDescription(description);
+
 // 根据表单项类型返回对应的组件
 const getComponentType = (type: string) => {
   switch (type) {
@@ -116,7 +126,8 @@ watch(
     // console.log('formName changed! is', formName.value);
     description = getDescriptionByName(formName.value);
     // console.log('description changed! is', description);
-    
+    let form_data = createOrUpdateFormDataByDescription(description);
+    console.log('form_data changed! is', form_data);
   },
   {
     immediate: true,
