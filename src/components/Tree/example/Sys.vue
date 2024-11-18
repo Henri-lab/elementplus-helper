@@ -26,7 +26,7 @@ import {
   description_addNewSysForm,
   open,
   //@ts-ignore
-} from '@/components/EditDialog/forms/config.ts';
+} from '@/components/Dialog/forms/config';
 
 const isTest = ref(false);
 

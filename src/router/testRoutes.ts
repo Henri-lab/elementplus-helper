@@ -39,7 +39,7 @@ const testRoutes: RouteRecordRaw[] = [
         path: 'DialogForm',
         name: 'DialogForm',
         component: () =>
-          import('@/components/EditDialog/test/WithCustomForm.vue'),
+          import('@/components/Dialog/test/WithCustomForm.vue'),
       },
       {
         path: 'Form',

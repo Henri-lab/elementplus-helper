@@ -10,6 +10,6 @@ import $bus from '@/utils/bus';
 import { description_addNewSysForm, open } from '../forms/config';
 
 const handleClick = () => {
-  open(description_addNewSysForm, 'from ~ src/components/EditDialog/test/WithCustomForm.vue');
+  open(description_addNewSysForm, 'from ~ src/components/Dialog/test/WithCustomForm.vue');
 };
 </script>

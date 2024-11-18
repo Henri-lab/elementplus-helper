@@ -1,4 +1,5 @@
 import $bus from '@/utils/bus';
+import { openFormDialog } from '@/utils/bus';
 export const description_addNewSysForm = [
   {
     label: '用户名',
@@ -44,7 +45,7 @@ export const description_addNewSysForm = [
 ];
 export const open = (desc: any, name: any) => {
   console.log('open dialog with form to edit');
-  $bus.emit('$:EditDialog:SlotForm:open', {
+  openFormDialog({
     description: desc,
     formName: name || 'test form',
   });

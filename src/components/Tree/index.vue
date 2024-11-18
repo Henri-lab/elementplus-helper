@@ -123,6 +123,8 @@ import { getKeysByValue } from '@/utils/tool';
 
 //convery property 'id' of vdom
 import { useAttrs } from 'vue';
+//@ts-ignore
+import { openFormDialog } from '@/utils/bus';
 const attrs = useAttrs();
 
 type TreeNode = ITreeNode;
@@ -322,12 +324,13 @@ const handleMenuAction = (action: string) => {
     if (action === 'add') {
       if (enableDialog.value) {
         emits('beforeAddNewNode', { nodesRef: data, node: selectedNode.value });
-        $bus.emit('$:EditDialog:SlotForm:open', {
+        openFormDialog({
           formType: dialogFormType.value,
           formName: dialogFormName.value,
           nodesRef: data,
           node: selectedNode.value,
         });
+        
       } else {
         handleAddNode();
       }

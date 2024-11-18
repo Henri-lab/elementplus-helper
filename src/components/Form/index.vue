@@ -44,7 +44,15 @@
 
 <script setup lang="ts">
 import { ElMessage, type FormInstance } from 'element-plus';
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  nextTick,
+  toRaw,
+} from 'vue';
 import { def_description } from './default';
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
 import { getDescriptionByName, getDescriptionFields } from './tool';
@@ -89,8 +97,6 @@ const createOrUpdateFormDataByDescription = (
   description: IDescriptionItem[]
 ) => {
   copyFormData = formData;
-  console.log(description,'--======');
-  
   description.forEach((item: IDescriptionItem) => {
     formData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
     copyFormData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
@@ -125,14 +131,15 @@ const testFormInfo = () => {
 };
 
 watch(
-  () => formName,
-  () => {
-    description = getDescriptionByName(formName.value);
+  () => props.formName,
+  (newName) => {
+    const newDescription = getDescriptionByName(newName);
+    description.splice(0, description.length, ...newDescription); // @important！‘reactive’ value updated method
     let exportedFormData = createOrUpdateFormDataByDescription(description);
     let fields = getDescriptionFields(description);
     filterObjectProperties(copyFormData, fields);
-    console.log('formName changed! is', formName.value);
-    // console.log('description changed! is', description);
+    // console.log('formName changed! is', formName.value);
+    console.log('description changed! is', description);
     // console.log('fields changed! is', fields);
     // console.log('exportedFormData changed! is', exportedFormData);
     // console.log('form inner data',formData);

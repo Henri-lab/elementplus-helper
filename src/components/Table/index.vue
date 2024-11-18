@@ -126,6 +126,8 @@ import { defineComponent, ref, watch } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 //@ts-ignore
 import $bus from '@/utils/bus';
+//@ts-ignore
+import { openFormDialog } from '@utils/bus';
 
 export default defineComponent({
   props: {
@@ -203,7 +205,7 @@ export default defineComponent({
       if (!customDialog.value) {
         dialogVisible.value = true;
       }else{
-        $bus.emit('$:EditDialog:SlotForm:open')
+        openFormDialog();
       }
     };
 

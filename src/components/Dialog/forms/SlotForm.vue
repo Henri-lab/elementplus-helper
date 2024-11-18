@@ -43,6 +43,7 @@ $bus.on('EditDialog:SlotForm:open', (arg: any) => {
   formData.value = arg.formData;
   formName.value = arg.formName;
   formType.value = arg.formType;
+  
 });
 
 $bus.on('EditDialog:SlotForm:close', (arg: any) => {

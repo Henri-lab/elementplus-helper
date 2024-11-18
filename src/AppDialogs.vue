@@ -8,9 +8,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 //@ts-ignore
-import DialogAddSysToTree from './components/EditDialog/example/addSysToTree.vue';
+import DialogAddSysToTree from './components/Dialog/example/addSysToTree.vue';
 //@ts-ignore
-import EditDialogSlotForm from '@/components/EditDialog/forms/SlotForm.vue';
+import EditDialogSlotForm from '@/components/Dialog/forms/SlotForm.vue';
 </script>
 
 <style scoped></style>
