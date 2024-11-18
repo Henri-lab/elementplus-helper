@@ -58,3 +58,4 @@ const createWriteOnce = (initialValue:any) => {
 //   console.log(myVar.value); // Outputs: 42
   
 //   myVar.value = 100; // Error: The variable has already been set.
+

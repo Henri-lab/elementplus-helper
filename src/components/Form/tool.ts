@@ -9,7 +9,7 @@ export const getDescriptionByName = (
   }
   const res = descriptionInfos.find((item) => item.name === name);
   if (res) {
-    return [res.description];
+    return res.descriptions;
   }
   return [];
 };
@@ -23,8 +23,9 @@ export const getDescriptionByType = (
     descriptionInfos = def_descInfos;
   }
   descriptionInfos.forEach((item) => {
-    if (item.description.type === type) {
-      res.push(item.description);
+    if (item.type === type) {
+      res=item.descriptions;
+      return;
     }
   });
   return res;
@@ -35,4 +36,5 @@ export const getDescriptionFields = (descriptionItems: IDescriptionItem[]) => {
   descriptionItems.forEach((descItem) => {
     res.push(descItem.field);
   });
+  return res;
 };

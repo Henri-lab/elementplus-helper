@@ -13,5 +13,5 @@ export interface IDescriptionItem {
 export interface IDescriptionInfoItem {
   type?: string;
   name?: string;
-  description: IDescriptionItem;
+  descriptions: IDescriptionItem[];
 }

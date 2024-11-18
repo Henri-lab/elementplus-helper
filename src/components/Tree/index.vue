@@ -118,7 +118,7 @@ import { deleteNodeWithHistory, deleteNode } from './tool/del';
 import { updateNode, saveLabel, undoAction } from './tool/update';
 import { findNode } from './tool/find';
 //@ts-ignore
-import { getKeysByValue } from '@/utils/tool';
+import { getKeysByValue} from '@/utils/tool';
 
 //convery property 'id' of vdom
 import { useAttrs } from 'vue';
@@ -230,7 +230,6 @@ const addSuccessText = ref(props.addSuccessText);
 const nodeDefaultLabel = ref(props.nodeDefaultLabel);
 const deleteSuccessText = ref(props.deleteSuccessText);
 const deleteFailText = ref(props.deleteFailText);
-
 
 const handleAddNode = (
   type?: string,

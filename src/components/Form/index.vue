@@ -47,7 +47,9 @@ import { ElMessage, type FormInstance } from 'element-plus';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { def_description } from './default';
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
-import { getDescriptionByName } from './tool';
+import { getDescriptionByName, getDescriptionFields } from './tool';
+//@ts-ignore
+import { filterObjectProperties } from '@/utils/tool';
 //@ts-ignore
 import $bus from '@/utils/bus';
 
@@ -125,9 +127,12 @@ watch(
   () => {
     // console.log('formName changed! is', formName.value);
     description = getDescriptionByName(formName.value);
-    // console.log('description changed! is', description);
-    let form_data = createOrUpdateFormDataByDescription(description);
-    console.log('form_data changed! is', form_data);
+    let exportedFormData = createOrUpdateFormDataByDescription(description);
+    let fields = getDescriptionFields(description);
+    filterObjectProperties(copyFormData, fields);
+    console.log('description changed! is', description);
+    console.log('fields changed! is', fields);
+    console.log('exportedFormData changed! is', exportedFormData);
   },
   {
     immediate: true,

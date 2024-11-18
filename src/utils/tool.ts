@@ -24,4 +24,20 @@ function getKeyByValue(
 function getKeysByValue(obj: Record<string, any>, value: any): string[] {
   return Object.keys(obj).filter((key) => obj[key] === value);
 }
-export { sleep, executeUntilNonEmpty, getKeyByValue, getKeysByValue };
+function filterObjectProperties(
+  obj: Record<string, any>,
+  allowedKeys: string[]
+): void {
+  for (const key in obj) {
+    if (!allowedKeys.includes(key)) {
+      delete obj[key]; // 删除不属于 allowedKeys 的属性
+    }
+  }
+}
+export {
+  sleep,
+  executeUntilNonEmpty,
+  getKeyByValue,
+  getKeysByValue,
+  filterObjectProperties,
+};
