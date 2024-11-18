@@ -1,13 +1,13 @@
 <template>
   <div id="sysTree" ref="sysTree">
-    <BasicTree
-      id="idOfSysTree"
+    <MyTree
       :data="treeData"
       :test="isTest"
       ref="sysTree"
       dialog
+      formName="sysTreeAddForm"
       @beforeAddNewNode="handleBeforeAddNode"
-    ></BasicTree>
+    ></MyTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'sysTree:关闭数据' : 'sysTree:显示数据' }}
     </button>
@@ -19,7 +19,7 @@ import { onMounted, ref, watch } from 'vue';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
-import BasicTree from '../index.vue';
+import MyTree from '../index.vue';
 //@ts-ignore
 import treeMockData from '@/mock/tree_node';
 import {
@@ -32,7 +32,6 @@ const isTest = ref(false);
 
 const isShowTestBtn = ref(false);
 
-const targetElement = ref(null);
 const sysTree = ref(null);
 const thisTree = sysTree;
 const props = defineProps({
@@ -43,11 +42,6 @@ const props = defineProps({
 });
 
 const treeData = ref(props.treeData || treeMockData());
-onMounted(() => {
-  if (thisTree.value) {
-    targetElement.value = document.getElementById('sysTree') as any;
-  }
-});
 
 const handleBeforeAddNode = (nodeData: any) => {
   const { nodesRef, node } = nodeData;
@@ -67,4 +61,9 @@ $bus.on('Test:showTestButton', (isShow: boolean) => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#sysTree {
+  height: $h_aside*0.91;// need design better
+  // background-color: red;
+}
+</style>

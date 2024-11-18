@@ -154,7 +154,5 @@ const beforeLeave = async (newTabName: any) => {
   overflow: scroll;
   background-size: cover;
   position: relative;
-  .control-panel {
-  }
 }
 </style>

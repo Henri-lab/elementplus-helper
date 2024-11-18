@@ -415,16 +415,16 @@ const getClickedNodeInfo = (node: TreeNode) => {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 5px;
     width: 120px;
-    z-index: 1000;
+    z-index: 99999999;
     .ul {
       list-style: none;
       padding: 0;
       margin: 0;
       .li {
-        padding: 8px;
+        padding-bottom: 8px;
         cursor: pointer;
         &:hover {
-          background-color: #f0f0f0;
+          background-color: #1659d5;
         }
       }
     }
