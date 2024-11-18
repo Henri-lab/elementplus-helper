@@ -23,6 +23,7 @@ import EnhancedTable from '../index.vue';
 import tableMockData from '@/mock/table_test';
 //@ts-ignore
 import config_columns from '../config/targetAnalyse'
+
 import EnhancedPagination from '../../Pagination/index.vue';
 
 

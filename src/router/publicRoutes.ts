@@ -75,7 +75,7 @@ const publicRoutes: RouteRecordRaw[] = [
               header: () => import('@/components/Header/index.vue'),
               main_m: () => import('@/components/TreeOrg/TreeOrg.vue'),
               main_f: () =>
-                import('@/components/Table/example/TargetAnalyse.vue'),
+                import('@/components/Table/example/TargetAnalyse.ts'),
               aside: () => import('@/components/Tabs/example/Sys&Target.vue'),
             },
             meta: {

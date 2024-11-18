@@ -76,7 +76,7 @@ declare module 'vue' {
     Form: typeof import('./src/components/Form/index.vue')['default']
     Header: typeof import('./src/components/Header/index.vue')['default']
     Idex: typeof import('./src/components/Form/idex.vue')['default']
-    Index1: typeof import('./src/components/Tree/history/index1.vue')['default']
+    Index1: typeof import('./src/components/Tree/deprecated/index1.vue')['default']
     Index2: typeof import('./src/components/Tree/index2.vue')['default']
     'MatainA&B&C': typeof import('./src/components/Tabs/example/MatainA&B&C.vue')['default']
     MindMapNode: typeof import('./src/components/Recursion/MindMapNode.vue')['default']
@@ -94,7 +94,7 @@ declare module 'vue' {
     SysAndTarget: typeof import('./src/components/Tabs/example/SysAndTarget.vue')['default']
     Table: typeof import('./src/components/Table/index.vue')['default']
     Tabs: typeof import('./src/components/Tabs/index.vue')['default']
-    TargetAnalyse: typeof import('./src/components/Table/example/TargetAnalyse.vue')['default']
+    TargetAnalyse: typeof import('./src/components/Table/deprecated/TargetAnalyse.vue')['default']
     TargetBasicInfo: typeof import('./src/components/Table/example/TargetBasicInfo.vue')['default']
     Test: typeof import('./src/components/EnhancedForm/test.vue')['default']
     test2: typeof import('./src/components/Tree/test2.vue')['default']
@@ -111,7 +111,7 @@ declare module 'vue' {
     TreeOrg2: typeof import('./src/components/TreeOrg/TreeOrg2.vue')['default']
     WithCtxmenu: typeof import('./src/components/Tree/test/WithCtxmenu.vue')['default']
     WithCustomForm: typeof import('./src/components/EditDialog/test/WithCustomForm.vue')['default']
-    WithDialog: typeof import('./src/components/Tree/history/WithDialog.vue')['default']
+    WithDialog: typeof import('./src/components/Tree/test/WithDialog.vue')['default']
     WithDialog2: typeof import('./src/components/Tree/test/WithDialog2.vue')['default']
   }
 }

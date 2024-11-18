@@ -38,8 +38,6 @@ export default defineComponent({
     onMounted(() => {
       adjustScale();
       window.addEventListener('resize', adjustScale);
-      const pinyin = getInitialsFromChinese('银行');
-      console.log('pinyin', pinyin);
     });
 
     onBeforeUnmount(() => {
