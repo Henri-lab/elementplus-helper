@@ -21,5 +21,5 @@ export const tellTree = (arg?: any) => {
 };
 
 export const tellTable = (arg?: any) => {
-  $bus.emit('$:Dialog->Tree', arg);
+  $bus.emit('$:Dialog->Table:addRow', arg);
 };

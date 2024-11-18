@@ -73,25 +73,25 @@ async function handleFormSubmit() {
   formType.value = myFormRef.value.getFormInfo().type;
   if (status == 'submit:success') {
     closeDialog();
-    console.log(
-      'submitedForm:',
-      formData.value,
-      formName.value,
-      formType.value
-    );
-    // if (formType.value == '<tree>') {
-    //   tellTree({
-    //     formData: formData.value,
-    //     formName: formName.value,
-    //     formType: formType.value,
-    //   });
-    // } else if (formType.value == '<table>') {
-    //   tellTable({
-    //     formData: formData.value,
-    //     formName: formName.value,
-    //     formType: formType.value,
-    //   });
-    // }
+    // console.log(
+    //   'submitedForm:',
+    //   formData.value,
+    //   formName.value,
+    //   formType.value
+    // );
+    if (formType.value == '<tree>') {
+      tellTree({
+        formData: formData.value,
+        formName: formName.value,
+        formType: formType.value,
+      });
+    } else if (formType.value == '<table>') {
+      tellTable({
+        formData: formData.value,
+        formName: formName.value,
+        formType: formType.value,
+      });
+    }
   }
 }
 

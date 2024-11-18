@@ -170,7 +170,7 @@ export default defineComponent({
       default: '<table>',
     },
   },
-  emits: ['onSubmit'],
+  emits: ['afterAddRow'],
 
   setup(props, { emit }) {
     type AnyObject = {
@@ -309,10 +309,9 @@ export default defineComponent({
       handleAdd();
     });
 
-    $bus.on('Dialog->Table', (arg: any) => {
-      console.log('Dialog->Table:', arg);
-
-      emit('onSubmit', arg);
+    $bus.on('Dialog->Table:addRow', (arg: any) => {
+      // console.log('Dialog->Table:addRow:', arg);
+      emit('afterAddRow', arg);
     });
 
     return {

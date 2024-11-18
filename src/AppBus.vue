@@ -19,8 +19,8 @@ $bus.on('$:Table:update_row', (arg) => {
 $bus.on('$:Table:searchByTargetName', (arg) => {
   $bus.emit('Table:searchByTargetName', arg);
 });
-$bus.on('$:Dialog->Tree', (arg) => {
-  $bus.emit('Dialog->Tree', arg);
+$bus.on('$:Dialog->Table:addRow', (arg) => {
+  $bus.emit('Dialog->Table:addRow', arg);
 });
 
 $bus.on('$:Dialog->Tree:addNode', (arg) => {
