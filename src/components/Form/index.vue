@@ -89,6 +89,8 @@ const createOrUpdateFormDataByDescription = (
   description: IDescriptionItem[]
 ) => {
   copyFormData = formData;
+  console.log(description,'--======');
+  
   description.forEach((item: IDescriptionItem) => {
     formData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
     copyFormData[item.field] = item.type === 'checkbox' ? [] : item.data || ''; // 为每个字段设置初始值
@@ -129,7 +131,7 @@ watch(
     let exportedFormData = createOrUpdateFormDataByDescription(description);
     let fields = getDescriptionFields(description);
     filterObjectProperties(copyFormData, fields);
-    // console.log('formName changed! is', formName.value);
+    console.log('formName changed! is', formName.value);
     // console.log('description changed! is', description);
     // console.log('fields changed! is', fields);
     // console.log('exportedFormData changed! is', exportedFormData);

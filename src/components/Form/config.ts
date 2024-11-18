@@ -1,4 +1,8 @@
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
+import { generateFormDescriptions } from './tool';
+import { columns as cfg_TA } from '@/components/Table/config/targetAnalyse';
+
+
 
 export const descriptionInfos = [
   {
@@ -32,5 +36,10 @@ export const descriptionInfos = [
         rules: [{ required: true, message: '不能为空', trigger: 'blur' }],
       },
     ],
+  },
+  {
+    type: 'table->dialog->form',
+    name: 'targetAnalyseTableAddForm',
+    descriptions: () => generateFormDescriptions(cfg_TA),
   },
 ];

@@ -9,8 +9,11 @@ export function createComponent(
     getTableData: () => any[],
     // getConfigColumnsPath: () => string,
     getConfigColumns: () => any[],
-    getInitialPageSize: () => number = () => 5,
-    getInitialCurrentPage: () => number = () => 1
+    extra?: {
+        currentPage?: number,
+        pageSize?: number,
+        customDialog?: boolean,
+    }
 ) {
     return defineComponent({
         components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
@@ -26,8 +29,8 @@ export function createComponent(
 
             const tableData = ref(getTableData()); // 动态获取表格数据
             const totalItems = ref(tableData.value.length || 0); // 总条数
-            const currentPage = ref(getInitialCurrentPage()); // 当前页码
-            const pageSize = ref(getInitialPageSize()); // 每页条数
+            const currentPage = ref(extra?.currentPage || 1); // 当前页码
+            const pageSize = ref(extra?.currentPage || 10); // 每页条数
 
             // 计算当前页的数据
             const paginatedData = computed(() => {
@@ -66,6 +69,7 @@ export function createComponent(
                         initialData={paginatedData.value}
                         isAddBtn={false}
                         isDeleteSelected={false}
+                        customDialog={extra?.customDialog}
                     />
 
                     <br />

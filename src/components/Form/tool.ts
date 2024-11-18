@@ -5,7 +5,7 @@ export const getDescriptionByName = (
   descriptionInfos?: IDescriptionInfoItem[]
 ): IDescriptionItem[] => {
   if (!descriptionInfos) {
-    descriptionInfos = def_descInfos;
+    descriptionInfos = def_descInfos as IDescriptionInfoItem[];
   }
   const res = descriptionInfos.find((item) => item.name === name);
   if (res) {
@@ -20,11 +20,11 @@ export const getDescriptionByType = (
 ): Array<IDescriptionItem> | [] => {
   let res: Array<IDescriptionItem> = [];
   if (!descriptionInfos) {
-    descriptionInfos = def_descInfos;
+    descriptionInfos = def_descInfos as IDescriptionInfoItem[];
   }
   descriptionInfos.forEach((item) => {
     if (item.type === type) {
-      res=item.descriptions;
+      res = item.descriptions;
       return;
     }
   });
@@ -37,4 +37,19 @@ export const getDescriptionFields = (descriptionItems: IDescriptionItem[]) => {
     res.push(descItem.field);
   });
   return res;
+};
+
+export const generateFormDescriptions = (columns: any[]) => {
+  return columns.map((col) => ({
+    label: col.label,
+    field: col.prop,
+    span: 24,
+    type: 'input', 
+    placeholder: `请输入${col.label}`,
+    style: { width: '100%', height: '100px', backgroundColor: '#f9f9f9' },
+    data: '', 
+    rules: [
+      { required: true, message: `${col.label}不能为空`, trigger: 'blur' },
+    ],
+  }));
 };
