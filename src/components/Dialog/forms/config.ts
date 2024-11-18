@@ -44,13 +44,11 @@ export const description_addNewSysForm = [
   },
 ];
 export const open = (desc: any, name: any) => {
-  console.log('open dialog with form to edit');
   openFormDialog({
     description: desc,
     formName: name || 'test form',
   });
 };
 export const close = () => {
-  console.log('close dialog with form to edit');
   $bus.emit('$:EditDialog:SlotForm:close');
 };

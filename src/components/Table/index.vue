@@ -127,7 +127,7 @@ import { ElMessageBox, ElMessage } from 'element-plus';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
-import { openFormDialog } from '@utils/bus';
+import { openFormDialog } from '@/utils/bus';
 
 export default defineComponent({
   props: {
@@ -165,9 +165,14 @@ export default defineComponent({
       type: String,
       default: 'default',
     },
+    customFormType: {
+      type: String,
+      default: '<table>',
+    },
   },
+  emits: ['onSubmit'],
 
-  setup(props) {
+  setup(props, { emit }) {
     type AnyObject = {
       [key: string]: any;
     };
@@ -204,8 +209,11 @@ export default defineComponent({
       isEditing.value = false;
       if (!customDialog.value) {
         dialogVisible.value = true;
-      }else{
-        openFormDialog();
+      } else {
+        openFormDialog({
+          formType: props.customFormType,
+          formName: props.customFormName,
+        });
       }
     };
 
@@ -255,6 +263,9 @@ export default defineComponent({
       } else {
         // 新增数据
         tableData.value.push({ ...form.value });
+        if (!customDialog.value) {
+        } else {
+        }
         ElMessage.success('新增成功');
       }
       dialogVisible.value = false;
@@ -296,6 +307,12 @@ export default defineComponent({
 
     $bus.on('Table:add_row', () => {
       handleAdd();
+    });
+
+    $bus.on('Dialog->Table', (arg: any) => {
+      console.log('Dialog->Table:', arg);
+
+      emit('onSubmit', arg);
     });
 
     return {

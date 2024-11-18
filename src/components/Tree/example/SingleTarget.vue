@@ -1,6 +1,12 @@
 <template>
   <div id="singleTargetTree" ref="singleTargetTree">
-    <MyTree :data="treeData" :test="isTest" dialog  formName="singleTargetTreeAddForm"></MyTree>
+    <MyTree
+      :data="treeData"
+      :test="isTest"
+      dialog
+      formName="singleTargetTreeAddForm"
+      formType="<tree>"
+    ></MyTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">
       {{ isTest ? 'singleTargetTree:关闭数据' : 'singleTargetTree:显示数据' }}
     </button>
@@ -38,7 +44,7 @@ $bus.on('Test:showTestButton', (isShow: boolean) => {
 
 <style lang="scss" scoped>
 #singleTargetTree {
-  height: $h_aside*0.91;// need design better
+  height: $h_aside * 0.91; // need design better
   // background-color: red;
 }
 </style>

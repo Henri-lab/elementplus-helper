@@ -55,7 +55,12 @@ import {
 } from 'vue';
 import { def_description } from './default';
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
-import { getDescriptionByName, getDescriptionFields } from './tool';
+import {
+  getDescriptionByName,
+  getDescriptionFields,
+  generateFormDescriptions,
+  getColumnsByName,
+} from './tool';
 //@ts-ignore
 import { filterObjectProperties } from '@/utils/tool';
 //@ts-ignore
@@ -133,13 +138,19 @@ const testFormInfo = () => {
 watch(
   () => props.formName,
   (newName) => {
-    const newDescription = getDescriptionByName(newName);
+    let newDescription = getDescriptionByName(newName);
+    if (!newDescription) {
+      const columns = getColumnsByName(newName);
+      newDescription = generateFormDescriptions(columns);
+      // console.log('newDescription', newDescription);
+    }
+
     description.splice(0, description.length, ...newDescription); // @important！‘reactive’ value updated method
     let exportedFormData = createOrUpdateFormDataByDescription(description);
     let fields = getDescriptionFields(description);
     filterObjectProperties(copyFormData, fields);
     // console.log('formName changed! is', formName.value);
-    console.log('description changed! is', description);
+    // console.log('description changed! is', description);
     // console.log('fields changed! is', fields);
     // console.log('exportedFormData changed! is', exportedFormData);
     // console.log('form inner data',formData);

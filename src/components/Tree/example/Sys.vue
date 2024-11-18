@@ -6,6 +6,7 @@
       ref="sysTree"
       dialog
       formName="sysTreeAddForm"
+      formType="<tree>"
       @beforeAddNewNode="handleBeforeAddNode"
     ></MyTree>
     <button v-if="isShowTestBtn" @click="isTest = !isTest">

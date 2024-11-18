@@ -14,4 +14,5 @@ export interface IDescriptionInfoItem {
   type?: string;
   name?: string;
   descriptions: IDescriptionItem[];
+  columns?: any; // 表格列配置
 }

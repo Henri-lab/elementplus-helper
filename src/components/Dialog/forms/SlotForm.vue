@@ -27,6 +27,8 @@ import { ref } from 'vue';
 //@ts-ignore
 import $bus from '@/utils/bus';
 //@ts-ignore
+import { tellTree, tellTable } from '@/utils/bus';
+//@ts-ignore
 import EditDialog from '../index.vue';
 //@ts-ignore
 import MyCoustomForm from '@/components/Form/index.vue';
@@ -43,7 +45,6 @@ $bus.on('EditDialog:SlotForm:open', (arg: any) => {
   formData.value = arg.formData;
   formName.value = arg.formName;
   formType.value = arg.formType;
-  
 });
 
 $bus.on('EditDialog:SlotForm:close', (arg: any) => {
@@ -72,12 +73,25 @@ async function handleFormSubmit() {
   formType.value = myFormRef.value.getFormInfo().type;
   if (status == 'submit:success') {
     closeDialog();
-    // console.log('submitedForm:', formData.value, formName.value, formType.value);
-    $bus.emit('$:Dialog->Tree:addNode', {
-      formData: formData.value,
-      formName: formName.value,
-      formType: formType.value,
-    });
+    console.log(
+      'submitedForm:',
+      formData.value,
+      formName.value,
+      formType.value
+    );
+    // if (formType.value == '<tree>') {
+    //   tellTree({
+    //     formData: formData.value,
+    //     formName: formName.value,
+    //     formType: formType.value,
+    //   });
+    // } else if (formType.value == '<table>') {
+    //   tellTable({
+    //     formData: formData.value,
+    //     formName: formName.value,
+    //     formType: formType.value,
+    //   });
+    // }
   }
 }
 

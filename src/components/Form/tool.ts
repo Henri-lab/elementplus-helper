@@ -14,6 +14,20 @@ export const getDescriptionByName = (
   return [];
 };
 
+export const getColumnsByName = (
+  name: string,
+  descriptionInfos?: IDescriptionInfoItem[]
+): IDescriptionItem[] => {
+  if (!descriptionInfos) {
+    descriptionInfos = def_descInfos as IDescriptionInfoItem[];
+  }
+  const res = descriptionInfos.find((item) => item.name === name);
+  if (res) {
+    return res.columns;
+  }
+  return [];
+};
+
 export const getDescriptionByType = (
   type: string,
   descriptionInfos?: IDescriptionInfoItem[]

@@ -1,16 +1,17 @@
 //@ts-ignore
-import { createComponent } from '@openUI/OpenTable/creater';
+import { createComponent as MyTable } from '@openUI/OpenTable/creater';
 import mockData from '@/mock/table_test';
-import { conlumsPinyin } from '@/components/Table/config/targetAnalyse';
-const columns = await conlumsPinyin;
+import { columnsPinyin } from '@/components/Table/config/targetAnalyse';
+const columns = await columnsPinyin;
 // console.log(columns,'pinyin');
 
-export default createComponent(
+export default MyTable(
   () => [], // 示例表格数据获取函数
   //   () => '@/components/Table/config/targetAnalyse.ts', // 列配置路径获取函数
   () => columns, // 列配置获取函数
   {
     customDialog: true,
-    customFormName:'targetAnalyseTableAddForm'
+    customFormName: 'targetAnalyseTableAddForm',
+    customFormType: '<table>',
   }
 );

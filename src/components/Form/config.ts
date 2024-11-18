@@ -1,12 +1,9 @@
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
-import { generateFormDescriptions } from './tool';
-import { columns as cfg_TA } from '@/components/Table/config/targetAnalyse';
-
-
+import { columnsPinyin as cfg_TA } from '@/components/Table/config/targetAnalyse';
 
 export const descriptionInfos = [
   {
-    type: 'tree->dialog->form',
+    type: '<tree>',
     name: 'sysTreeAddForm',
     descriptions: [
       {
@@ -22,7 +19,7 @@ export const descriptionInfos = [
     ],
   },
   {
-    type: 'tree->dialog->form',
+    type: '<tree>',
     name: 'singleTargetTreeAddForm',
     descriptions: [
       {
@@ -38,8 +35,9 @@ export const descriptionInfos = [
     ],
   },
   {
-    type: 'table->dialog->form',
+    type: '<table>',
     name: 'targetAnalyseTableAddForm',
-    descriptions: () => generateFormDescriptions(cfg_TA),
+    descriptions: null,
+    columns: await cfg_TA,
   },
 ];

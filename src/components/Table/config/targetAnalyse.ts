@@ -22,4 +22,4 @@ export async function convertPropsToInitials(columns: any[]) {
   return transformedColumns;
 }
 
-export let conlumsPinyin = convertPropsToInitials(columns);
+export let columnsPinyin = convertPropsToInitials(columns);

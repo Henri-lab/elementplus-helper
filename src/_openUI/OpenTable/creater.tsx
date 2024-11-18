@@ -13,6 +13,8 @@ export function createComponent(
         currentPage?: number,
         pageSize?: number,
         customDialog?: boolean,
+        customFormName?: string,
+        customFormType?: string,
     }
 ) {
     return defineComponent({
@@ -70,6 +72,8 @@ export function createComponent(
                         isAddBtn={false}
                         isDeleteSelected={false}
                         customDialog={extra?.customDialog}
+                        customFormName={extra?.customFormName}
+                        customFormType={extra?.customFormType}
                     />
 
                     <br />

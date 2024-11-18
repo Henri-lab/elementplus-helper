@@ -1,5 +1,8 @@
 <script setup>
 import $bus from './utils/bus';
+$bus.on('$:Test:showTestButton', (arg) => {
+  $bus.emit('Test:showTestButton', arg);
+});
 
 $bus.on('$:Table:add_row', (arg) => {
   $bus.emit('Table:add_row', arg);
@@ -16,9 +19,8 @@ $bus.on('$:Table:update_row', (arg) => {
 $bus.on('$:Table:searchByTargetName', (arg) => {
   $bus.emit('Table:searchByTargetName', arg);
 });
-
-$bus.on('$:Test:showTestButton', (arg) => {
-  $bus.emit('Test:showTestButton', arg);
+$bus.on('$:Dialog->Tree', (arg) => {
+  $bus.emit('Dialog->Tree', arg);
 });
 
 $bus.on('$:Dialog->Tree:addNode', (arg) => {
