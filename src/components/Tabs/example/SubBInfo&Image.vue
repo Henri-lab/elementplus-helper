@@ -13,9 +13,9 @@
 //@ts-ignore
 import Tabs from '../index.vue';
 //@ts-ignore
-import C1 from '@/components/Table/example/TargetBasicInfo.ts';
+import C1 from '@/components/Table/example/SubTargetBasicInfo.ts';
 //@ts-ignore
-import C2 from '@/components/Table/example/ThemeImages.ts';
+import C2 from '@/components/Table/example/SubThemeImages.ts';
 import { markRaw } from 'vue';
 
 const tabs = [

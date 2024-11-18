@@ -10,7 +10,6 @@ export const columns = [
   { label: '子目标类型', prop: 'subtype' },
 ];
 
-
 // 将 columns 的 prop 转换为拼音首字母
 export async function convertPropsToInitials(columns: any[]) {
   const transformedColumns = await Promise.all(
@@ -22,4 +21,4 @@ export async function convertPropsToInitials(columns: any[]) {
   return transformedColumns;
 }
 
-export let columnsPinyin = convertPropsToInitials(columns);
+export let columnsPinyin = await convertPropsToInitials(columns);

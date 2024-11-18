@@ -27,7 +27,7 @@ import EnhancedTable from '../index.vue';
 //@ts-ignore
 import tableMockData from '@/mock/table_test';
 //@ts-ignore
-import config_columns from '../config/subTargetMaintain'
+import {columns as config_columns } from '../config/subTargetBasicInfo'
 import EnhancedPagination from '../../Pagination/index.vue';
 
 

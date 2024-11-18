@@ -1,5 +1,6 @@
 import type { IDescriptionItem, IDescriptionInfoItem } from './interface';
 import { columnsPinyin as cfg_TA } from '@/components/Table/config/targetAnalyse';
+import {columnsPinyin as cfg_STM} from '@/components/Table/config/subTargetBasicInfo';
 
 export const descriptionInfos = [
   {
@@ -38,6 +39,12 @@ export const descriptionInfos = [
     type: '<table>',
     name: 'targetAnalyseTableAddForm',
     descriptions: null,
-    columns: await cfg_TA,
+    columns: cfg_TA,
   },
+  {
+    type: '<table>',
+    name: 'subTargetMaintainTableAddForm',
+    descriptions: null,
+    columns: cfg_STM ,
+  }
 ];

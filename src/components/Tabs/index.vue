@@ -19,15 +19,20 @@
             {{ tab.label }}
           </span>
         </template>
-        <!-- 动态加载的组件内容 -->
-        <div class="stringComp comp" v-if="typeof tab.component === 'string'">
-          {{ tab.component }}
-        </div>
-        <template v-else>
-          <div class="realComp comp">
-            <component :is="tab.component" v-bind="tab.props" />
+        <Suspense>
+          <!-- 动态加载的组件内容 -->
+          <div class="stringComp comp" v-if="typeof tab.component === 'string'">
+            {{ tab.component }}
           </div>
-        </template>
+          <template v-else>
+            <div class="realComp comp">
+              <component :is="tab.component" v-bind="tab.props" />
+            </div>
+          </template>
+          <template #fallback>
+            <div class="loading text">加载中...</div>
+          </template>
+        </Suspense>
       </el-tab-pane>
     </el-tabs>
 

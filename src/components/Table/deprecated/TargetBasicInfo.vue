@@ -8,6 +8,14 @@
       :isAddBtn="false"
       :isDeleteSelected="false"
     >
+      <template #operation="scope">
+        <el-button @click="handleCustomBtn(scope.row)" size="small">
+          关联图片
+        </el-button>
+        <el-button @click="handleCustomBtn(scope.row)" size="small">
+          导出
+        </el-button>
+      </template>
     </EnhancedTable>
     <br />
 
@@ -30,14 +38,14 @@ import EnhancedTable from '../index.vue';
 //@ts-ignore
 import tableMockData from '@/mock/table_test';
 //@ts-ignore
-import config_columns from '../config/themeImages';
+import {columns as config_columns } from '../config/targetBasicInfo';
 import EnhancedPagination from '../../Pagination/index.vue';
 
 export default defineComponent({
   components: { EnhancedTable, EnhancedPagination, ToolBarOfTable },
   setup() {
     const columns = config_columns;
-    const data = tableMockData('themeImages'); // 模拟数据
+    const data = tableMockData('targetBasicInfo'); // 模拟数据
 
     const handleCustomBtn = (row: any) => {
       console.log('custom button clicked:', row);

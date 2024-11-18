@@ -15,7 +15,7 @@
   //@ts-ignore
   import C1 from '@/components/Tabs/example/BInfo&Image.vue';
   //@ts-ignore
-  import C2 from '@/components//Tabs/example/BInfo&Image.vue';
+  import C2 from '@/components//Tabs/example/SubBInfo&Image.vue';
   //@ts-ignore
   import C3 from '@/components/Other/ModelMatain.vue';
   import { markRaw } from 'vue';

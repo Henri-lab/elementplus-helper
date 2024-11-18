@@ -87,8 +87,15 @@
       v-model="dialogVisible"
       :title="isEditing ? '编辑数据' : '新增数据'"
       class="enhanced-table__dialog"
+      @close="dialogVisible = false"
+      @keydown.enter="handleSubmit"
     >
-      <el-form :model="form" class="enhanced-table__form">
+      <el-form
+        :model="form"
+        class="enhanced-table__form"
+        ref="innerForm"
+        :rules="rules"
+      >
         <el-form-item
           v-for="column in columns"
           :key="column.prop"
@@ -122,7 +129,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 //@ts-ignore
 import $bus from '@/utils/bus';
@@ -157,6 +164,14 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    innerFormTemplate: {
+      type: Object,
+      default: {},
+    },
+    innerFormRules: {
+      type: Object,
+      default: {},
+    },
     customDialog: {
       type: Boolean,
       default: false,
@@ -185,11 +200,13 @@ export default defineComponent({
     const isAddBtn = ref(props.isAddBtn);
     const isDeleteSelected = ref(props.isDeleteSelected);
     const dialogVisible = ref(false); // 控制对话框显示
-    const form = ref<AnyObject>({}); // 表单数据
+    const form = ref<AnyObject>(props.innerFormTemplate); // 表单数据
+    const rules = ref(props.innerFormRules);
     const isEditing = ref(false); // 是否为编辑模式
     const currentIndex = ref(-1); // 当前编辑项索引
     const selectedRows = ref<Array<RowObject>>([]); // 存储选中的行数据
     const tableRef = ref(null); // 表格引用
+    const innerForm = ref(null); //
 
     const customDialog = ref(props.customDialog);
     const customFormName = ref(props.customFormName);
@@ -258,15 +275,10 @@ export default defineComponent({
     const handleSubmit = () => {
       if (isEditing.value) {
         // 更新数据
-        tableData.value[currentIndex.value] = { ...form.value };
-        ElMessage.success('编辑成功');
+        updateValidate();
       } else {
         // 新增数据
-        tableData.value.push({ ...form.value });
-        if (!customDialog.value) {
-        } else {
-        }
-        ElMessage.success('新增成功');
+        addValidate();
       }
       dialogVisible.value = false;
     };
@@ -313,7 +325,55 @@ export default defineComponent({
       // console.log('Dialog->Table:addRow:', arg);
       emit('afterAddRow', arg);
     });
+    const addValidate = () => {
+      if (!customDialog.value) {
+        return innerForm.value.validate((valid) => {
+          if (valid) {
+            tableData.value.push({ ...form.value });
+            ElMessage.success('新增成功');
+            emit('afterAddRow', {
+              formType: 'innerForm',
+              formData: form.value,
+            });
+          } else {
+            emit('afterAddRow', {
+              formType: 'innerForm',
+              formData: null,
+            });
+            ElMessage.error('请填写完整信息');
+            return false;
+          }
+        });
+      }
+    };
 
+    const updateValidate = () => {
+      if (!customDialog.value) {
+        return innerForm.value.validate((valid) => {
+          if (valid) {
+            tableData.value[currentIndex.value] = { ...form.value };
+            ElMessage.success('编辑成功');
+          } else {
+            ElMessage.error('请填写完整信息');
+            return false;
+          }
+        });
+      } else {
+      }
+    };
+    // watch(
+    //   () => innerForm.value,
+    //   (newValue) => {
+    //     console.log('innerForm.value:', newValue);
+    //   }
+    // );
+
+    // onMounted(() => {
+    //   console.log('Table:mounted:', props.innerFormTemplate, form.value);
+    // });
+    // onBeforeUnmount(() => {
+    //   console.log('Table:unmounted');
+    // })
     return {
       tableData,
       dialogVisible,
@@ -333,6 +393,8 @@ export default defineComponent({
       isDelete,
       isAddBtn,
       isDeleteSelected,
+      innerForm,
+      rules,
     };
   },
 });

@@ -1,7 +1,6 @@
 //@ts-ignore
 import { createComponent as MyTableSuit } from '@openUI/OpenTable/creater';
-import mockData from '@/mock/table_test';
-import { columnsPinyin } from '@/components/Table/config/targetAnalyse';
+import { columnsPinyin } from '@/components/Table/config/themeImages';
 const columns = columnsPinyin;
 // console.log(columns,'pinyin');
 
@@ -10,10 +9,10 @@ export default MyTableSuit(
   () => columns, // 列配置
   {
     customDialog: false,
-    // customFormName: 'targetAnalyseTableAddForm',
+    // customFormName: 'themeImagesTableAddForm',
     // customFormType: '<table>',
-    onSubmit:(arg:any)=>{
+    onSubmit: (arg: any) => {
       //请求后台
-    }
+    },
   }
 );

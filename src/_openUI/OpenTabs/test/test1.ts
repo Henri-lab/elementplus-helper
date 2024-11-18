@@ -1,6 +1,7 @@
 import { markRaw } from 'vue';
+//@ts-ignore
 import { createTabsComponent } from '../creater';
-import comp1 from '@/components/Table/example/TargetAnalyse.vue';
+import comp1 from '@/components/Table/example/TargetAnalyse.ts';
 import comp2 from '@/components/Table/example/TargetBasicInfo.vue';
 
 const tabsConfigArr = [
