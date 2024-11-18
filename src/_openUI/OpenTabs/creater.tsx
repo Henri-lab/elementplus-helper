@@ -52,16 +52,22 @@ export function createTabsComponent(tabsConfig: TabConfig[]) {
             content: tab.content || '',
           }))
         );
+        // console.log(tabs.value);
       });
+
 
       return () => (
         <div class="tabs-basicInfos-and-images">
-          <Tabs
-            tabs={tabs.value}
-            isGuard={false}
-            isControlPanel={false}
-            initName={initName}
-          />
+          {tabs.value.length > 0 ? (
+            <Tabs
+              tabs={tabs.value}
+              isGuard={false}
+              isControlPanel={false}
+              initName={initName}
+            />
+          ) : (
+            <div>加载中...</div>
+          )}
         </div>
       );
     },

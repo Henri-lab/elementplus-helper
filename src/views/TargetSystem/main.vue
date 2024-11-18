@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import BasFeaTheme from '@/components/Tabs/example/Bas&Fea&Theme.vue';
+import BasFeaTheme from '@/components/Tabs/example/Bas&Fea&Theme.ts';
 import TreeOrg from '@/components/TreeOrg/TreeOrg.vue';
 </script>
 

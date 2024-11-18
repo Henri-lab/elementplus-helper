@@ -17,7 +17,7 @@ declare module 'vue' {
     'Button.vue': typeof import('./src/components/Dialog/button.vue/index.vue')['default']
     CodeEditor: typeof import('./src/components/CodeEditor/index.vue')['default']
     ContextMenu: typeof import('./src/components/ContextMenu/index.vue')['default']
-    copy: typeof import('./src/components/Table/example/TargetBasicInfo copy.vue')['default']
+    copy: typeof import('./src/components/Tabs/example/Sys&Target copy.vue')['default']
     CustomForm: typeof import('./src/components/Dialog/test/customForm.vue')['default']
     Demo1: typeof import('./src/components/Draggable/demo1.vue')['default']
     Demo2: typeof import('./src/components/Draggable/demo2.vue')['default']

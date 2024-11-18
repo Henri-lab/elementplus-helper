@@ -35,7 +35,7 @@ const publicRoutes: RouteRecordRaw[] = [
             components: {
               header: () => import('@/components/Header/index.vue'),
               main: () => import('@/views/TargetSystem/main.vue'),
-              aside: () => import('@/components/Tabs/example/Sys&Target.vue'),
+              aside: () => import('@/components/Tabs/example/Sys&Target.ts'),
               footer: () => import('@/layout/display0/footer.vue'),
             },
             meta: {
@@ -48,8 +48,8 @@ const publicRoutes: RouteRecordRaw[] = [
             name: 'dataMaintain',
             components: {
               header: () => import('@/components/Header/index.vue'),
-              main: () => import('@/components/Tabs/example/MatainA&B&C.vue'),
-              aside: () => import('@/components/Tabs/example/Sys&Target.vue'),
+              main: () => import('@/components/Tabs/example/MatainA&B&C.ts'),
+              aside: () => import('@/components/Tabs/example/Sys&Target.ts'),
             },
             meta: {
               title: '数据维护',
@@ -76,7 +76,7 @@ const publicRoutes: RouteRecordRaw[] = [
               main_m: () => import('@/components/TreeOrg/TreeOrg.vue'),
               main_f: () =>
                 import('@/components/Table/example/TargetAnalyse.ts'),
-              aside: () => import('@/components/Tabs/example/Sys&Target.vue'),
+              aside: () => import('@/components/Tabs/example/Sys&Target.ts'),
             },
             meta: {
               title: '页面1',
