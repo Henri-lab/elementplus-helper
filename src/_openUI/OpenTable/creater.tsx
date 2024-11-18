@@ -15,6 +15,7 @@ export function createComponent(
         customDialog?: boolean,
         customFormName?: string,
         customFormType?: string,
+        onSubmit?: (arg: any) => any,
     }
 ) {
     return defineComponent({
@@ -74,6 +75,7 @@ export function createComponent(
                         customDialog={extra?.customDialog}
                         customFormName={extra?.customFormName}
                         customFormType={extra?.customFormType}
+                        onAfterAddRow={extra?.onSubmit}
                     />
 
                     <br />

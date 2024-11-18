@@ -13,5 +13,8 @@ export default MyTable(
     customDialog: true,
     customFormName: 'targetAnalyseTableAddForm',
     customFormType: '<table>',
+    onSubmit:(arg:any)=>{
+      //请求后台
+    }
   }
 );
