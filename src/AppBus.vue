@@ -22,20 +22,15 @@ $bus.on('$:Test:showTestButton', (arg) => {
 });
 
 $bus.on('$:Dialog->Tree:addNode', (arg) => {
-  const label = arg.city || '<?>';
-  arg.label = label;
   $bus.emit('Dialog->Tree:addNode', arg);
 });
 
 $bus.on('$:Dialog->Tree:updateNode', (arg) => {
-  const label = arg.city || '<?>';
-  arg.label = label;
   $bus.emit('Dialog->Tree:updateNode', arg);
 });
 
 
 $bus.on('$:EditDialog:SlotForm:open',(arg)=>{
-  console.log('$:EditDialog:SlotForm:open',arg);
   $bus.emit('EditDialog:SlotForm:open',arg);
 });
 

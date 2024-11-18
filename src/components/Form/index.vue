@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" ref="elFormRef" @click="getFormInfo">
+  <el-form :model="formData" ref="elFormRef" @click="testFormInfo">
     <el-row :gutter="20">
       <el-col v-for="item in description" :span="item.span" :key="item.field">
         <el-form-item
@@ -115,7 +115,7 @@ const getComponentType = (type: string) => {
   }
 };
 
-const getFormInfo = () => {
+const testFormInfo = () => {
   console.log(
     `%cformType:${props.formType};formName:${props.formName}`,
     `color:wheat;background-color:black;border:1px solid orange;`
@@ -125,14 +125,15 @@ const getFormInfo = () => {
 watch(
   () => formName,
   () => {
-    // console.log('formName changed! is', formName.value);
     description = getDescriptionByName(formName.value);
     let exportedFormData = createOrUpdateFormDataByDescription(description);
     let fields = getDescriptionFields(description);
     filterObjectProperties(copyFormData, fields);
-    console.log('description changed! is', description);
-    console.log('fields changed! is', fields);
-    console.log('exportedFormData changed! is', exportedFormData);
+    // console.log('formName changed! is', formName.value);
+    // console.log('description changed! is', description);
+    // console.log('fields changed! is', fields);
+    // console.log('exportedFormData changed! is', exportedFormData);
+    // console.log('form inner data',formData);
   },
   {
     immediate: true,
@@ -197,10 +198,18 @@ function getResetFields() {
   return elFormRef.value.resetFields;
 }
 
+function getFormInfo() {
+  return {
+    name: formName.value,
+    type: formType.value,
+  };
+}
+
 defineExpose({
   getFormData,
   openValidate,
   getResetFields,
   getStatus,
+  getFormInfo,
 });
 </script>

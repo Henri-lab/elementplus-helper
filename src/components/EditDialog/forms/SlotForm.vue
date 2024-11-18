@@ -38,7 +38,6 @@ const formName = ref('DialogForm' + Date.now());
 const formType = ref('DialogForm' + Date.now());
 const formData = ref({});
 $bus.on('EditDialog:SlotForm:open', (arg: any) => {
-  console.log('$bus@EditDialog:SlotForm:open', arg);
   openDialog();
   description.value = arg.description;
   formData.value = arg.formData;
@@ -47,7 +46,6 @@ $bus.on('EditDialog:SlotForm:open', (arg: any) => {
 });
 
 $bus.on('EditDialog:SlotForm:close', (arg: any) => {
-  console.log('$bus@EditDialog:SlotForm:close', arg);
   closeDialog();
 });
 
@@ -69,10 +67,16 @@ async function handleFormSubmit() {
   const overwrite = false;
   const { status } = await myFormRef.value.openValidate(overwrite);
   formData.value = myFormRef.value.getFormData();
+  formName.value = myFormRef.value.getFormInfo().name;
+  formType.value = myFormRef.value.getFormInfo().type;
   if (status == 'submit:success') {
     closeDialog();
-    console.log('formData:', formData.value);
-    $bus.emit('$:Dialog->Tree:addNode', formData.value);
+    // console.log('submitedForm:', formData.value, formName.value, formType.value);
+    $bus.emit('$:Dialog->Tree:addNode', {
+      formData: formData.value,
+      formName: formName.value,
+      formType: formType.value,
+    });
   }
 }
 

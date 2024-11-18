@@ -118,7 +118,7 @@ import { deleteNodeWithHistory, deleteNode } from './tool/del';
 import { updateNode, saveLabel, undoAction } from './tool/update';
 import { findNode } from './tool/find';
 //@ts-ignore
-import { getKeysByValue} from '@/utils/tool';
+import { getKeysByValue } from '@/utils/tool';
 
 //convery property 'id' of vdom
 import { useAttrs } from 'vue';
@@ -126,13 +126,14 @@ const attrs = useAttrs();
 
 type TreeNode = ITreeNode;
 type HistoryStackItem = IHistoryStackItem;
-$bus.on('Dialog->Tree:addNode', (formData: any) => {
-  console.log('addNode', formData);
+$bus.on('Dialog->Tree:addNode', (arg: any) => {
+  console.log('addNode', arg);
+  handleAddNode(null, null, arg.formData);
 });
 
 //update and edit is the same in this case
-$bus.on('Dialog->Tree:updateNode', (formData: any) => {
-  console.log('updateNode', formData);
+$bus.on('Dialog->Tree:updateNode', (arg: any) => {
+  console.log('updateNode', arg);
 });
 
 const emits = defineEmits([
@@ -232,7 +233,7 @@ const deleteSuccessText = ref(props.deleteSuccessText);
 const deleteFailText = ref(props.deleteFailText);
 
 const handleAddNode = (
-  type?: string,
+  type?: string, //will set parentId select strategy
   parentNode?: ITreeNode,
   //@ts-ignore
   nodeInfo?: any
@@ -245,7 +246,10 @@ const handleAddNode = (
     addNodeWithHistory({
       nodesRef: data,
       parentNodeId: parentNodeId,
-      newNode: { id: Date.now(), label: nodeDefaultLabel.value },
+      newNode: {
+        id: nodeInfo.id || Date.now(),
+        label: nodeInfo.label || nodeDefaultLabel.value,
+      },
       historyStack,
     });
     ElMessage.success(addSuccessText.value);
