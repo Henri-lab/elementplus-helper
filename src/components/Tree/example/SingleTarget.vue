@@ -3,6 +3,7 @@
     <MyTree
       :data="treeData"
       :test="isTest"
+      ref="sysTree"
       dialog
       formName="singleTargetTreeAddForm"
       formType="<tree>"
