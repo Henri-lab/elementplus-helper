@@ -13,15 +13,24 @@ export const addNode = ({
   parentNodeId,
   newNode,
 }: IOperationParams): boolean => {
-  const parentNode = findNode({ nodesRef, nodeId: parentNodeId });
-  if (parentNode && newNode) {
-    parentNode.children = parentNode.children || [];
-    parentNode.children.push(newNode); // Add new node to children
-    nodesRef.value = [...nodesRef.value]; // Trigger reactivity
+  if (newNode) {
+    const parentNode = findNode({ nodesRef, nodeId: parentNodeId });
+    if (parentNode) {
+      parentNode.children = parentNode.children || [];
+      parentNode.children.push(newNode); // Add new node to children
+      newNode.parentId = parentNode.id; // Set new node's parentId
+      newNode.isRoot = false;
+    } else {
+      nodesRef.value.push(newNode);
+      newNode.parentId = 'root';
+      newNode.isRoot = true;
+    }
+    nodesRef.value = [...nodesRef.value]; // Trigger reactivit
     return true;
+  } else {
+    console.warn('newNode is missing');
+    return false;
   }
-  console.warn('Parent node not found or newNode is missing');
-  return false;
 };
 export const addNodeWithHistory = ({
   nodesRef,
@@ -30,36 +39,44 @@ export const addNodeWithHistory = ({
   historyStack,
 }: IOperationParams): boolean => {
   // find the parent node
-  const parentNode = findNode({ nodesRef, nodeId: parentNodeId });
 
-  if (parentNode && newNode) {
-    // push new node to parent's children
-    parentNode.children = parentNode.children || [];
-    parentNode.children.push(newNode);
-
-    // trigger reactivity by pass the array directly
-    nodesRef.value = [...nodesRef.value];
-
-    // save the operation to history stack if provided
-    if (historyStack) {
-      historyStack.value.push({
-        action: 'add',
-        payload: {
-          parentId: parentNodeId,
-          nodeData: newNode,
-        },
-      });
+  if (newNode) {
+    const parentNode = findNode({ nodesRef, nodeId: parentNodeId });
+    if (parentNode) {
+      parentNode.children = parentNode.children || [];
+      parentNode.children.push(newNode); // Add new node to children
+      newNode.parentId = parentNode.id; // Set new node's parentId
+      newNode.isRoot = false;
+      // save the operation to history stack if provided
+      if (historyStack) {
+        historyStack.value.push({
+          action: 'add',
+          payload: {
+            parentId: parentNodeId,
+            nodeData: newNode,
+          },
+        });
+      }
+      ElMessage.success('节点已添加');
+      return true;
+    } else {
+      nodesRef.value.push(newNode);
+      newNode.parentId = 'root';
+      newNode.isRoot = true;
+      if (historyStack) {
+        historyStack.value.push({
+          action: 'add',
+          payload: {
+            parentId: parentNodeId||'root',
+            nodeData: newNode,
+            id:newNode.id,
+          },
+        });
+      }
+      return false;
     }
-    ElMessage.success('节点已添加');
-    return true;
   } else {
-    ElMessage.error('未找到父节点');
+    ElMessage.error('newNode is missing');
     return false;
   }
 };
-// After updating the data, set the new node as the current one
-// nextTick(() => {
-//   if (treeRef.value) {
-//     treeRef.value.setCurrentKey(newNode.id);
-//   }
-// });

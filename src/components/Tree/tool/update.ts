@@ -59,7 +59,6 @@ export const undoAction = ({
   if (action === 'add') {
     // 撤销添加：执行删除操作
     console.log('执行删除操作', payload);
-    
     deleteNode({ nodesRef: nodesRef, nodeId: payload.id });
     ElMessage.success('撤销添加');
   } else if (action === 'delete') {

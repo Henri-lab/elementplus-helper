@@ -31,6 +31,22 @@ export const deleteNodeWithHistory = ({
 }: IOperationParams) => {
   const parentNode = findParentNode({ nodesRef, nodeId });
   const nodeData = findNode({ nodesRef, nodeId });
+  if (!parentNode) {
+    const index = nodesRef.value.findIndex((node) => node.id === nodeId);
+    if (index !== -1) {
+      const deletedNode = nodesRef.value.splice(index, 1);
+      historyStack.value.push({
+        action: 'delete',
+        payload: {
+          parentId: 'root',
+          nodeData: { ...deletedNode[0] },
+        },
+      });
+      return true;
+    }
+    ElMessage.error('节点删除失败');
+    return false;
+  }
 
   if (nodeData && parentNode) {
     const index = parentNode.children?.findIndex((node) => node.id === nodeId);

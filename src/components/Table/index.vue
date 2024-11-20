@@ -222,7 +222,7 @@ export default defineComponent({
 
     // 新增
     const handleAdd = () => {
-      form.value = {};
+      form.value = props.innerFormTemplate;
       isEditing.value = false;
       if (!customDialog.value) {
         dialogVisible.value = true;
@@ -236,7 +236,7 @@ export default defineComponent({
 
     // 编辑
     const handleEdit = (row: any) => {
-      form.value = { ...row };
+      form.value = { ...props.innerFormTemplate,...row };
       currentIndex.value = tableData.value.indexOf(row);
       isEditing.value = true;
       if (!customDialog.value) {

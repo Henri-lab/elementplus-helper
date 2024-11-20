@@ -1,16 +1,18 @@
 import type { Ref } from 'vue';
 
 export interface ITreeNode {
-  id?: number;
+  id?: number|string;
   label: string;
   children?: ITreeNode[];
   check?: boolean;
+  parentId?: number|string;
+  isRoot?: boolean;
 }
 
 export interface IOperationParams {
   nodesRef: Ref<ITreeNode[]>;
-  nodeId?: number|undefined;
-  parentNodeId?: number;
+  nodeId?: number|string;
+  parentNodeId?: number|string;
   newNode?: ITreeNode;
   updatedProperties?: Partial<ITreeNode>;
   //undo params need
@@ -22,10 +24,10 @@ export interface IOperationParams {
 export interface IHistoryStackItem {
   action: string;
   payload: {
-    id?: number;
+    id?: number|string;
     newLabel?: string;
     previousLabel?: string;
-    parentId?: number
+    parentId?: number|string;
     nodeData?: ITreeNode;
   };
 }
