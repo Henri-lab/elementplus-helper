@@ -38,11 +38,21 @@
         :define-menus="defineMenus"
         @on-contextmenu="onMenus"
         @on-node-click="onNodeClick"
-
       >
         <template #default="{ node }">
           <div class="tree-org-node__custom" :data-id="node.id">
-            <div>{{ node.label }}</div>
+            <div>{{ node.$$data.label}}</div>
+            
+            <el-form v-model="node.$$data.formData" v-if="node.$$data.type==0">
+              <el-form-item
+                v-for="(prop, index) in getKeys(node.$$data.formData)"
+                :key="index"
+                :prop="prop"
+                :label="prop"
+              >
+                <el-input v-model="node.$$data.formData[prop]"></el-input>
+              </el-form-item>
+            </el-form>
             <el-button size="small" @click="showForm(node)">编辑表单</el-button>
           </div>
         </template>
@@ -115,12 +125,17 @@ const data = reactive({
     },
   ],
 });
+const getKeys = (object) => {
+  if (!object) return [];
+  let keys = Object.keys(object);
+  return keys;
+};
 
 // 可拖拽项目列表
 const draggableItems = ref([
-  { id: 1, label: '表单A', formData: { field1: '', field2: '' } },
-  { id: 2, label: '表单B', formData: { name: '', age: '' } },
-  { id: 3, label: '表单C', formData: { type: '', value: '' } },
+  {type:0, id: 100, label: '表单A', formData: { field1: '', field2: '' } },
+  {type:1,  id: 200, label: '表单B', formData: { name: '', age: '' } },
+  {type:2,  id: 300, label: '表单C', formData: { type: '', value: '' } },
 ]);
 
 // 当前拖拽的项目
@@ -149,21 +164,21 @@ const cloneItem = (item) => {
   return { ...item }; // 深拷贝拖拽项，防止源数据被修改
 };
 
-
-
-const onNodeClick = (evt,node)=>{
-    // console.log('onNodeClick',node)
-    selectedNode.value = node;
-}
+const onNodeClick = (evt, node) => {
+  // console.log('onNodeClick',node)
+  selectedNode.value = node;
+};
 // 拖拽放置到节点
 const onDropNode = (event, node = {}) => {
   // console.log(event, node,currentDraggedItem.value, "onDropNode")
   const draggedItem = currentDraggedItem.value;
   if (!draggedItem) return;
+  console.log(event.target.closest('.tree-org-node__custom'));
   const targetNodeId = event.target.closest('.tree-org-node__custom')?.dataset
     ?.id;
   if (!targetNodeId) return;
   const targetNode = findNodeById(data, targetNodeId);
+  targetNode.children = targetNode.children || [];
   //   console.log(targetNode, 'targetNode');
   draggedItem.pid = targetNodeId;
   draggedItem.isLeaf = true;
@@ -201,7 +216,7 @@ const defineMenus = (e, node) => {
   }
 };
 const onMenus = ({ command, node, data }) => {
-    selectedNode.value = node; // 记录当前右键的节点
+  selectedNode.value = node; // 记录当前右键的节点
   // console.log(arg)
   if (command == 'my_delete') {
     deleteNode();
@@ -275,8 +290,8 @@ const deleteNode = () => {
   padding: 10px;
   border-right: 1px solid #ccc;
   background-color: #f8f8f8;
-//   position: absolute;
-//   top:-300px;
+  //   position: absolute;
+  //   top:-300px;
 
   .draggable-item {
     padding: 10px;
